@@ -2,6 +2,7 @@ var express = require ('express');
 var catogoryModel = require('../models/category.model');
 var router = express.Router();
 
+
 router.get('/',(req,res)=>{
     catogoryModel.all()
     .then(rows => {

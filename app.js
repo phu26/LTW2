@@ -4,6 +4,7 @@ var morgan = require('morgan');
 var app = express();
 var publicDir = require('path').join(__dirname, '/public');
 var bodyParser = require('body-parser');
+var catogoryModel = require('../models/category.model');
 
 
 app.use(morgan('dev'));
@@ -16,7 +17,19 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 app.use('/categories', require('./routes/categories'));
-app.get('/', (req, res) => { res.render('home'); })
+app.get('/', (req, res) => {
+    catogoryModel.all()
+    .then(rows => {
+       res.render('home',{
+           categories: rows
+        });
+      
+    })
+    .catch(error => {
+        res.render('error',{ layout: false})
+    }) ;
+    
+});
 
 app.get('/test', (req, res) => { res.end('test page.'); })
 var port = 3000;
