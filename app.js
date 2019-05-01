@@ -16,6 +16,7 @@ app.use(bodyParser.urlencoded({
     extended: false
 }));
 app.use(bodyParser.json());
+app.use((require('./middlewares/category.mdw') ) );
 app.use('/categories', require('./routes/categories'));
 app.get('/', (req, res) => {
     catogoryModel.all()
