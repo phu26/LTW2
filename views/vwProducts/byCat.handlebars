@@ -1,0 +1,39 @@
+ <div class="card">
+  <h5 class="card-header">
+       Category
+  
+  </h5>
+<div class="card-body">
+  {{#if this.empty}}
+   <p class="card-text">
+      NOTTHING
+    </p>
+  {{else}}
+  <div class="row">
+ {{#each this.products}}
+     <div class="col-sm-4 mb-3">
+       <div class="card h100 shadow-sm" style="width: 18rem;">
+    <img src="/pic/{{ProID}}.jpg" width="100" height="200" class="card-img-top" alt="
+    ">
+    <div class="card-body">
+    <h5 class="card-title">{{{ProName}}}</h5>
+    <h5 class="card-title text-danger">{{Price}}</h5>
+    <p class="card-text">
+      {{TinyDes}}
+    </p>
+    
+  </div>
+  <div class="card-footer"> 
+<a href="javascript:;" class="btn btn-outline-primary"  title="View details">
+ <i class="fa fa-eye" aria-hidden="true"></i>
+  Detail
+  </a>
+  </div>
+</div>
+     </div>
+  {{/each}}
+  </div>
+  
+  {{/if}}
+</div>
+</div>
