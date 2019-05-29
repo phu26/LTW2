@@ -1,0 +1,29 @@
+<div class="card shadow">
+  <h5 class="card-header">
+    Product
+  </h5>
+  <div class="card-body">
+    {{#if this.error}}
+    <div class="alert alert-danger" role="alert">
+      Invalid productId. <a href="/" class="alert-link">Go home</a>.
+    </div>
+    {{else}}
+    {{#with this.product}}
+    <div class="card border-0">
+      <img src="/imgs/sp/{{ProID}}/main.jpg" alt="{{ProName}}" class="card-img-top">
+      <div class="card-body">
+        <h2 class="card-title">{{ProName}}</h2>
+        <p class="card-text">Giá bán: <span class="text-danger font-weight-bold">{{format_number Price}}</span></p>
+        <p class="card-text">Tồn kho: {{Quantity}}</p>
+        <p class="card-text">
+          {{{FullDes}}}
+        </p>
+        <p class="card-text text-muted">
+          <small>Last upadated 3 minutes ago.</small>
+        </p>
+      </div>
+    </div>
+    {{/with}}
+    {{/if}}
+  </div>
+</div>
