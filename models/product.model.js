@@ -1,18 +1,22 @@
 var db = require('../utils/db')
+var config = require('../config/default.json');
 module.exports = {
     all: () => {
             
-        return db.load('select * from products');
+        return db.load(`SELECT * FROM products `);
     },
     allByCat: catID => {
             
-        return db.load(`select * from products where CatID= ${catID}`);
+        return db.load(`select * from products where CatID= ${catID} and TinyDes!=''` );
     },
     single: id => {
             
-        return db.load(`select * from products where ProID  = ${id}`);
+        return db.load(`select * from products where ProName = '${id}'`);
     },
-   
+    single2: id => {
+            
+      return db.load(`select * from pic where ProID  = ${id}`);
+  },
     add: entity => {
         return db.add('products',entity);
     },
@@ -31,5 +35,11 @@ module.exports = {
     
       delete: id => {
         return db.delete('products', 'ProID', id);
-      }
+      },
+     
+      Click: id => {
+            
+        return db.load(`UPDATE products SET Click = Click + 1 where ProName='${id}'`);
+    },
+      
 };

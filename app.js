@@ -31,16 +31,19 @@ app.use(express.static('public'));
 
 require('./middlewares/session')(app);
 require('./middlewares/passport')(app);
+require('./middlewares/upload')(app);
 
 app.use(require('./middlewares/auth.mdw'));
 app.use(require('./middlewares/category.mdw'));
+
+app.use(require('./routes/home'));
 
 app.use('/categories', require('./routes/categories'));
 app.use('/products', require('./routes/products'));
 app.use('/account', require('./routes/account'));
 
 app.get('/', (req, res) => {
-  // res.end('hello express');
+ 
   res.render('home');
 })
 

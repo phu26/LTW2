@@ -1,0 +1,64 @@
+{{#section 'css'}}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.3/css/fileinput.min.css" media="all"
+  rel="stylesheet" type="text/css" />
+{{/section}}
+
+{{#section 'js'}}
+<script
+  src="https://cloud.tinymce.com/5/tinymce.min.js?apiKey=ezd73nxbzc7bu6e86g2l82jbbffke0mwevwrnyvc5q8h89j6"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.3/js/fileinput.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.3/themes/fa/theme.min.js"></script>
+<script>
+  $(function () {
+
+    $('#fuMain').fileinput({
+      theme: 'fa',
+      dropZoneEnabled: false,
+      allowedFileExtensions: ['png', 'jpg', 'gif'],
+      uploadClass: 'btn btn-success',
+      uploadUrl: '/upload',
+      uploadAsync: false,
+    });
+
+    tinymce.init({
+      selector: '#txtFullDes',
+      menubar: false,
+      height: 600,
+      plugins: 'paste image link autolink lists table media',
+      toolbar: [
+        'undo redo | bold italic underline strikethrough | numlist bullist | alignleft aligncenter alignright',
+        'forecolor backcolor',
+        'table link image media',
+        // 'paste'
+      ],
+      image_caption: true,
+    });
+  })
+</script>
+{{/section}}
+
+<form action="" method="POST">
+  <div class="card shadow">
+    <h5 class="card-header">
+      New Product
+    </h5>
+    <div class="card-body">
+      <div class="form-group">
+        <label for="fuMain">Photo:</label>
+        <div class="file-loading">
+          <input id="fuMain" name="fuMain" type="file" multiple>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="txtFullDes">Description</label>
+        <textarea class="form-control" id="txtFullDes" name="FullDes"></textarea>
+      </div>
+    </div>
+    <div class="card-footer text-right">
+      <button type="submit" class="btn btn-success btn-block">
+        <i class="fa fa-check" aria-hidden="true"></i>
+        Save
+      </button>
+    </div>
+  </div>
+</form>

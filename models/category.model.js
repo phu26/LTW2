@@ -7,9 +7,10 @@ module.exports = {
 
   allWithDetails: () => {
     return db.load(`
-      select c.*, count(p.ProID) as num_of_products
-      from categories c left join products p on c.CatID = p.CatID
-      group by c.CatID, c.CatName
+    select c.*, count(p.ProID) as num_of_products
+    from categories c left join products p on c.CatID = p.CatID 
+    and p.TinyDes!=''
+    group by c.CatID, c.CatName
     `);
   },
 

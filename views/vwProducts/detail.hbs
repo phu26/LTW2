@@ -8,9 +8,14 @@
       Invalid productId. <a href="/" class="alert-link">Go home</a>.
     </div>
     {{else}}
+      {{#each this.k}}
+      <img src="/pic/{{pic}}" alt="{{ProName}}" class="card-img-top">
+      
+      <h6>                            </h6>
+  {{/each}}
     {{#with this.product}}
     <div class="card border-0">
-      <img src="/imgs/sp/{{ProID}}/main.jpg" alt="{{ProName}}" class="card-img-top">
+    
       <div class="card-body">
         <h2 class="card-title">{{ProName}}</h2>
         <p class="card-text">Giá bán: <span class="text-danger font-weight-bold">{{format_number Price}}</span></p>
