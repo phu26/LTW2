@@ -56,11 +56,13 @@ router.post('/login', (req, res, next) => {
         err_message: info.message
       })
     }
-
+    var retUrl1 = req.query.retUrl || '/admin';
     var retUrl = req.query.retUrl || '/';
     req.logIn(user, err => {
       if (err)
         return next(err);
+      if(user.f_Permission != 0 )
+      return res.redirect(retUrl1);
 
       return res.redirect(retUrl);
     });

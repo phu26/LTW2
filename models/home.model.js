@@ -8,7 +8,8 @@ module.exports = {
             
         return db.load(`SELECT * FROM products ORDER by CreatedAt DESC limit 3 `);
     }
-      
+     
+    
 };
 
 

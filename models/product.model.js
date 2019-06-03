@@ -42,4 +42,8 @@ module.exports = {
         return db.load(`UPDATE products SET Click = Click + 1 where ProName='${id}'`);
     },
       
+   AddCmt: id => {
+            
+      return db.load(`UPDATE products SET Click = Click + 1 where ProName='${id}'`);
+  }
 };

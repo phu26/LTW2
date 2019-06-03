@@ -12,6 +12,9 @@ module.exports = {
   singleByUserName: userName => {
     return db.load(`select * from users where f_Username = '${userName}'`);
   },
+  singleByUserNameAd: userName => {
+    return db.load(`select * from users where f_Username = '${userName}' and f_Permission = 1`);
+  },
 
   add: entity => {
     return db.add('users', entity);

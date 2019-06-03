@@ -13,10 +13,14 @@
   "dependencies": {
     "bcrypt": "^3.0.6",
     "body-parser": "^1.18.3",
+    "date-time": "^3.1.0",
+    "date-time-js": "^1.0.6",
     "express": "^4.16.4",
     "express-handlebars": "^3.0.2",
     "express-handlebars-sections": "^1.0.1",
     "express-session": "^1.16.1",
+    "helper": "0.0.13",
+    "helper-date": "^1.0.1",
     "http-errors": "^1.7.2",
     "lru-cache": "^5.1.1",
     "moment": "^2.24.0",
@@ -26,6 +30,10 @@
     "numeral": "^2.0.6",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
-    "postgresql": "0.0.1"
+    "postgresql": "0.0.1",
+    "react-datetime": "^2.16.3"
+  },
+  "devDependencies": {
+    "handlebars-helper-datetime": "^0.1.0"
   }
 }
