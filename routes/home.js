@@ -2,17 +2,38 @@ var express = require ('express');
 var router = express.Router();
 var catogoryModel = require('../models/home.model');
 
-router.get('/',(req,res)=>{
+
+var a = function(req,res,next){
     catogoryModel.all()
     .then(rows => {
-       res.render('home',{
-           Host: rows
+       req.Host =rows;
+       return next();
+       
+     })
+     .catch(err => next(err));
+}
+
+var b = function(req,res,next){
+    catogoryModel.New()
+    .then(rows => {
+       req.New =rows;
+       return next();
+       
+     })
+     .catch(err => next(err));
+}
+router.get('/',[a,b],function(req,res,next){
+   
+      return  res.render('home',{
+           Host: req.Host,
+           New : req.New
         });
       
-    })
-    .catch(error => {
-        res.render('error',{ layout: false})
-    }) ;
+   
+  
     
 })
+
+
+
 module.exports = router;

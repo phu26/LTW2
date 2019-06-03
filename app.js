@@ -38,6 +38,7 @@ app.use(require('./middlewares/category.mdw'));
 
 app.use(require('./routes/home'));
 
+
 app.use('/categories', require('./routes/categories'));
 app.use('/products', require('./routes/products'));
 app.use('/account', require('./routes/account'));
