@@ -21,11 +21,11 @@ module.exports = {
         return db.add('products',entity);
     },
     countByCat: catId => {
-        return db.load(`select count(*) as total from products where CatID = ${catId}`);
+        return db.load(`select count(*) as total from products where CatID = ${catId} and TinyDes!=''`);
       },
       pageByCat: (catId, start_offset) => {
         var lim = config.paginate.default;
-        return db.load(`select * from products where CatID = ${catId} limit ${lim} offset ${start_offset}`);
+        return db.load(`select * from products where CatID = ${catId} and TinyDes!='' limit ${lim} offset ${start_offset}`);
       },
       update: entity => {
         var id = entity.ProID;

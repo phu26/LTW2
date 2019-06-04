@@ -1,3 +1,13 @@
+ 
+<style>
+   #d {
+    
+    width:400px;
+    box-shadow:  5px 5px 5px thistle;
+   
+   margin: 25px
+   
+}</style>
  <div class="card">
   <h5 class="card-header">
        Category
@@ -11,31 +21,22 @@
   {{else}}
   <div class="row">
  {{#each this.products}}
-     <div class="col-sm-4 mb-3">
-       <div class="card h100 shadow-sm" style="width: 18rem;">
-    <img src="/pic/{{ProID}}.jpg" width="100" height="200" class="card-img-top" alt="
-    ">
-    <div class="card-body">
-    <h5 class="card-title">{{{ProName}}}</h5>
-    <h5 class="card-title text-danger">{{Price}}</h5>
-    <p class="card-text">
-      {{TinyDes}}
-    </p>
-    
-  </div>
-
-  <div class="card-footer"> 
-  <a href="/products/{{ProName}}" class="btn btn-sm btn-outline-primary" title="View details">
-              <i class="fa fa-eye" aria-hidden="true"></i>
-              Details
-            </a>
-            <a href="javascript:;" class="btn btn-sm btn-outline-success">
-              <i class="fa fa-cart-plus" aria-hidden="true"></i>
-              Add to cart
-            </a>
-  </div>
-</div>
-     </div>
+     
+      <div  id="d"class="row" >
+		<div class="col-md-6" >
+			<a  href="/products/{{ProName}}">
+				<img class="img-fluid" src="/pic/{{ProID}}.jpg" width="150" height="120">
+			</a>
+		</div>
+		<div  class="col-md-6">
+			
+			<a  href="/products/{{ProName}}" ><h3>{{ProName}}</h3>
+			<h4></h4>
+			<p>{{TinyDes}}</p></a>
+       <small>{{CreatedAt}}</small>
+		</div>
+	</div>
+      
   {{/each}}
   </div>
   <div class="row">
