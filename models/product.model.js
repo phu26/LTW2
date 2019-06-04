@@ -46,10 +46,12 @@ module.exports = {
       return db.load(`select * from users where f_Name = '${name}'`);
   },
    AddCmt: (content, idU,idP) => {
-    return db.load(`INSERT INTO  comment( Content, idUser, idProduct) VALUES ('${content}','${idU}','${idP}')`);
+    return db.load(`INSERT INTO  comment( Content, idUser, idProduct,CreatedAt) VALUES ('${content}',${idU},'${idP}',now())`);
 },
 ShowCmt: name => {
             
-  return db.load(`select * from comment where idProduct = '${name}'`);
+  return db.load(`SELECT DISTINCT c.*,u.f_Name FROM  comment c 
+  LEFT JOIN users u on c.idUser = u.f_ID
+  RIGHT JOIN products p on c.idProduct = '${name}'`);
 },
 };
