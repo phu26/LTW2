@@ -68,7 +68,7 @@ router.post('/:id', b,function(req, res,next) {
   
   
   console.log(req.id);
-  productModel.AddCmt(req.body.comment,req.body.username.id,id);
+  productModel.AddCmt(req.body.comment,req.id,id);
   productModel.single(id)
     .then(rows => {
       if (rows.length > 0) {
