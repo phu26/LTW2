@@ -1,6 +1,11 @@
 var express = require('express');
 var productModel = require('../models/product.model');
-
+var app = require('express')();
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
+io.on('connection', function(socket){
+  console.log('a user connected');
+});
 
 var router = express.Router();
 
@@ -12,8 +17,18 @@ router.post('/add', (req, res, next) => {
   console.log(req.body);
   res.end('done');
 })
-
-router.get('/:id', (req, res,next) => {
+var cmt = function(req,res,next){
+  
+  productModel.ShowCmt(req.params.id)
+  .then(rows => {
+     req.show =rows;
+     console.log(req.show);
+     return next();
+   
+   })
+   .catch(err => next(err));
+}
+router.get('/:id',cmt,function (req, res,next) {
   var id = req.params.id;
   console.log(id);
   if (id == '') {
@@ -21,7 +36,7 @@ router.get('/:id', (req, res,next) => {
     return;
   }
   productModel.Click(id);
-
+  var showcmt = req.show;
   productModel.single(id)
     .then(rows => {
       if (rows.length > 0) {
@@ -37,7 +52,7 @@ router.get('/:id', (req, res,next) => {
        
         
       res.render('vwProducts/detail', {
-          error: false, product,k
+          error: false, product,k,showcmt
 
         });
       } else {
@@ -53,22 +68,34 @@ var b = function(req,res,next){
   console.log(req.body.username);
   productModel.single3(req.body.username)
   .then(rows => {
-     req.id =rows[0].f_ID;
-     console.log(req.id);
+     req.cmt =rows[0];
+     console.log(req.cmt);
      return next();
    
    })
    .catch(err => next(err));
 }
-router.post('/:id', b,function(req, res,next) {
+var cmt2 = function(req,res,next){
+  
+  productModel.ShowCmt(req.params.id)
+  .then(rows => {
+     req.show2 =rows;
+     console.log(req.show2);
+     return next();
+   
+   })
+   .catch(err => next(err));
+}
+router.post('/:id',[b,cmt2] ,function(req, res,next) {
   var id = req.params.id;
   console.log(id);
  
+
   
   
-  
-  console.log(req.id);
-  productModel.AddCmt(req.body.comment,req.id,id);
+  console.log(req.body.comment);
+  productModel.AddCmt(req.body.comment,req.cmt.f_ID,id);
+ 
   productModel.single(id)
     .then(rows => {
       if (rows.length > 0) {
@@ -81,12 +108,12 @@ router.post('/:id', b,function(req, res,next) {
             c.active = true;
           }
         }
-       
+      var showcmt = req.show2 ;
         
       res.render('vwProducts/detail', {
-          error: false, product,k
+        error: false, k,product,showcmt
 
-        });
+      });
       } else {
      res.render('vwProducts/detail', {
           error: true

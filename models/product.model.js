@@ -48,4 +48,8 @@ module.exports = {
    AddCmt: (content, idU,idP) => {
     return db.load(`INSERT INTO  comment( Content, idUser, idProduct) VALUES ('${content}','${idU}','${idP}')`);
 },
+ShowCmt: name => {
+            
+  return db.load(`select * from comment where idProduct = '${name}'`);
+},
 };

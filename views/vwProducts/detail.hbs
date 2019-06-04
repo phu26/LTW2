@@ -1,3 +1,7 @@
+ <script src="/socket.io/socket.io.js"></script>
+<script>
+  var socket = io();
+</script>
 <div class="card shadow">
   <h5 class="card-header">
     Product
@@ -30,6 +34,16 @@
     </div>
     {{/with}}
     {{/if}}
+    {{#each showcmt}}
+     <form >
+   <div class="form-group row">
+    <label for="staticEmail" class="col-sm-2 col-form-label">Name</label>
+    <div class="col-sm-10">
+      <input type="text"  readonly class="form-control-plaintext" id="staticEmail" value="{{Content}}">
+    </div>
+  </div>
+  </form>
+  {{/each}}
     <form method="POST" >
   <div class="form-group row">
     <label for="staticEmail" class="col-sm-2 col-form-label">Name</label>

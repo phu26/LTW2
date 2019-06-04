@@ -31,7 +31,8 @@
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "postgresql": "0.0.1",
-    "react-datetime": "^2.16.3"
+    "react-datetime": "^2.16.3",
+    "socket.io": "^2.2.0"
   },
   "devDependencies": {
     "handlebars-helper-datetime": "^0.1.0"
