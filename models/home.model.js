@@ -2,11 +2,11 @@ var db = require('../utils/db')
 module.exports = {
     all: () => {
             
-        return db.load(`SELECT * FROM products WHERE TinyDes!='' ORDER BY Click DESC limit 3`);
+        return db.load(`SELECT c.CatName,p.* from  categories c ,products p WHERE p.CatID=c.CatID and p.TinyDes!='' ORDER BY Click DESC limit 3`);
     },
     New: () => {
             
-        return db.load(`SELECT * FROM products ORDER by CreatedAt DESC limit 3 `);
+        return db.load(`SELECT c.CatName,p.* from  categories c ,products p WHERE p.CatID=c.CatID and p.TinyDes!='' ORDER by p.CreatedAt DESC limit 3  `);
     },
     top10: () => {
             
