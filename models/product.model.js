@@ -41,9 +41,11 @@ module.exports = {
             
         return db.load(`UPDATE products SET Click = Click + 1 where ProName='${id}'`);
     },
-      
-   AddCmt: id => {
+    single3: name => {
             
-      return db.load(`UPDATE products SET Click = Click + 1 where ProName='${id}'`);
-  }
+      return db.load(`select * from users where f_Name = '${name}'`);
+  },
+   AddCmt: (content, idU,idP) => {
+    return db.load(`INSERT INTO  comment( Content, idUser, idProduct) VALUES ('${content}','${idU}','${idP}')`);
+},
 };

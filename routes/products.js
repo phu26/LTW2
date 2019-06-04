@@ -49,15 +49,26 @@ router.get('/:id', (req, res,next) => {
     
  
 })
-router.post('/:id', (req, res,next) => {
+var b = function(req,res,next){
+  console.log(req.body.username);
+  productModel.single3(req.body.username)
+  .then(rows => {
+     req.id =rows[0].f_ID;
+     console.log(req.id);
+     return next();
+   
+   })
+   .catch(err => next(err));
+}
+router.post('/:id', b,function(req, res,next) {
   var id = req.params.id;
   console.log(id);
-  if (id == '') {
-    res.render('vwProducts/detail', { error: true });
-    return;
-  }
+ 
   
   
+  
+  console.log(req.id);
+  productModel.AddCmt(req.body.comment,req.body.username.id,id);
   productModel.single(id)
     .then(rows => {
       if (rows.length > 0) {
@@ -83,7 +94,6 @@ router.post('/:id', (req, res,next) => {
       }
     }).catch(next);
     
- 
 })
 
 module.exports = router;
