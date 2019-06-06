@@ -54,8 +54,8 @@ ShowCmt: name => {
   LEFT JOIN users u on c.idUser = u.f_ID
   RIGHT JOIN products p on c.idProduct = '${name}'`);
 },
-related: (name,catid) => {
+related: name => {
             
-  return db.load(`select * from products where ProName != '${name}' and CatID=${catid}`);
+  return db.load(`select * from products where ProName != '${name}' `);
 },
 };

@@ -70,6 +70,10 @@ router.post('/login', (req, res, next) => {
   })(req, res, next);
 })
 
+router.get('/logout', restricted, (req, res, next) => {
+  req.logout();
+  res.redirect('/account/login');
+})
 router.post('/logout', restricted, (req, res, next) => {
   req.logout();
   res.redirect('/account/login');

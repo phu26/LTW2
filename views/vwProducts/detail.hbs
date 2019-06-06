@@ -64,6 +64,34 @@
               </button>
             </div>
 </form>
+
+<div class="card-body">
+ 
+  
+<div class="card-header"><center>RELATED</center></div>
+  <div class="row">
+ {{#each productRelate}}
+     
+      <div  id="d"class="row" >
+		<div class="col-md-6" >
+			<a  href="/products/{{ProName}}">
+				<img class="img-fluid" src="/pic/{{ProID}}.jpg" width="150" height="120">
+			</a>
+		</div>
+		<div  class="col-md-6">
+			
+			<a style="color:black"  href="/products/{{ProName}}" ><h3>{{ProName}}</h3>
+			
+			<p>{{TinyDes}}</p></a>
+       <small>{{CreatedAt}}</small>
+		</div>
+	</div>
+      
+  {{/each}}
+  </div>
+ 
+ 
+</div>
   </div>
   
 </div>
