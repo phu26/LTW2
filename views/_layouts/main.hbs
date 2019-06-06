@@ -59,14 +59,9 @@
               {{/if}}</a>
       </li> 
      {{/each}}
-      {{#if isAuthenticated}}
-      {{#if writer}}
-         <li class="nav-item">
-        <a class="nav-link" href="/">writer<span class="sr-only">(current)</span></a>
-      </li>
-      {{/if}}
       
-      {{/if}}
+      
+     
     </ul>
     <form id="frmLogout" action="/account/logout" method="POST"></form>
     <ul class="navbar-nav">
@@ -101,10 +96,14 @@
     <form class="form-inline my-2 my-md-0">
       <input class="form-control" type="text" placeholder="Search">
     </form>
-    
-
+     {{#if isAuthenticated}}
+      {{#if writer}}
+         <li class="nav-item">
+        <a class="btn btn-primary" href="/upload">Thêm bài viết<span class="sr-only">(current)</span></a>
+      </li>
+      {{/if}}
+      {{/if}}
   </div>
- 
 </nav>
 
 
