@@ -63,10 +63,16 @@ router.get('/:id', [cmt, relatee], function (req, res, next) {
           }
         }
         var productRelate= [];
+        productRelate.length = 5;
+        var i=0;
         for (var d of res.locals.relate) {
           if (d.CatID === product.CatID) {
-           
+          
+           if(i==5)
+           break;
+
            productRelate.push(d) ;
+           i++;
           }
         }
 
