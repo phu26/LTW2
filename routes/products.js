@@ -28,7 +28,31 @@ var cmt = function(req,res,next){
    })
    .catch(err => next(err));
 }
-router.get('/:id',cmt,function (req, res,next) {
+var r = function(req,next){
+  
+  productModel.single(req.params.id)
+  .then(rows => {
+    console.log(req.params.id);
+     req.idd =rows[0].CatID;
+     console.log(req.idd);
+     return next();
+   
+   })
+   .catch(err => next(err));
+   
+}
+var relate =  function(req,res,next){
+ r.call(req,res,next);
+  productModel.related(req.params.id,req.idd)
+  .then(rows => {
+     req.alll =rows;
+     
+     return next();
+   
+   })
+   .catch(err => next(err));
+}
+router.get('/:id',[cmt,relate],function (req, res,next) {
   var id = req.params.id;
   console.log(id);
   if (id == '') {
@@ -75,6 +99,7 @@ var b = function(req,res,next){
    })
    .catch(err => next(err));
 }
+
 var cmt2 = function(req,res,next){
   
   productModel.ShowCmt(req.params.id)
@@ -86,14 +111,16 @@ var cmt2 = function(req,res,next){
    })
    .catch(err => next(err));
 }
-router.post('/:id',[b,cmt2] ,function(req, res,next) {
+
+
+router.post('/:id',[b,cmt2,relate] ,function(req, res,next) {
   var id = req.params.id;
   console.log(id);
  
 
   
   
-  console.log(req.body.comment);
+ 
   productModel.AddCmt(req.body.comment,req.cmt.f_ID,id);
  
   productModel.single(id)
