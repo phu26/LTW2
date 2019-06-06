@@ -13,19 +13,27 @@
      
 }
 [class~="news"] {
+  padding: 5px;
   width: 100% !important;
+  border:  10px;
+  
+}
+[class~="box"] {
+  box-shadow: inset 0px 0px  14px #BAD3C7;
 }
  #d {
    visibility: visible !important;
       background-color: transparent;
-      color: #4db2ec;
+      color:black;
 text-decoration:solid;
     font-weight:bold;
     background-position:center;
     width:300px;
     box-shadow:  5px 5px 5px thistle;
    font-weight: bold;
-   margin: 15px
+   margin: 15px;
+   padding : 10px;
+   
  }
  #e{
    background-position:center;
@@ -39,8 +47,14 @@ text-decoration:solid;
   overflow-y: scroll; 
 
  }
+ #border{
+   margin-top: 10px;
+   font-family: cursive;
+   text-align: center;
+  box-shadow: inset 0px 0px  14px #BAD3C7;
+}
 </style>
-<main role="main">
+<main  role="main">
       <div>
       <div id="carouselExampleIndicators"  class="carousel slide news"  data-ride="carousel">
   <ol class="carousel-indicators">
@@ -77,8 +91,8 @@ text-decoration:solid;
 </div>
       <div class="row news">
         <div class="col-sm-6 news" >
-     <div style="width: 100" class="card-header">
-               <h4 class="my-0 font-weight-normal">Tin Mới</h4>
+     <div  id="border" style="width: 100" class="card-header">
+               <h4  class="my-0 font-weight-normal">Tin Mới</h4>
           </div>
       <div  class="card-deck mb-4 text-center">
 
@@ -101,9 +115,9 @@ text-decoration:solid;
             
              
           </div>
-     <div > 
+     <footer class="text-muted"> 
                 <span class="badge badge-light"><small>{{CreatedAt}}</small></span>
-              </div>
+     </footer>
   </a>
        
              {{/each}}
@@ -111,11 +125,15 @@ text-decoration:solid;
       </div>
         </div>
           <div class="col-sm-2 news" >
-            gggggggggggg
+             <div  id="border" style="width: 100" class="card-header">
+               <h4  class="my-0 font-weight-normal"> gggggggggggg</h4>
           </div>
-    <div class="col-sm-4     " >
-      <div style="width: 100" class="card-header">
-               <h4 class="my-0 font-weight-normal">Top Chuyên Mục</h4>
+           
+          </div>
+    <div class="col-sm-4  news   " >
+      
+      <div  id="border" style="width: 100" class="card-header">
+               <h4  class="my-0 font-weight-normal"> Top Chuyên Mục</h4>
           </div>
   <div id="e" >
     
