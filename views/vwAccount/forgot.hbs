@@ -29,54 +29,37 @@
       pointer-events: none;
       color: #aaa;
     }
-    img {
-border-radius:50%;
--moz-border-radius:50%;
--webkit-border-radius:50%;
-}
   </style>
 </head>
 
 <body>
   <div class="container-fluid h-100">
     <div class="row justify-content-center align-items-center h-100">
-      <div class="col-sm-4 col-md-3"><h1>ProFiles</h1></div>
-    
-{{#with entity}}
-       <div   class="row" >
-		<div class="col-md-6" >
-			
-			<center><img class="img-fluid" src="/pic/{{Pic}}" width="350" height="350">
-		</center>	
-		</div>
-        <form  method="POST" enctype="multipart/form-data">
-                    <div class="form-group">
-                        <label for="example-input-file">&nbsp;</label>
-                        <input type="file" name="file" class="form-control-file border">
-                    </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
-		<div class="col-md-6" >
-			
-			<div class="row">
-       
-        <div class="col-sm-6">  <div  id="border" style="width: 100" class="card-header">
-               <h4  class="my-0 font-weight-normal">Thông Tin Cá Nhân</h4>
-          </div> <h>{{f_Name}}</h>
-          <br>
-          <small>{{f_DOB}}</small>
+      <div class="col-sm-4 col-md-3">
+        {{#if err_message}}
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          {{err_message}}
+        </div>
+        {{/if}}
+
+        <form method="POST">
+          <div class="form-group">
+            <div class="input-group">
+              <input class="form-control form-control-lg border-right-0 border" placeholder="Email" type="text"
+                name="email" autofocus>
+              <span class="input-group-append">
+                <div class="input-group-text bg-white">
+                  <i class="fa fa-user" aria-hidden="true"></i>
+                </div>
+              </span>
+            </div>
           </div>
-      
-			<div class="col-sm-6">
-        <div  id="border" style="width: 100" class="card-header">
-               <h4  class="my-0 font-weight-normal">Thông Tin Liên Hệ </h4>
-          </div>
-			<p>{{f_Email}}</p></a>
-     
-       </div>
-		</div>
-	</div>
-       {{/with}}
+         
+          
+        </form>
       </div>
     </div>
   </div>

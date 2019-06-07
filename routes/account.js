@@ -7,6 +7,7 @@ var restricted = require('../middlewares/restricted');
 var multer = require('multer');
 var router = express.Router();
 let path = require("path");
+var flash = require('express-flash');
 
 router.get('/register', (req, res, next) => {
   res.render('vwAccount/Register');
@@ -42,6 +43,11 @@ router.get('/is-available', (req, res, next) => {
 
 router.get('/login', (req, res, next) => {
   res.render('vwAccount/login', {
+    layout: false
+  });
+})
+router.get('/forgot', function(req, res) {
+  res.render('vwAccount/forgot', {
     layout: false
   });
 })

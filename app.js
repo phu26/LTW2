@@ -4,7 +4,7 @@ var hbs_sections = require('express-handlebars-sections');
 var morgan = require('morgan');
 var createError = require('http-errors');
 var numeral = require('numeral');
-
+var flash = require('express-flash');
 var app = express();
 
 app.use(morgan('dev'));
@@ -37,7 +37,7 @@ app.use(require('./middlewares/auth.mdw'));
 app.use(require('./middlewares/category.mdw'));
 
 app.use(require('./routes/home'));
-
+app.use(flash());
 
 app.use('/categories', require('./routes/categories'));
 app.use('/products', require('./routes/products'));
