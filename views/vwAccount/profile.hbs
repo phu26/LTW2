@@ -37,8 +37,29 @@
     <div class="row justify-content-center align-items-center h-100">
       <div class="col-sm-4 col-md-3">
     <h1>ProFiles</h1>
-
-       
+{{#with entity}}
+       <div  id="d"class="row" >
+		<div class="col-md-6" >
+			
+				<img class="img-fluid" src="/pic/{{Pic}}" width="150" height="120">
+		
+		</div>
+        <form action="/upload" method="POST" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="example-input-file">&nbsp;</label>
+                        <input type="file" name="file" class="form-control-file border">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+		<div  class="col-md-6">
+			
+			<div ><h3>{{f_Name}}</h3>
+			
+			<p>{{f_Email}}</p></a>
+       <small>{{f_DOB}}</small>
+		</div>
+	</div>
+       {{/with}}
       </div>
     </div>
   </div>

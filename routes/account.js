@@ -81,10 +81,29 @@ router.post('/logout', restricted, (req, res, next) => {
 
 router.get('/profile/:id', restricted, (req, res, next) => {
   id = req.params.id;
-  
-  res.render('vwAccount/profile',{
+  userModel.single(id)
+  .then(rows => {
+    account = rows[0];
+    var dob = moment(account.f_DOB, 'YYYY-MM-DD').format('DD/MM/YYYY');
 
-  });
+    var entity = account;
+    
+    entity.f_DOB = dob;
+  
+  
+  
+    
+    if (rows.length > 0) {
+      res.render('vwAccount/profile',{
+        entity
+      });
+    } else {
+      res.render('vwAccount/profile', {
+        error: true
+      });
+    }
+  }).catch(next);
+ 
 })
 
 module.exports = router;
