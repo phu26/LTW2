@@ -30,5 +30,11 @@ module.exports = {
 
   delete: id => {
     return db.delete('users', 'f_ID', id);
-  }
+  },
+  Addpic:(id,pic) => {
+    return db.load(`INSERT INTO users( Pic) VALUES ('${pic}') where f_ID = ${id}`);
+  },
+  Updatepic:(id,pic) => {
+    return db.load(`UPDATE  users SET Pic='${pic}' where f_ID = ${id}`);
+  },
 };

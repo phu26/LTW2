@@ -4,8 +4,9 @@ var moment = require('moment');
 var passport = require('passport');
 var userModel = require('../models/user.model');
 var restricted = require('../middlewares/restricted');
-
+var multer = require('multer');
 var router = express.Router();
+let path = require("path");
 
 router.get('/register', (req, res, next) => {
   res.render('vwAccount/Register');
@@ -62,10 +63,10 @@ router.post('/login', (req, res, next) => {
     req.logIn(user, err => {
       if (err)
         return next(err);
-      if(user.f_Permission == 1 )
-      return res.redirect(retUrl1);
-      if(user.f_Permission == 3)
-      return res.redirect(retUrl1);
+      if (user.f_Permission == 1)
+        return res.redirect(retUrl1);
+      if (user.f_Permission == 3)
+        return res.redirect(retUrl1);
     });
   })(req, res, next);
 })
@@ -82,28 +83,108 @@ router.post('/logout', restricted, (req, res, next) => {
 router.get('/profile/:id', restricted, (req, res, next) => {
   id = req.params.id;
   userModel.single(id)
-  .then(rows => {
-    account = rows[0];
-    var dob = moment(account.f_DOB, 'YYYY-MM-DD').format('DD/MM/YYYY');
+    .then(rows => {
+      account = rows[0];
+      var dob = moment(account.f_DOB, 'YYYY-MM-DD').format('DD/MM/YYYY');
 
-    var entity = account;
-    
-    entity.f_DOB = dob;
-  
-  
-  
-    
-    if (rows.length > 0) {
-      res.render('vwAccount/profile',{
-        entity
-      });
-    } else {
-      res.render('vwAccount/profile', {
-        error: true
-      });
-    }
-  }).catch(next);
- 
+      var entity = account;
+
+      entity.f_DOB = dob;
+
+
+
+
+      if (rows.length > 0) {
+        res.render('vwAccount/profile', {
+          entity
+        });
+      } else {
+        res.render('vwAccount/profile', {
+          error: true
+        });
+      }
+    }).catch(next);
+
 })
 
+
+// Khởi tạo biến cấu hình cho việc lưu trữ file upload
+let diskStorage = multer.diskStorage({
+  destination: (req, file, callback) => {
+    // Định nghĩa nơi file upload sẽ được lưu lại
+    callback(null, './public/pic');
+  },
+  filename: (req, file, callback) => {
+    // ở đây các bạn có thể làm bất kỳ điều gì với cái file nhé.
+    // Mình ví dụ chỉ cho phép tải lên các loại ảnh png & jpg
+    let math = ["image/png", "image/jpeg"];
+    if (math.indexOf(file.mimetype) === -1) {
+      let errorMess = `The file <strong>${file.originalname}</strong> is invalid. Only allowed to upload image jpeg or png.`;
+      return callback(errorMess, null);
+    }
+
+    // Tên của file thì mình nối thêm một cái nhãn thời gian để đảm bảo không bị trùng.
+    let filename = `${Date.now()}-LTW2-${file.originalname}`;
+    callback(null, filename);
+  }
+});
+
+// Khởi tạo middleware uploadFile với cấu hình như ở trên,
+// Bên trong hàm .single() truyền vào name của thẻ input, ở đây là "file"
+let uploadFile = multer({ storage: diskStorage }).single("file");
+
+var isPic = function (req, res, next) {
+
+  id = req.params.id;
+  userModel.single(id)
+    .then(rows => {
+      res.KT = rows[0].pic;
+
+      return next();
+
+    })
+    .catch(err => next(err));
+}
+// Route này Xử lý khi client thực hiện hành động upload file
+router.post("/profile/:id", isPic, function (req, res) {
+  id = req.params.id;
+  if (req.KT != '') {
+   
+    uploadFile(req, res, (error) => {
+      // Nếu có lỗi thì trả về lỗi cho client.
+      // Ví dụ như upload một file không phải file ảnh theo như cấu hình của mình bên trên
+      if (error) {
+        return res.send(`Error when trying to upload: ${error}`);
+      }
+      
+      userModel.Updatepic(id, req.file.filename);
+  
+      // Không có lỗi thì lại render cái file ảnh về cho client.
+      // Đồng thời file đã được lưu vào thư mục uploads
+      
+      
+     
+    });
+    res.redirect('/account/profile/'+id);
+  }
+  else {
+    uploadFile(req, res, (error) => {
+      // Nếu có lỗi thì trả về lỗi cho client.
+      // Ví dụ như upload một file không phải file ảnh theo như cấu hình của mình bên trên
+      if (error) {
+        return res.send(`Error when trying to upload: ${error}`);
+      }
+      userModel.Addpic(id, req.file.filename);
+  
+      // Không có lỗi thì lại render cái file ảnh về cho client.
+      // Đồng thời file đã được lưu vào thư mục uploads
+     
+     
+  
+    });
+   
+    res.redirect('/account/profile/'+id);
+  }
+ 
+});
 module.exports = router;
