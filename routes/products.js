@@ -15,7 +15,7 @@ router.get('/add', (req, res, next) => {
 })
 
 router.post('/add', (req, res, next) => {
-  console.log(req.body);
+  
   res.end('done');
 })
 var cmt = function (req, res, next) {
@@ -23,7 +23,7 @@ var cmt = function (req, res, next) {
   productModel.ShowCmt(req.params.id)
     .then(rows => {
       req.show = rows;
-      console.log(req.show);
+    
       return next();
 
     })
@@ -34,7 +34,7 @@ var relatee = function (req, res, next) {
   productModel.related(req.params.id)
     .then(rows => {
       res.locals.relate = rows;
-      console.log(req.show);
+      
       return next();
 
     })
@@ -76,7 +76,7 @@ router.get('/:id', [cmt, relatee], function (req, res, next) {
           }
         }
 
-        console.log(productRelate);
+    
         res.render('vwProducts/detail', {
           error: false, product, k, showcmt, productRelate
 
@@ -95,7 +95,7 @@ var b = function (req, res, next) {
   productModel.single3(req.body.username)
     .then(rows => {
       req.cmt = rows[0];
-      console.log(req.cmt);
+     
       return next();
 
     })
@@ -107,7 +107,7 @@ var cmt2 = function (req, res, next) {
   productModel.ShowCmt(req.params.id)
     .then(rows => {
       req.show2 = rows;
-      console.log(req.show2);
+     
       return next();
 
     })
@@ -115,9 +115,8 @@ var cmt2 = function (req, res, next) {
 }
 
 
-router.post('/:id', [b, cmt2], function (req, res, next) {
+router.post('/:id', [b, cmt2,relatee], function (req, res, next) {
   var id = req.params.id;
-  console.log(id);
 
   productModel.AddCmt(req.body.comment, req.cmt.f_ID, id);
 
@@ -134,11 +133,11 @@ router.post('/:id', [b, cmt2], function (req, res, next) {
           }
         }
         var showcmt = req.show2;
+        
+       
 
-        res.render('vwProducts/detail', {
-          error: false, k, product, showcmt
-
-        });
+    
+        res.redirect('/products/'+id);
       } else {
         res.render('vwProducts/detail', {
           error: true

@@ -79,8 +79,12 @@ router.post('/logout', restricted, (req, res, next) => {
   res.redirect('/account/login');
 })
 
-router.get('/profile', restricted, (req, res, next) => {
-  res.end('PROFILE');
+router.get('/profile/:id', restricted, (req, res, next) => {
+  id = req.params.id;
+  
+  res.render('vwAccount/profile',{
+
+  });
 })
 
 module.exports = router;
