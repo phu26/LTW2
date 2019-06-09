@@ -5,7 +5,17 @@ var morgan = require('morgan');
 var createError = require('http-errors');
 var numeral = require('numeral');
 var flash = require('express-flash');
+var mysql = require('mysql');
 var app = express();  
+var connection = mysql.createConnection({
+  host     : 'localhost',
+  user     : 'root',
+  password : '',
+  database : 'qlbh'
+});
+
+connection.connect();
+
 
 app.use(morgan('dev'));
 app.engine('hbs', exphbs({
@@ -42,20 +52,21 @@ app.use(require('./routes/home'));
 app.use('/categories', require('./routes/categories'));
 app.use('/products', require('./routes/products'));
 app.use('/account', require('./routes/account'));
+
+
+
 app.get('/upload',(req,res) =>{
   res.render('upload');
 })
-app.get('/', (req, res) => {
- 
-  res.render('home');
-})
-  connection.query('SELECT * from products where ProName like "%'+req.body.typehead+'%"', function(err, rows, fields) {
-  if (err) throw err;
-   var data= rows[0];
-   res.redirect('/products/'+data.ProName);
-    
-});
 
+ 
+
+  
+ 
+  
+
+
+  
 app.get('/error', (req, res) => {
   res.render('error', { layout: false });
 })
