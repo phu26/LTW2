@@ -49,6 +49,12 @@ app.get('/', (req, res) => {
  
   res.render('home');
 })
+  connection.query('SELECT * from products where ProName like "%'+req.body.typehead+'%"', function(err, rows, fields) {
+  if (err) throw err;
+   var data= rows[0];
+   res.redirect('/products/'+data.ProName);
+    
+});
 
 app.get('/error', (req, res) => {
   res.render('error', { layout: false });
