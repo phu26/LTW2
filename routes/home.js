@@ -1,7 +1,9 @@
 var express = require ('express');
 var router = express.Router();
 var catogoryModel = require('../models/home.model');
+
 var moment = require('moment');
+
 
 var top3host = function(req,res,next){
     catogoryModel.all()
