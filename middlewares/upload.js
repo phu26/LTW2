@@ -9,7 +9,7 @@ module.exports = function (app) {
       cb(null, file.originalname)
     }
   });
-
+ 
   app.post('/upload', (req, res, next) => {
     multer({ storage }).array('fuMain')(req, res, err => {
       if (err) {

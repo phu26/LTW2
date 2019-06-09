@@ -53,9 +53,14 @@ app.use('/categories', require('./routes/categories'));
 app.use('/products', require('./routes/products'));
 app.use('/account', require('./routes/account'));
 
+
 app.post('/search',function(req,res){
    
   console.log(req.headers.referer);
+app.get('/upload',(req,res) =>{
+  res.render('upload');
+})
+
  
   connection.query('SELECT * from products where ProName like "%'+req.body.typehead+'%"', function(err, rows, fields) {
       if (err) throw err;

@@ -12,7 +12,6 @@ var crypto = require('crypto');
 router.get('/register', (req, res, next) => {
   res.render('vwAccount/Register');
 })
-
 router.post('/register', (req, res, next) => {
   var saltRounds = 10;
   var hash = bcrypt.hashSync(req.body.password, saltRounds);
