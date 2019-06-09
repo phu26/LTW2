@@ -30,5 +30,18 @@ module.exports = {
 
   delete: id => {
     return db.delete('users', 'f_ID', id);
-  }
+  },
+  Addpic:(id,pic) => {
+    return db.load(`INSERT INTO users( Pic) VALUES ('${pic}') where f_ID = ${id}`);
+  },
+  Updatepic:(id,pic) => {
+    return db.load(`UPDATE  users SET Pic='${pic}' where f_ID = ${id}`);
+  },
+  
+  findOne: mail => {
+    return db.load(`select * from users where f_Email = '${mail}'`);
+  },
+  updatePass: (id ,newP)=> {
+    return db.load(`UPDATE users SET f_Password = '${newP}' where f_ID = ${id}`);
+  },
 };

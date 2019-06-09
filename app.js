@@ -4,8 +4,8 @@ var hbs_sections = require('express-handlebars-sections');
 var morgan = require('morgan');
 var createError = require('http-errors');
 var numeral = require('numeral');
-
-var app = express();
+var flash = require('express-flash');
+var app = express();  
 
 app.use(morgan('dev'));
 app.engine('hbs', exphbs({
@@ -26,7 +26,7 @@ app.use(express.urlencoded({
 }));
 // parse application/json
 app.use(express.json());
-
+app.use(flash());
 app.use(express.static('public'));
 
 require('./middlewares/session')(app);

@@ -7,13 +7,21 @@
     <meta name="generator" content="Jekyll v3.8.5">
    
     <title>Báo Điện Tử TH16-NEWS</title>
-    <link rel="icon" href="https://www.google.com/url?sa=i&rct=j&q=&esrc=s&source=images&cd=&ved=2ahUKEwjp3J_jqozhAhUOwosBHbUZAFcQjRx6BAgBEAU&url=https%3A%2F%2Fappadvice.com%2Fapp%2Fhurom-juice%2F1383211942&psig=AOvVaw1xAAVgZdFaUq7M-3Ng8s82&ust=1553020614980673">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     
 <link rel="stylesheet" href="https://getbootstrap.com/docs/4.3/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <!-- Bootstrap core CSS -->
  
   
      <style>
+       .dropdown:hover>.dropdown-menu {
+  display: block;
+}
+
+.dropdown>.dropdown-toggle:active {
+  /*Without this, clicking will make it sticky*/
+    pointer-events: none;
+}
       .bd-placeholder-img {
         font-size: 1.125rem;
         text-anchor: middle;
@@ -50,13 +58,24 @@
       <li class="nav-item">
         <a class="nav-link" href="/">TRANG CHỦ <span class="sr-only">(current)</span></a>
       </li>
+      
+
+
         {{#each lcCategories}}
          <li class="nav-item">
-        <a class="nav-link" href="/categories/{{CatID}}/products">{{CatName}}<span class="sr-only">(current)</span>
-   
-              {{#if num_of_products}}
+<div class="dropdown">
+  
+      
+        <a  class="btn" style="color:bisque" href="/categories/{{CatID}}/products">{{CatName}}<span class="sr-only">(current)</span>
+          {{#if num_of_products}}
               <span class="badge badge-danger float-right">{{num_of_products}}</span>
               {{/if}}</a>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    <a class="dropdown-item" href="#">Action</a>
+    
+  </div>
+            
+              </div>
       </li> 
      {{/each}}
       
@@ -73,14 +92,18 @@
             Hi, <strong>{{authUser.f_Name}}</strong>
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="/account/profile">
+            <a class="dropdown-item" href="/account/profile/{{authUser.f_ID}}">
               <i class="fa fa-user" aria-hidden="true"></i>
               Profile
             </a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="javascript: $('#frmLogout').submit();">
+          
+            <a class="dropdown-item" href="/account/logout">
               <i class="fa fa-sign-out" aria-hidden="true"></i>
               Sign Out
+            </a>
+               <a class="dropdown-item" href="/account/ChPass/{{authUser.f_ID}}">
+              <i class="fa fa-key" aria-hidden="true"></i>
+              Change Password
             </a>
           </div>
         </li>
