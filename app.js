@@ -54,20 +54,12 @@ app.use('/products', require('./routes/products'));
 app.use('/account', require('./routes/account'));
 
 
-app.post('/search',function(req,res){
-   
-  console.log(req.headers.referer);
-
-
  
-  connection.query('SELECT * from products where ProName like "%'+req.body.typehead+'%"', function(err, rows, fields) {
-      if (err) throw err;
-       var data= rows[0];
-       res.redirect('/products/'+data.ProName);
-        
-    });
-  });
+
   
+ 
+  
+
 
   
 app.get('/error', (req, res) => {
