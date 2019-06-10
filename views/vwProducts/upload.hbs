@@ -1,0 +1,36 @@
+ <style>
+   .ok{
+     width: 100%;
+     height: 100%;
+     
+
+   }
+ </style>
+ <head>
+    <meta charset="utf-8">
+    <title>CKEditor 5 - Classic editor</title>
+    <script src="https://cdn.ckeditor.com/ckeditor5/12.2.0/classic/ckeditor.js"></script>
+</head>
+ {{#if isAuthenticated}}
+
+      {{#if writer}}
+    <form 
+     method="post">
+        <textarea name="content" id="editor">
+            &lt;p&gt;This is some sample content.&lt;/p&gt;
+        </textarea>
+        <p><input type="submit" value="Submit"></p>
+    </form>
+    <script>
+        ClassicEditor
+            .create( document.querySelector( '#editor' ) )
+            .catch( error => {
+                console.error( error );
+            } );
+    </script>
+
+
+      {{else}}
+      khong phai writer   
+      {{/if}}
+      {{/if}}

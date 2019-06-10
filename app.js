@@ -53,9 +53,7 @@ app.use('/categories', require('./routes/categories'));
 app.use('/products', require('./routes/products'));
 app.use('/account', require('./routes/account'));
 
-app.get('/upload',(req,res) =>{
-  res.render('upload');
-})
+
 app.post('/search',function(req,res){
    
   console.log(req.headers.referer);

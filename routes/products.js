@@ -146,5 +146,12 @@ router.post('/:id', [b, cmt2,relatee], function (req, res, next) {
     }).catch(next);
 
 })
+router.get('/',(req,res) =>{
+  res.render('vwProducts/upload');
+})
+router.post('/',(req,res) =>{
+  console.log(req.body.content);
+  res.end(req.body.content);
+})
 
 module.exports = router;
