@@ -6,22 +6,35 @@
 
    }
  </style>
+ <script src="https://cdn.ckeditor.com/ckeditor5/12.0.0/decoupled-document/ckeditor.js"></script>
  {{#if isAuthenticated}}
       {{#if writer}}
-     <div id="editor">
-    <p>This is the editor content.</p>
-</div>
-<script src="https://cdn.ckeditor.com/ckeditor5/12.1.0/classic/ckeditor.js"></script>
-<script>
-    ClassicEditor
-        .create( document.querySelector( '#editor' ) )
-        .then( editor => {
-            window.editor = editor;
+      
+
+ <div id="toolbar-container"></div>
+<div id="editor">
+        <p>This is the initial editor content.</p>
+    </div>
+ 
+        <script>
+        
+    DecoupledEditor
+        .create( document.querySelector( '#editor' ),{
+        cloudServices: {
+            tokenUrl: 'https://example.com/cs-token-endpoint',
+            uploadUrl: 'https://your-organization-id.cke-cs.com/easyimage/upload/'
+        }
         } )
-        .catch( err => {
-            console.error( err.stack );
+        .then( editor => {
+            const toolbarContainer = document.querySelector( '#toolbar-container' );
+
+            toolbarContainer.appendChild( editor.ui.view.toolbar.element );
+        } )
+        .catch( error => {
+            console.error( error );
         } );
-</script> 
+    </script>
+
       {{else}}
       khong phai writer   
       {{/if}}
