@@ -26,5 +26,5 @@ CKEDITOR.editorConfig = function( config ) {
 	
 
 	config.extraPlugins='youtube,imagebrowser';
-	config.removeButtons = 'Underline,Subscript,Superscript';
+	config.removeButtons = 'Subscript,Superscript,Strikethrough';
 };
