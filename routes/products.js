@@ -167,6 +167,10 @@ router.get('/',(req,res) =>{
 })
 router.post('/',(req,res) =>{
   console.log(req.body.content);
+  var entity = require.body;
+  productModel.add(entity).then(id =>{
+    res.redirect('/')
+  })
   res.end(req.body.content);
 })
 router.get('/files', function (req, res) {
