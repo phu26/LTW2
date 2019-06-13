@@ -5,8 +5,63 @@
 
 
   }
-</style>
 
+  textarea {
+    resize: horizontal;
+  }
+</style>
+{{#section 'js'}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+ <script>
+   $(function() {
+   $('#uploadForm').validate({
+      onkeyup: false,
+      rules: {
+        hinhdaidien: {
+          required: true,
+        },
+        tieude: {
+          required: true,
+          minlength: 10
+        },
+        baiviet: {
+          required: true,
+          minlength: 10
+        },
+        tags: {
+          required: true,
+        },
+      },
+      messages: {
+        hinhdaidien: {
+          required: 'Vui lòng chọn hình đại diện',
+        },
+        tieude: {
+          required: 'Vui lòng nhập tiêu đề',
+          minlength: 'Tiêu đề ít nhất 40 ký tự'
+        },
+        baiviet: {
+          required: 'Vui lòng nhập bài viết',
+          minlength: 'Bài viết ít nhất 300 ký tự'
+        },
+        tags: {
+          required: 'Vui lòng nhập các tag',
+        },
+      },
+      errorElement: 'small',
+      errorClass: 'help-block text-danger',
+      validClass: 'is-valid',
+      highlight: function (e) {
+        $(e).removeClass('is-valid').addClass('is-invalid');
+      },
+      unhighlight: function (e) {
+        $(e).removeClass('is-invalid').addClass('is-valid');
+      },
+    });
+  })
+</script>
+{{/section}}
 <head>
   <meta charset="utf-8">
   <title>CKEditor 5 - Classic editor</title>
@@ -19,41 +74,60 @@
 {{#if isAuthenticated}}
 
 {{#if writer}}
-<form method="post">
-  <div class="form-group">
-    <label for="danhmuc">Chọn danh mục :</label>
-    <select class="form-control" id="danhmuc">
-      {{#each lcCategories}}
-      <option>{{CatName}}</option>
-      {{/each}}
-    </select>
-  </div>
-  <div class = "form-group">
-    <label for="editor1">Chọn hình đại diện bài viết :</label>
-    <textarea name="content" placeholder="Chèn hình vào đây" id="editor1">
-            
+<div class="card">
+  <div class="card-header"><h1>Upload bài viết</h1></div>
+  <div class="card-body">
+    <form method="post" id="uploadForm">
+      <div class="form-group">
+        <label class="col-form-label-lg" for="danhmuc">Chọn danh mục :</label>
+        <select class="form-control-lg" name="danhmuc">
+          {{#each lcCategories}}
+          <option>{{CatName}}</option>
+          {{/each}}
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="col-form-label-lg" for="editor1">Chọn hình đại diện bài viết :</label>
+        <textarea rows="4" name="hinhdaidien" cols="500" name="content" placeholder="Chèn hình vào đây" id="editor1">
+
         </textarea>
-  </div>
-   <div class="form-group">
-    <div class="input-group">
-  <div class="input-group-prepend">
-    <span class="input-group-text">Nhập tiêu đề:</span>
-  </div>
-  <textarea class="form-control" aria-setsize="30" id="Title" aria-label="With textarea"></textarea>
-</div>
-  </div>
-  <div>
-    <label for="editor1">Nhập bài viết :</label>
-  <textarea name="content" id="editor2">
-            
+      </div>
+      <div class="form-group">
+        <div class="input-group input-group-lg">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Nhập tiêu đề:</span>
+          </div>
+          <textarea class="form-control" name="tieude" maxlength="150" placeholder="Tiêu đề" rows="1" name="Title"
+            aria-label="With textarea"></textarea>
+        </div>
+      </div>
+      <div>
+        <label class="form-control-lg" for="editor1">Nhập bài viết :</label>
+        <textarea name="content" name="baiviet" id="editor2">
+
         </textarea></div>
-  
-  <p><input type="submit" class="btn btn-primary" value="Submit"></p>
-</form>
+<div class="form-group">
+        <div class="input-group input-group-lg">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Nhập các Tag :</span>
+          </div>
+          <textarea class="form-control" maxlength="150" placeholder="#tag1,#tag2,#tag...." rows="1" name="tags"
+            aria-label="With textarea"></textarea>
+        </div>
+        <div class="card-footer text-right">
+      <button type="submit" class="btn btn-lg btn-primary btn-block">
+        Upload
+        <script>document.write(Date())</script>
+      </button>
+    </div>
+      
+    </form>
+  </div>
+</div>
 <script type="text/javascript">
 
-  CKEDITOR.replace('editor1',{
-    "removeButtons" :'youtube,Source,Save,NewPage,Preview,Print,Templates,Cut,Copy,Paste,PasteText,PasteFromWord,Redo,Undo,Find,Replace,SelectAll,Scayt,Form,Radio,TextField,Textarea,Select,Button,ImageButton,HiddenField,About,Maximize,ShowBlocks,BGColor,TextColor,Styles,Format,Font,FontSize,Iframe,PageBreak,SpecialChar,Smiley,HorizontalRule,Table,Flash,Unlink,Link,Anchor,Language,BidiRtl,BidiLtr,JustifyLeft,JustifyCenter,JustifyRight,JustifyBlock,CreateDiv,Blockquote,Outdent,Indent,BulletedList,NumberedList,CopyFormatting,Bold,Italic,RemoveFormat,Underline,Strike,Subscript,Superscript,Checkbox',
+  CKEDITOR.replace('editor1', {
+    "removeButtons": 'youtube,Source,Save,NewPage,Preview,Print,Templates,Cut,Copy,Paste,PasteText,PasteFromWord,Redo,Undo,Find,Replace,SelectAll,Scayt,Form,Radio,TextField,Textarea,Select,Button,ImageButton,HiddenField,About,Maximize,ShowBlocks,BGColor,TextColor,Styles,Format,Font,FontSize,Iframe,PageBreak,SpecialChar,Smiley,HorizontalRule,Table,Flash,Unlink,Link,Anchor,Language,BidiRtl,BidiLtr,JustifyLeft,JustifyCenter,JustifyRight,JustifyBlock,CreateDiv,Blockquote,Outdent,Indent,BulletedList,NumberedList,CopyFormatting,Bold,Italic,RemoveFormat,Underline,Strike,Subscript,Superscript,Checkbox',
     "imageBrowser_listUrl": "/products/files",
   });
 
