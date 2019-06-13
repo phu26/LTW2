@@ -1,9 +1,19 @@
 var express = require ('express');
 var router = express.Router();
 var catogoryModel = require('../models/home.model');
-
+var async = require("async");
 var moment = require('moment');
+var mysql = require('mysql');
 
+var createConnection = () => mysql.createConnection({
+    host:'localhost',
+    
+    user:'root',
+    password:'',
+    database:'qlbh',
+
+});
+var conn= createConnection();
 
 var top3host = function(req,res,next){
     catogoryModel.all()
@@ -38,6 +48,9 @@ var b = function(req,res,next){
      })
      .catch(err => next(err));
 }
+
+   
+ 
 router.get('/',[top3host,top10host,b],function(req,res,next){
      
      var dob = moment(req.H1.CreatedAt, 'YYYY-MM-DD').format('DD/MM/YYYY');
@@ -55,15 +68,45 @@ router.get('/',[top3host,top10host,b],function(req,res,next){
      entity3.CreatedAt = dob3;
      entity4.CreatedAt = dob4;
      entity5.CreatedAt = dob5;
-      return  res.render('home',{
-           Host: req.Host,
-           H1:entity1,
-           H2:entity2,
-           H2:entity3,
-           Host2: entity4,
-           
-           New : entity5,
+     function getCategoryTree(callback) {
+          conn.query("SELECT * FROM `categories`", function(error, results, fields) {
+            async.map(results, getCategory, callback);
+          });
+        }
+     function getCategory(resultItem, callback) {
+          var supcat_id = resultItem.CatID;
+          var cat_name = resultItem.CatName;
+          conn.query("SELECT * FROM `subcategories` WHERE `CatID` = " + supcat_id, function(error, results, fields) {
+               var subcategories = results.map(getSubCategory);
+               callback(error, { cat_id: supcat_id, cat_name: cat_name, subcats: subcategories });
+             });
+        }
+     
+        
+        function getSubCategory(resultItem) {
+          return {
+            subcat_id: resultItem.subID,
+            subcat_name: resultItem.subName
+          };
+        }
+        
+        
+        
+        getCategoryTree(function(err,result ) {
+        
+         
+          return  res.render('home',{
+               Host: req.Host,
+               H1:entity1,
+               H2:entity2,
+               H2:entity3,
+               Host2: entity4,
+               OK : result,
+               New : entity5,
+            });
+          
         });
+   
       
    
   
