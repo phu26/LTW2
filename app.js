@@ -44,7 +44,7 @@ require('./middlewares/passport')(app);
 require('./middlewares/upload')(app);
 
 app.use(require('./middlewares/auth.mdw'));
-app.use(require('./middlewares/category.mdw'));
+
 
 app.use(require('./routes/home'));
 

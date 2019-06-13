@@ -64,18 +64,20 @@
       
 
 
-        {{#each lcCategories}}
+        {{#each OK}}
          <li class="nav-item">
 <div class="dropdown">
   
       
-        <a  class="btn" style="color:bisque" href="/categories/{{CatID}}/products">{{CatName}}<span class="sr-only">(current)</span>
-          {{#if num_of_products}}
-              <span class="badge badge-danger float-right">{{num_of_products}}</span>
-              {{/if}}</a>
+        <a  class="btn" style="color:bisque" href="/categories/{{cat_id}}/products">{{cat_name}}<span class="sr-only">(current)</span>
+          {{#each subcats}}
+              <span class="badge badge-danger float-right">{{subcat_name}}</span>
+              {{/each}}</a>
+
     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-    <a class="dropdown-item" href="#">Action</a>
-    
+        {{#each subcats}}
+    <a class="dropdown-item" href="#">{{subcat_name}}</a>
+    {{/each}}</a>
   </div>
             
               </div>

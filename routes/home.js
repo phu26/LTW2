@@ -48,6 +48,9 @@ var b = function(req,res,next){
      })
      .catch(err => next(err));
 }
+
+   
+ 
 router.get('/',[top3host,top10host,b],function(req,res,next){
      
      var dob = moment(req.H1.CreatedAt, 'YYYY-MM-DD').format('DD/MM/YYYY');
@@ -78,7 +81,7 @@ router.get('/',[top3host,top10host,b],function(req,res,next){
                callback(error, { cat_id: supcat_id, cat_name: cat_name, subcats: subcategories });
              });
         }
-   
+     
         
         function getSubCategory(resultItem) {
           return {
@@ -87,19 +90,23 @@ router.get('/',[top3host,top10host,b],function(req,res,next){
           };
         }
         
-        getCategoryTree(function(err, result) {
-          console.log(JSON.stringify(result, null, "  "));
+        
+        
+        getCategoryTree(function(err,result ) {
+        
+         
+          return  res.render('home',{
+               Host: req.Host,
+               H1:entity1,
+               H2:entity2,
+               H2:entity3,
+               Host2: entity4,
+               OK : result,
+               New : entity5,
+            });
+          
         });
-    
-      return  res.render('home',{
-           Host: req.Host,
-           H1:entity1,
-           H2:entity2,
-           H2:entity3,
-           Host2: entity4,
-           
-           New : entity5,
-        });
+   
       
    
   
