@@ -166,12 +166,16 @@ router.get('/',(req,res) =>{
   res.render('vwProducts/upload');
 })
 router.post('/',(req,res) =>{
-  console.log(req.body.content);
-  var entity = require.body;
+  console.log(req.body.FullDes);
+  var entity = req.body;
+  entity.Click=0;
+  entity.subCatID=0;
+  entity.CreatedAt = Date.now();
+  
+  delete entity.tags;
   productModel.add(entity).then(id =>{
-    res.redirect('/')
+    res.redirect('/products')
   })
-  res.end(req.body.content);
 })
 router.get('/files', function (req, res) {
   const images = fs.readdirSync('public/pic')

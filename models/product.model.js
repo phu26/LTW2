@@ -17,6 +17,7 @@ module.exports = {
             
       return db.load(`select * from pic where ProID  = ${id}`);
   },
+
     add: entity => {
         return db.add('products',entity);
     },
