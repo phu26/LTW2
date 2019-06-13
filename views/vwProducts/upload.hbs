@@ -32,6 +32,9 @@
         tags: {
           required: true,
         },
+        TinyDes: {
+          required: true,
+        }
       },
       messages: {
         hinhdaidien: {
@@ -101,6 +104,15 @@
             aria-label="With textarea"></textarea>
         </div>
       </div>
+      <div class="form-group">
+        <div class="input-group input-group-lg">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Mô tả:</span>
+          </div>
+          <textarea class="form-control" name="tieude" maxlength="150" placeholder="Mô tả ngắn gọn" rows="2" name="TinyDes"
+            aria-label="With textarea"></textarea>
+        </div>
+      </div>
       <div>
         <label class="form-control-lg" for="editor1">Nhập bài viết :</label>
         <textarea name="content" name="baiviet" id="editor2">
@@ -117,7 +129,6 @@
         <div class="card-footer text-right">
       <button type="submit" class="btn btn-lg btn-primary btn-block">
         Upload
-        <script>document.write(Date())</script>
       </button>
     </div>
       
