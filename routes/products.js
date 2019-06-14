@@ -8,6 +8,7 @@ var path = require('path')
 var crypto = require('crypto');
 var bodyParser = require('body-parser');
 var multer  =   require('multer');
+var moment = require('moment');
 
 var storage = multer.diskStorage({
   destination: 'public/pic/',
@@ -170,7 +171,7 @@ router.post('/',(req,res) =>{
   var entity = req.body;
   entity.Click=0;
   entity.subCatID=0;
-  entity.CreatedAt = Date.now();
+  entity.CreatedAt= moment().format('YYYY-MM-DD HH:mm:ss');
   
   delete entity.tags;
   productModel.add(entity).then(id =>{

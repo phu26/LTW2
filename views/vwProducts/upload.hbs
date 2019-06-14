@@ -90,6 +90,14 @@
         </select>
       </div>
       <div class="form-group">
+        <label class="col-form-label-lg" for="CatID">Chọn danh mục :</label>
+        <select class="form-control-lg" name="CatID">
+          {{#each lcCategories}}
+          <option value="{{CatID}}">{{CatName}}</option>
+          {{/each}}
+        </select>
+      </div>
+      <div class="form-group">
         <label class="col-form-label-lg" for="editor1">Chọn hình đại diện bài viết :</label>
         <textarea rows="4" name="pic" cols="500" name="pic" placeholder="Chèn hình vào đây" id="editor1">
 
