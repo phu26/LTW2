@@ -46,7 +46,7 @@ function getCategory(resultItem, callback) {
     };
   }
   
-  //
+  
 
   module.exports = (req, res, next) => getCategoryTree(function(err,result ){
 
