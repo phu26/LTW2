@@ -2,7 +2,6 @@ var LRU = require('lru-cache');
 var categoryModel = require('../models/category.model');
 var mysql = require('mysql');
 var async = require("async");
-
 var createConnection = () => mysql.createConnection({
     host:'localhost',
     
@@ -67,7 +66,7 @@ function getCategory(resultItem, callback) {
     res.locals.lcCategories = data;
     next();
   }
-  console.log(res.locals);
+  //console.log(res.locals.lcCategories);
   
   });
 

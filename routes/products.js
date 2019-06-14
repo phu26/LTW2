@@ -1,5 +1,6 @@
 var express = require('express');
 var productModel = require('../models/product.model');
+var categoryModel = require('../models/category.model');
 var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
@@ -170,7 +171,6 @@ router.post('/',(req,res) =>{
   console.log(req.body.FullDes);
   var entity = req.body;
   entity.Click=0;
-  entity.subCatID=0;
   entity.CreatedAt= moment().format('YYYY-MM-DD HH:mm:ss');
   
   delete entity.tags;

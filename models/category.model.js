@@ -4,7 +4,9 @@ module.exports = {
   all: () => {
     return db.load('select * from categories');
   },
-
+  subcat: id  => {
+    return db.load(`select * from subcategories where subid= ${id}`);
+  },
   allWithDetails: () => {
     return db.load(`
     select c.*, count(p.ProID) as num_of_products
@@ -17,7 +19,9 @@ module.exports = {
   single: id => {
     return db.load(`select * from categories where CatID = ${id}`);
   },
-
+  singleEmpty: id => {
+    return db.load(`select c.* from categories c, products p where c.CatID = p.CatID and c.CatID=${id} group by CatID,CatName having count(p.ProID)=0`);
+  },
   /**
    * @param {*} entity { CatName: ... }
    */
