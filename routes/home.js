@@ -73,6 +73,10 @@ router.get('/',[top3host,top10host,b],function(req,res,next){
             async.map(results, getCategory, callback);
           });
         }
+       /* select c.*, count(p.ProID) as num_of_products
+        from subcategories c left join products p on c.subID = p.CatID 
+        and p.TinyDes!='' and c.CatID = 1
+        group by c.subID, c.subName*/
      function getCategory(resultItem, callback) {
           var supcat_id = resultItem.CatID;
           var cat_name = resultItem.CatName;
@@ -92,7 +96,7 @@ router.get('/',[top3host,top10host,b],function(req,res,next){
         
         
         
-        getCategoryTree(function(err,result ) {
+        
         
          
           return  res.render('home',{
@@ -101,12 +105,11 @@ router.get('/',[top3host,top10host,b],function(req,res,next){
                H2:entity2,
                H2:entity3,
                Host2: entity4,
-               OK : result,
+               
                New : entity5,
             });
           
-        });
-   
+      
       
    
   
