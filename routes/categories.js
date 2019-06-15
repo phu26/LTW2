@@ -34,16 +34,27 @@ router.get('/edit/:id', (req, res, next) => {
   categoryModel.single(id)
     .then(rows => {
       if (rows.length > 0) {
-        res.render('vwCategories/edit', {
-          error: false,
-          category: rows[0]
-        });
+        res.cat=rows[0];
+        categoryModel.subCatbyCat(res.cat.CatID).then(rows2 =>
+          {
+            res.sub = rows2;
+            console.log(res.sub);
+            if(rows2.length>0)
+            {
+              res.render('vwCategories/edit', {
+                error: false,
+                category: res.cat,
+                subcat: res.sub,
+              }).catch(next);
+            }
+          }
+        )
       } else {
         res.render('vwCategories/edit', {
           error: true
         });
       }
-    }).catch(next);
+    })
 })
 
 router.post('/update', (req, res, next) => {

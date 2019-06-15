@@ -33,7 +33,21 @@
         <i class="fa fa-check" aria-hidden="true"></i>
         Save
       </button>
-      {{/unless}}
     </div>
+    {{/unless}}
+    {{#unless this.error}}
+
+    <div class="card-body">
+      <div class="form-group">
+        <label for="txtsubCatName">Sub Category</label>
+        {{#each subcat}}
+        <label class="increase" for="txtsubCatName"></label>
+        <input type="text" class="form-control" id="txtsubCatName" name="CatName" value="{{subName}}">
+        {{/each}}
+      </div>
+    </div>
+    {{/unless}}
+
+  </div>
   </div>
 </form>

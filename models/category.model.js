@@ -22,6 +22,10 @@ module.exports = {
   singleEmpty: id => {
     return db.load(`select c.* from categories c, products p where c.CatID = p.CatID and c.CatID=${id} group by CatID,CatName having count(p.ProID)=0`);
   },
+  subCatbyCat: id => {
+    return db.load(`SELECT * FROM subcategories WHERE CatID= ${id}`);
+  },
+   
   /**
    * @param {*} entity { CatName: ... }
    */

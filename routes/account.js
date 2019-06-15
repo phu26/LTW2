@@ -20,7 +20,7 @@ router.post('/register', (req, res, next) => {
   var entity = req.body;
   entity.f_Password = hash;
   entity.f_DOB = dob;
-  entity.f_Permission = 0;
+  entity.f_Permission = 1;
 
   delete entity.password;
   delete entity.confirm;
@@ -214,9 +214,6 @@ router.post('/login', (req, res, next) => {
     req.logIn(user, err => {
       if (err)
         return next(err);
-      if (user.f_Permission == 1)
-        return res.redirect(retUrl1);
-      if (user.f_Permission == 3)
         return res.redirect(retUrl1);
     });
   })(req, res, next);

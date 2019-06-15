@@ -66,7 +66,8 @@ function getCategory(resultItem, callback) {
     res.locals.lcCategories = data;
     next();
   }
-  //console.log(res.locals.lcCategories);
+  //
+console.log(res.locals.lcCategories);
   
   });
 
