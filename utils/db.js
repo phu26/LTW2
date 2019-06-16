@@ -114,18 +114,6 @@ module.exports = {
       //  });
   //  },
      
-    update: (tableName, idField, entity, id, fn) =>{
-        var connection = createConnection();
-        var sql = 'update ${tableName} set ? where ${idField} = ?';
-        connection.connect();
-        connection.query(sql, [entity, id], (error, results, fields) => {
-            if(error){
-                console.log(error.sqlMessage);
-            }else{
-                fn(results.changedRows);
-            }
-            connection.end();
-        });
-    }
+    
 };
 

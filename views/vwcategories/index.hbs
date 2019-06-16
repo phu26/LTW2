@@ -1,38 +1,46 @@
- <div class="card">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<div class="card">
   <div class="card-header">
-      <h5>  Category</h5>
-  
+    <h5> Category</h5>
+
   </div>
-  <table class="table table-hover">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Name</th>
-      <th scope="col" class="text-right">
-        <a class="btn btn-outline-success btn-sm" href="/categories/add" role="button" title="Add" >
+  <table name="tbCat" class="table table-hover table-dark table-striped">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Sub Categories</th>
+        <th scope="col" class="text-right">
+          <a class="btn btn-outline-success btn-sm" href="/categories/add" role="button" title="Add">
             <i class="fa fa-plus" aria-hidden="true"></i>
             Add Category
-        </a>
-      </th>
-     
-    </tr>
-  </thead>
-  <tbody>
-        {{#each this.categories}}
-        <tr>
-      <th scope="row">{{CatID}}</th>
-      <td>{{CatName}}</td>
-      <td class="text-right">
-          <a class="btn btn-primary btn-sm" href="/categories/edit/{{CatID}}" role="button" title="Edit">
-              <i class="fa fa-pencil" aria-hidden="true"></i>
           </a>
-      </td>
-   
-    </tr>
-        {{/each}}
-    
- 
-   
-  </tbody>
-</table>
+        </th>
+
+      </tr>
+      });
+    </thead>
+    <tbody>
+      {{#each lcCategories}}
+      <tr class='clickable-row' data-href="/categories/edit/{{cat_id}}">
+        <th scope="row">{{cat_id}}</th>
+        <td>{{cat_name}}</td>
+        <td>{{#each subcats}}{{subcat_name}}, {{/each}}</td>
+        <td class="text-right">
+          <a class="btn btn-primary btn-sm" href="/categories/edit/{{cat_id}}" role="button" title="Edit">
+            <i class="fa fa-pencil" aria-hidden="true"></i>
+          </a>
+          <a class="btn btn-success btn-sm" href="/categories/edit/{{cat_id}}" role="button" title="Add Sub Category">
+            <i class="fa fa-plus" aria-hidden="true"></i>
+          </a>
+        </td>
+      <script>
+        $("#tbCat").on('click-row.bs.table', function (e, row, $element) {
+    window.location = $element.data('href');});
+      </script>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
 </div>
