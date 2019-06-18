@@ -80,7 +80,7 @@
 
               <div class="dropdown-menu">
                 {{#each subcats}}
-                <a class="dropdown-item" href="/categories/{{subcat_id}}">{{subcat_name}}
+                <a class="dropdown-item" href="/categories/view/{{subcat_id}}">{{subcat_name}}
                  </a>
                  
             </a>
@@ -186,7 +186,7 @@
       </div>
     </div>
     {{/if}}
-    {{#if administrator}}
+    {{#if admin}}
     <div class="dropdown show">
       <a class="btn btn-success dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
         aria-haspopup="true" aria-expanded="false">
@@ -194,9 +194,9 @@
       </a>
 
       <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
-        <a class="dropdown-item" href="#">Quản lý chuyên mục</a>
+        <a class="dropdown-item" href="/categories">Quản lý chuyên mục</a>
         <a class="dropdown-item" href="#">Quản lý nhãn</a>
-        <a class="dropdown-item" href="#">Quản lý bài viết</a>
+        <a class="dropdown-item" href="/Newsmt">Quản lý bài viết</a>
         <a class="dropdown-item" href="#">Quản lý danh sách người dùng</a>
       </div>
     </div>
