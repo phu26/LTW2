@@ -36,7 +36,7 @@ app.use(express.urlencoded({
   extended: true
 }));
 // parse application/json
-app.use(express.json());
+app.use(express.json({limit: '100mb'}));
 app.use(flash());
 app.use(express.static('public'));
 

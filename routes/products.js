@@ -168,15 +168,89 @@ router.get('/',(req,res) =>{
   res.render('vwProducts/upload');
 })
 router.post('/',(req,res) =>{
-  console.log(req.body.FullDes);
-  var entity = req.body;
+
+
+ var entity = new Object;
+ entity.CatID = req.body.CatID; 
+ if(req.body.subCatID != null)
+ entity.subCatID = req.body.subCatID;
+ else
+ entity.subCatID = 0;
+ entity.pic= req.body.pic;
+ var xx= entity.pic.split(" ")[2];
+ var yy = xx.split("=")[1];
+ var av = (yy.slice(1,yy.length-1));
+ entity.pic = av;
+ 
+ entity.ProName = req.body.ProName; 
+ entity.TinyDes = req.body.TinyDes; 
+ entity.FullDes = req.body.FullDes; 
+ 
   entity.Click=0;
   entity.CreatedAt= moment().format('YYYY-MM-DD HH:mm:ss');
-  
-  delete entity.tags;
-  productModel.add(entity).then(id =>{
-    res.redirect('/products')
+  var tagg = req.body.tags;
+  var tag  = tagg.split(",");
+
+ 
+  productModel.add(entity);
+  productModel.IDsingle(req.body.ProName)
+  .then(rows => {
+    res.iddd = rows[0];
+    res.i= 0;
+    while(res.i<tag.length)
+    {
+      
+      console.log(tag.length);
+      console.log(tag[res.i]);
+      res.i2= 0;
+      res.i3 = 0;
+      productModel.tagInfo(tag[res.i2]).then(row2=>{
+        console.log(tag[res.i2]);
+        var kt= row2[0];
+        
+        if(kt)
+        {
+       
+         
+        }else{
+          console.log("2");
+            console.log(tag[res.i2]);
+            console.log("3");
+          console.log(tag[res.i3]);
+          console.log("4");
+             productModel.addTag(tag[res.i2]);
+            productModel.IDsingle2(tag[res.i3]).then(
+            r=>{
+              console.log(tag[res.i3]);
+              console.log(res.iddd);
+              res.idtag = r[0];
+              var enti = new Object;
+              enti.proID=res.iddd.ProID;
+              enti.tagID = res.idtag.tagID;
+              
+              productModel.addITag(enti);
+             
+              console.log(enti.tagID);
+              console.log("thanh cong 2");
+            
+            }
+            
+          )
+          res.i3 = res.i3+1;
+        }
+        
+        res.i2= res.i2+1;
+
+      })
+      
+      res.i = res.i + 1;
+      
+    }
   })
+
+  res.redirect(/products/);
+
+ 
 })
 router.get('/files', function (req, res) {
   const images = fs.readdirSync('public/pic')

@@ -19,7 +19,7 @@
     </div>
     {{else}}
       {{#each this.k}}
-      <img src="/pic/{{pic}}" alt="{{ProName}}" class="card-img-top">
+      <img src={{pic}} alt="{{ProName}}" class="card-img-top">
       
       <h6>                            </h6>
   {{/each}}
@@ -81,7 +81,7 @@
       <div  id="d"class="row" >
 		<div class="col-md-6" >
 			<a  href="/products/{{ProName}}">
-				<img class="img-fluid" src="/pic/{{ProID}}.jpg" width="150" height="120">
+				<img class="img-fluid" src="/pic/{{pic}}" width="150" height="120">
 			</a>
 		</div>
 		<div  class="col-md-6">

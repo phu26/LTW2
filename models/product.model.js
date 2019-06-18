@@ -59,4 +59,23 @@ related: name => {
             
   return db.load(`select * from products where ProName != '${name}' `);
 },
+
+tagInfo: name => {
+            
+  return db.load(`select * from tag where tagName = '${name}' `);
+},
+addTag: entity => {
+  return db.load(`INSERT INTO tag(tagName) VALUES ('${entity}')`);
+},
+addITag: entity => {
+  return db.add('itiemtag',entity);
+},
+IDsingle: id => {
+            
+  return db.load(`select ProID from products where ProName = '${id}'`);
+},
+IDsingle2: id => {
+            
+  return db.load(`select tagID from tag where tagName = '${id}' `);
+},
 };
