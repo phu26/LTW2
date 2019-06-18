@@ -178,9 +178,10 @@ router.post('/',(req,res) =>{
  entity.subCatID = 0;
  entity.pic= req.body.pic;
  var xx= entity.pic.split(" ")[2];
- var xy = xx.split("/")[2];
- var av = (xy.slice(0,xy.length-1));
+ var yy = xx.split("=")[1];
+ var av = (yy.slice(1,yy.length-1));
  entity.pic = av;
+ 
  entity.ProName = req.body.ProName; 
  entity.TinyDes = req.body.TinyDes; 
  entity.FullDes = req.body.FullDes; 
