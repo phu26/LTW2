@@ -6,6 +6,7 @@ var createError = require('http-errors');
 var numeral = require('numeral');
 var flash = require('express-flash');
 var mysql = require('mysql');
+var datatable = require('datatables.net');
 var app = express();
 
 var connection = mysql.createConnection({
