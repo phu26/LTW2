@@ -1,0 +1,41 @@
+{{#if admin}}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<form action="/categories/update" method="POST">
+  <div class="card shadow">
+    <h5 class="card-header">
+      Edit Category
+    </h5>
+    <div class="card-body">
+      {{#if this.error}}
+      <div class="alert alert-danger" role="alert">
+        Invalid categoryId. <a href="/categories" class="alert-link">Back to List</a>.
+      </div>
+      {{else}}
+      <div class="form-group">
+        <label for="txtCatID">Category Name</label>
+        <input readonly type="text" class="form-control" id="txtCatID" name="CatID" value="{{Cat.CatName}}">
+      </div>
+      <div class="form-group">
+        <label for="txtCatName">Sub Category Name</label>
+        <input type="text" class="form-control" id="txtCatName" name="CatName" value="{{SubCat.subName}}">
+      </div>
+      {{/if}}
+    </div>
+    <div class="card-footer text-right">
+      <a class="btn btn-outline-primary" href="/categories/edit/{{Cat.CatID}}" role="button" title="Back">
+        <i class="fa fa-backward" aria-hidden="true"></i>
+        List
+      </a>
+      {{#unless this.error}}
+      <button type="submit" class="btn btn-danger" formaction="/categories/delete">
+        <i class="fa fa-trash-o" aria-hidden="true"></i>
+        Delete
+      </button>
+      <button type="submit" class="btn btn-success">
+        <i class="fa fa-check" aria-hidden="true"></i>
+        Save
+      </button>
+    </div>
+    {{/unless}}
+ {{/if}}

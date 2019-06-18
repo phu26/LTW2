@@ -19,6 +19,11 @@ module.exports = {
   single: id => {
     return db.load(`select * from categories where CatID = ${id}`);
   },
+
+  subsingle: id => {
+    return db.load(`select * from subcategories where subID = ${id}`);
+  },
+
   singleEmpty: id => {
     return db.load(`select c.* from categories c, products p where c.CatID = p.CatID and c.CatID=${id} group by CatID,CatName having count(p.ProID)=0`);
   },
@@ -32,7 +37,12 @@ module.exports = {
   add: entity => {
     return db.add('categories', entity);
   },
-
+  /**
+   * @param {*} entity { subName,CatID }
+   */
+  addsub: entity => {
+    return db.add('subcategories', entity);
+  },
   /**
    * @param {*} entity { CatID, CatName }
    */
@@ -44,5 +54,10 @@ module.exports = {
 
   delete: id => {
     return db.delete('categories', 'CatID', id);
+  },
+
+  subdelete: id => {
+    return db.delete('subcategories', 'subID', id);
   }
+  
 };

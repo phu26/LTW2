@@ -1,4 +1,23 @@
-<form action="/categories/update" method="POST">
+{{#if admin}}
+<style>
+  .header {
+    display: flex;
+    justify-content: space-between;
+  }
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script>
+  $(document).ready(function () {
+    $("#myInput").on("keyup", function () {
+      var value = $(this).val().toLowerCase();
+      $("#tbsubcats tr").filter(function () {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+      });
+    });
+  });
+</script>
+<form id="formEdit" action="/categories/update" method="POST">
   <div class="card shadow">
     <h5 class="card-header">
       Edit Category
@@ -36,19 +55,55 @@
     </div>
     {{/unless}}
     {{#unless this.error}}
-
-    <div class="card-body">
-      <div class="form-group">
-        <label for="txtsubCatName">Sub Category</label>
-        {{#each subcat}}
-        <input id="prodId" name="{{subID}}" value="{{subID}}" type="hidden" value="xm234jq">
-        <label class="increase" for="txtsubCatName"></label>
-        <input type="text" class="form-control" id="txtsubCatName" name="{{subName}}" value="{{subName}}">
-        {{/each}}
+    <div class="card">
+      <div class="card-header">
+        <div class="header">
+          <h5>Sub Category</h5>
+          <input id="myInput" type="text" placeholder="Search..">
+        </div>
       </div>
+      <table name="tbSubCat" class="table table-hover table-dark table-striped">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Sub Categories</th>
+            <th scope="col" class="text-right">
+              <a class="btn btn-outline-success btn-sm" href="/categories/add/{{this.category.CatID}}" role="button"
+                title="Add">
+                <i class="fa fa-plus" aria-hidden="true"></i>
+                Add Sub Category
+              </a>
+            </th>
+
+          </tr>
+        </thead>
+        <tbody id="tbsubcats">
+          {{#each subcat}}
+          <tr class='clickable-row'>
+            <th scope="row">{{subID}}</th>
+            <td>{{subName}}</td>
+            <td class="text-right">
+              <a class="btn btn-primary btn-sm" href="/categories/{{CatID}}/{{subID}}" role="button" title="Edit">
+                <i class="fa fa-pencil" aria-hidden="true"></i>
+              </a>
+              <a class="btn btn-danger btn-sm" href="javascript:;" onclick="doPreview();" role="button" title="Delete">
+                <i class="fa fa-trash-o" aria-hidden="true"></i>
+              </a>
+              <script>
+                function doPreview() {
+                  form = document.getElementById('formEdit');
+                  form.action = '/categories/{{CatID}}/delete/{{subID}}';
+                  form.submit();
+                }
+              </script>
+            </td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
     </div>
     {{/unless}}
-
   </div>
   </div>
 </form>
+{{/if}}

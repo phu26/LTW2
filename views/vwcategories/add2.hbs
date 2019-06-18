@@ -1,3 +1,4 @@
+ {{#if admin}}
  {{#if this.error}}
       <div class="alert alert-danger" role="alert">
         Invalid categoryId. <a href="/categories/{{CatID}}" class="alert-link">Back to Category</a>.
@@ -13,11 +14,10 @@
     <div class="col-sm-6">
 <form action="" method="POST"> 
   <div class="form-group" >
-    <label for="txtCatName">Category Name</label>
-    <input type="text" class="form-control" id="txtCatName" name="CatName" placeholder="name">
-    {{#if subcat}}
-    <input type="hidden" class="form-control" id="txtCatName" value="{{CatID}}" name="CatID" placeholder="name">
-    {{/if}}
+    <label for="txtCatName">Category ID</label>
+    <input readonly type="text" class="form-control" id="txtCatName" name="CatID" value="{{CatID}}">
+    <label for="txtCatName">Sub Category Name</label>
+    <input type="text" class="form-control" id="txtCatName" name="subName" >
  </div>
   <button type="submit" class="btn btn-success">
     <i class="fa fa-check" aria-hidden="true"></i>
@@ -29,4 +29,5 @@
     
   </div>
 </div>
+{{/if}}
 {{/if}}

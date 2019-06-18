@@ -1,3 +1,5 @@
+{{#if admin}}
+<form>
 <style>
   .header {
     display: flex;
@@ -45,10 +47,10 @@ $(document).ready(function(){
         <td>{{cat_name}}</td>
         <td>{{#each subcats}}{{subcat_name}}, {{/each}}</td>
         <td class="text-right">
-          <a class="btn btn-primary btn-sm" href="/categories/edit/{{cat_id}}" role="button" title="Edit">
+          <a class="btn btn-primary btn-sm" href="/categories/{{cat_id}}" role="button" title="Edit">
             <i class="fa fa-pencil" aria-hidden="true"></i>
           </a>
-          <a class="btn btn-success btn-sm" href="/categories/edit/{{cat_id}}" role="button" title="Add Sub Category">
+          <a class="btn btn-success btn-sm" href="/categories/add/{{cat_id}}" role="button" title="Add Sub Category">
             <i class="fa fa-plus" aria-hidden="true"></i>
           </a>
         </td>
@@ -61,3 +63,5 @@ $(document).ready(function(){
     </tbody>
   </table>
 </div>
+</form>
+{{/if}}

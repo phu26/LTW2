@@ -17,7 +17,7 @@ module.exports = (req, res, next) => {
     }
 
     if(req.user.f_Permission ==5)
-    res.locals.administrator = true;
+    res.locals.admin = true;
   }
 
   next();
