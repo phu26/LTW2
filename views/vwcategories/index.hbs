@@ -1,9 +1,27 @@
+<style>
+  .header {
+    display: flex;
+    justify-content: space-between;
+}
+</style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script>
+$(document).ready(function(){
+  $("#myInput").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#tbcats tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
+</script>
 <div class="card">
   <div class="card-header">
-    <h5> Category</h5>
-
+    <div class="header">
+        <h5> Category</h5>
+        <input id="myInput" type="text" placeholder="Search..">
+    </div>
   </div>
   <table name="tbCat" class="table table-hover table-dark table-striped">
     <thead>
@@ -19,9 +37,8 @@
         </th>
 
       </tr>
-      });
     </thead>
-    <tbody>
+    <tbody id="tbcats">
       {{#each lcCategories}}
       <tr class='clickable-row' data-href="/categories/edit/{{cat_id}}">
         <th scope="row">{{cat_id}}</th>
