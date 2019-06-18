@@ -162,6 +162,18 @@
         aria-label="With textarea"></textarea>
     </div>
     <div class="card-footer text-right">
+      <div class="input-group input-group-lg">
+      <div class="input-group-prepend">
+        <span class="input-group-text">Tác giả:{{authUser.f_Name}}
+           
+           </span>
+           <div class="col-sm-10">
+      <input type="hidden" name="author" readonly class="form-control-plaintext" id="staticEmail" value="{{authUser.f_ID}}">
+    </div>
+        
+      </div>
+      
+    </div>
       <button type="submit" class="btn btn-lg btn-primary btn-block">
         Upload
       </button>

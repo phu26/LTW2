@@ -67,7 +67,7 @@ function getCategory(resultItem, callback) {
     next();
   }
   //
-console.log(res.locals.lcCategories);
+
   
   });
 

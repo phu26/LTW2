@@ -19,11 +19,13 @@
   <style>
     .dropdown:hover>.dropdown-menu {
       display: block;
+     
     }
 
     .dropdown>.dropdown-toggle:active {
       /*Without this, clicking will make it sticky*/
       pointer-events: none;
+    
     }
 
     .bd-placeholder-img {
@@ -78,12 +80,11 @@
 
               <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 {{#each subcats}}
-                <a class="dropdown-item" href="#">{{subcat_name}}
-                  {{#each subcats}}
-                  <span class="badge badge-danger float-right">{{subcat_name}}</span>
-                  {{/each}}</a>
+                <a class="dropdown-item" href="/categories/{{subcat_id}}">{{subcat_name}}
+                 </a>
+                 
             </a>
-            {{/each}}</a>
+            {{/each}}
           </div>
 
     </div>
