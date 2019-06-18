@@ -58,7 +58,7 @@ router.get('/edit/:id', (req, res, next) => {
 })
 
 router.post('/update', (req, res, next) => {
-  categoryModel.update(req.body).then(n => {
+  categoryModel.update(entity).then(n => {
     res.redirect('/categories');
   }).catch(next);
 })

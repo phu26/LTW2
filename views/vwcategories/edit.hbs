@@ -41,8 +41,9 @@
       <div class="form-group">
         <label for="txtsubCatName">Sub Category</label>
         {{#each subcat}}
+        <input id="prodId" name="{{subID}}" value="{{subID}}" type="hidden" value="xm234jq">
         <label class="increase" for="txtsubCatName"></label>
-        <input type="text" class="form-control" id="txtsubCatName" name="CatName" value="{{subName}}">
+        <input type="text" class="form-control" id="txtsubCatName" name="{{subName}}" value="{{subName}}">
         {{/each}}
       </div>
     </div>
