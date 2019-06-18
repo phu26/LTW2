@@ -32,22 +32,25 @@ $(document).ready(function(){
         <th scope="col">Name</th>
         <th scope="col">Sub Categories</th>
         <th scope="col" class="text-right">
-          <a class="btn btn-outline-success btn-sm" href="/categories/add" role="button" title="Add">
+          <a class="btn btn-outline-success btn-sm" href="/products/" role="button" title="Add">
             <i class="fa fa-plus" aria-hidden="true"></i>
-            Add Category
+            Add Newspaper
           </a>
         </th>
 
       </tr>
     </thead>
     <tbody id="tbcats">
-      {{#each lcCategories}}
-      <tr class='clickable-row' data-href="/categories/edit/{{cat_id}}">
-        <th scope="row">{{cat_id}}</th>
-        <td>{{cat_name}}</td>
-        <td>{{#each subcats}}{{subcat_name}}, {{/each}}</td>
+      {{#each products}}
+      <tr class='clickable-row' data-href="/categories/edit/{{ProID}}">
+        <th scope="row">{{ProID}}</th>
+        <td>{{ProName}}</td>
+        <td>{{TinyDes}}</td>
+        <td>{{CreatedAt}}</td>
+          <td>{{TrangThai}}</td>
         <td class="text-right">
-          <a class="btn btn-primary btn-sm" href="/categories/edit/{{cat_id}}" role="button" title="Edit">
+            
+          <a class="btn btn-primary btn-sm" href="/categories/{{cat_id}}" role="button" title="Edit">
             <i class="fa fa-pencil" aria-hidden="true"></i>
           </a>
           <a class="btn btn-success btn-sm" href="/categories/add/{{cat_id}}" role="button" title="Add Sub Category">

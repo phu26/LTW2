@@ -4,6 +4,7 @@ var catogoryModel = require('../models/home.model');
 var async = require("async");
 var moment = require('moment');
 var mysql = require('mysql');
+var productModel = require('../models/product.model');
 
 var createConnection = () => mysql.createConnection({
     host:'localhost',
@@ -140,6 +141,14 @@ router.get('/',[top3host,top10host,b,tag],function(req,res,next){
     
 })
 
-
+router.get('/Newsmt',(req,res) =>{
+  productModel.all().then(rows=>{
+    var products = rows;
+    res.render('vwNews/index',{
+    products
+    });
+  })
+  
+})
 
 module.exports = router;

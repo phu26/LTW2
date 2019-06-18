@@ -168,6 +168,7 @@ router.post('/sp/:id', [b, cmt2,relatee], function (req, res, next) {
 router.get('/',(req,res) =>{
   res.render('vwProducts/upload');
 })
+
 router.post('/',(req,res) =>{
 
 
@@ -191,6 +192,7 @@ router.post('/',(req,res) =>{
   entity.CreatedAt= moment().format('YYYY-MM-DD HH:mm:ss');
   console.log(req.body.author);
   entity.author= req.body.author;
+  entity.TrangThai = 0;
   var tagg = req.body.tags;
   var tag  = tagg.split(",");
 console.log("ok");

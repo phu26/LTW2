@@ -17,7 +17,7 @@
     });
   });
 </script>
-<form id="formEdit" action="/categories/update" method="POST">
+<form id="formEdit" action="/categories/edit/update" method="POST">
   <div class="card shadow">
     <h5 class="card-header">
       Edit Category
@@ -83,7 +83,7 @@
             <th scope="row">{{subID}}</th>
             <td>{{subName}}</td>
             <td class="text-right">
-              <a class="btn btn-primary btn-sm" href="/categories/{{CatID}}/{{subID}}" role="button" title="Edit">
+              <a class="btn btn-primary btn-sm" href="/categories/edit/{{CatID}}/{{subID}}" role="button" title="Edit">
                 <i class="fa fa-pencil" aria-hidden="true"></i>
               </a>
               <a class="btn btn-danger btn-sm" href="javascript:;" onclick="doPreview();" role="button" title="Delete">

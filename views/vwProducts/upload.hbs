@@ -203,4 +203,126 @@
 {{else}}
 khong phai writer
 {{/if}}
+{{#if admin}}
+<div class="card">
+  <div class="card-header">
+    <h1>Upload bài viết</h1>
+  </div>
+  <div class="card-body">
+    <form method="post" id="uploadForm">
+      <div class="form-group">
+        <label class="col-form-label-lg" for="CatID">Chọn danh mục :</label>
+        <select class="form-control-lg" name="CatID" id="cat" onchange="getSubCat()" >
+          {{#each lcCategories}}
+          <option value="{{cat_id}}">{{cat_name}}</option>
+          {{/each}}         
+        </select>
+      </div>
+  <div class="form-group">
+    <label class="col-form-label-lg" for="subCatID">Chọn danh mục phụ :</label>
+    <select class="form-control-lg" name="subCatID" id="subcat">
+    </select>
+    <script language="javascript">
+          function getSubCat()
+          {
+            var value = document.getElementById("cat").value;
+            $("#subcat").empty();
+              console.log(value);
+              //var local_data =!{JSON.stringify(lcCategories)};
+              var d=document.getElementById("subcat");
+              {{#each lcCategories}}
+                if(value == {{cat_id}})
+                {
+                  {{#each subcats}}
+                   var opt = document.createElement('option');
+                  opt.value = {{subcat_id}};
+                  opt.text = "{{subcat_name}}";
+                  d.appendChild(opt); 
+                  //var opt = new Option("{{subcat_name}}",{{subcat_id}})
+                  //d.options.add(opt);
+                  {{/each}}
+                }              
+              {{/each}}
+          }
+          </script>
+  </div>
+  <div class="form-group">
+    <label class="col-form-label-lg" for="editor1">Chọn hình đại diện bài viết :</label>
+    <textarea rows="4" name="pic" cols="500" name="pic" placeholder="Chèn hình vào đây" id="editor1">
+
+        </textarea>
+  </div>
+  <div class="form-group">
+    <div class="input-group input-group-lg">
+      <div class="input-group-prepend">
+        <span class="input-group-text">Nhập tiêu đề:</span>
+      </div>
+      <textarea class="form-control" name="ProName" maxlength="150" placeholder="Tiêu đề" rows="1" name="Title"
+        aria-label="With textarea"></textarea>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="input-group input-group-lg">
+      <div class="input-group-prepend">
+        <span class="input-group-text">Mô tả:</span>
+      </div>
+      <textarea class="form-control" maxlength="150" placeholder="Mô tả ngắn gọn" rows="2" name="TinyDes"
+        aria-label="With textarea"></textarea>
+    </div>
+  </div>
+  <div>
+    <label class="form-control-lg" for="editor1">Nhập bài viết :</label>
+    <textarea name="FullDes" id="editor2">
+
+        </textarea></div>
+  <div class="form-group">
+    <div class="input-group input-group-lg">
+      <div class="input-group-prepend">
+        <span class="input-group-text">Nhập các Tag :</span>
+      </div>
+      <textarea class="form-control" maxlength="150" placeholder="#tag1,#tag2,#tag...." rows="1" name="tags"
+        aria-label="With textarea"></textarea>
+    </div>
+    <div class="card-footer text-right">
+      <div class="input-group input-group-lg">
+      <div class="input-group-prepend">
+        <span class="input-group-text">Tác giả:{{authUser.f_Name}}
+           
+           </span>
+           <div class="col-sm-10">
+      <input type="hidden" name="author" readonly class="form-control-plaintext" id="staticEmail" value="{{authUser.f_ID}}">
+    </div>
+        
+      </div>
+      
+    </div>
+      <button type="submit" class="btn btn-lg btn-primary btn-block">
+        Upload
+      </button>
+    </div>
+
+    </form>
+  </div>
+</div>
+<script type="text/javascript">
+
+  CKEDITOR.replace('editor1', {
+    "removeButtons": 'youtube,Source,Save,NewPage,Preview,Print,Templates,Cut,Copy,Paste,PasteText,PasteFromWord,Redo,Undo,Find,Replace,SelectAll,Scayt,Form,Radio,TextField,Textarea,Select,Button,ImageButton,HiddenField,About,Maximize,ShowBlocks,BGColor,TextColor,Styles,Format,Font,FontSize,Iframe,PageBreak,SpecialChar,Smiley,HorizontalRule,Table,Flash,Unlink,Link,Anchor,Language,BidiRtl,BidiLtr,JustifyLeft,JustifyCenter,JustifyRight,JustifyBlock,CreateDiv,Blockquote,Outdent,Indent,BulletedList,NumberedList,CopyFormatting,Bold,Italic,RemoveFormat,Underline,Strike,Subscript,Superscript,Checkbox',
+    "imageBrowser_listUrl": "/products/files",
+  });
+
+  CKEDITOR.replace('editor2', {
+    "imageBrowser_listUrl": "/products/files",
+  });
+
+
+
+
+
+</script>
+
+
+{{else}}
+khong phai writer
+{{/if}}
 {{/if}}
