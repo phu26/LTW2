@@ -19,9 +19,13 @@ module.exports = {
     
     top1in10: catID  => {
             
-        return db.load(`SELECT * from  products p WHERE p.CatID = ${catID} ORDER by p.CreatedAt DESC limit 1
-        `);
+        return db.load(`SELECT * from  products p WHERE p.CatID = ${catID} ORDER by p.CreatedAt DESC limit 1`);
     },
+    alltag: () => {
+            
+        return db.load(`SELECT * from  tag `);
+    },
+
 
 };
 

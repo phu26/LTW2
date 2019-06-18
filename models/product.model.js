@@ -11,7 +11,7 @@ module.exports = {
     },
     single: id => {
             
-        return db.load(`select * from products where ProName = '${id}'`);
+        return db.load(`select * from products where ProID = '${id}'`);
     },
     single2: id => {
             
@@ -28,6 +28,21 @@ module.exports = {
         var lim = config.paginate.default;
         return db.load(`select * from products where CatID = ${catId} and TinyDes!='' limit ${lim} offset ${start_offset}`);
       },
+     
+      countBySubCat: (subcatId) => {  
+        return db.load(`select count(*) as total from products where subCatID = ${subcatId} and TinyDes!=''`);
+      },
+      pageBySubCat: (subID, start_offset) => {
+        var lim = config.paginate.default;
+        return db.load(`select * from products where subCatID = ${subID} and TinyDes!='' limit ${lim} offset ${start_offset}`);
+      },
+      countByTag: (tagID) => {  
+        return db.load(`select COUNT(*) as total from products p ,itiemtag i where p.ProID=i.proID and i.tagID=${tagID} and TinyDes!=''`);
+      },
+      pageByTag: (tagID, start_offset) => {
+        var lim = config.paginate.default;
+        return db.load(`select p.*  from products p ,itiemtag i where p.ProID=i.proID and i.tagID=${tagID} and TinyDes!='' limit ${lim} offset ${start_offset}`);
+      },
       update: entity => {
         var id = entity.ProID;
         delete entity.ProID;
@@ -40,7 +55,7 @@ module.exports = {
      
       Click: id => {
             
-        return db.load(`UPDATE products SET Click = Click + 1 where ProName='${id}'`);
+        return db.load(`UPDATE products SET Click = Click + 1 where ProID=${id}`);
     },
     single3: name => {
             
@@ -72,7 +87,7 @@ addITag: entity => {
 },
 IDsingle: id => {
             
-  return db.load(`select ProID from products where ProName = '${id}'`);
+  return db.load(`select ProID from products where TinyDes= "${id}"`);
 },
 IDsingle2: id => {
             

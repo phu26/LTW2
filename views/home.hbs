@@ -2,7 +2,7 @@
 <style> 
   
   #c {
-    
+    color: white;
     background-position:center;
     width:4   00px;
     height:200px;
@@ -57,6 +57,12 @@ text-decoration:solid;
 </style>
 <main  role="main">
       <div>
+        <div><card-header> <div class="input-group-prepend">
+          {{#each Tg}}
+      <a style="padding: 2px" href="/categories/tag/{{tagID}}" ><span class="input-group-text"> {{tagName}}</span></a>  
+        {{/each}}
+      </div></card-header>
+        <div>
       <div id="carouselExampleIndicators"  class="carousel slide news"  data-ride="carousel">
   <ol class="carousel-indicators">
     <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -64,20 +70,24 @@ text-decoration:solid;
     <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
   </ol>
   <div class="carousel-inner">
-   
-       <a class="carousel-item active">
-         {{#with H1}}
+     {{#with H1}}
+       <a style="color: black" href="products/sp/{{ProName}}" class="carousel-item active">
+       
+         
       <img class="d-block w-100" src="/pic/{{pic}}"  height="550" alt="First slide">
+      <Center>{{ProName}}</Center>
     </a>
   {{/with}}
    {{#with H2}}
-    <a class="carousel-item">
+    <a href="products/sp/{{ProName}}" class="carousel-item">
       <img class="d-block w-100" src="/pic/{{pic}}" height="550" alt="Second slide">
+      <Center>{{ProName}}</Center>
     </a>
      {{/with}}
       {{#with H3}}
-    <a class="carousel-item">
+    <a href="products/sp/{{ProName}}" class="carousel-item">
       <img class="d-block w-100" src="/pic/{{pic}}"  height="550" alt="Third slide">
+      <Center>{{ProName}}</Center>
     </a>
      {{/with}}
   </div>
@@ -101,7 +111,7 @@ text-decoration:solid;
         {{#each New}}
         
     
-         <a style="background-image:url({{pic}})" id="d" href/="products/{{ProName}}"  >
+         <a style="background-image:url({{pic}})" id="d" href="products/sp/{{ProName}}"  >
           
             <h5  class="mb-1"> <b>{{CatName}}</b></h5>
           <div class="d-flex w-100 justify-content-between">
@@ -141,17 +151,23 @@ text-decoration:solid;
     
      <div class="col-sd-6"> 
        <div class="list-group">
-         
-  <a id="c" href="#" style="color:black" >
- 
+         {{#each tcm}}
+          {{#each subcats}}
+  <a style="background-image:url({{sub_pic}})" id="c" href="#" >
+     {{/each}}
     <div class="d-flex w-100 justify-content-between">
 
-      <h5  class="mb-1">    List group item heading</h5>
-      <span>3 days ago</span>
+      <h5  class="mb-1">   {{cat_name}}</h5>
+     
     </div>
-    <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-    <small>Donec id elit non mi porta.</small>
+    {{#each subcats}}
+    <p class="mb-1">{{sub_name}}</p>
+    
+    <small>{{sub_CreatedAt}}</small>
+      {{/each}}
   </a>
+ 
+  {{/each}}
   
   
 </div>

@@ -246,6 +246,98 @@ router.post('/add', (req, res, next) => {
 
 
 
+router.get('/:subcate', (req, res, next) => {
+  
+  var id = req.params.subcate;
+  console.log(id);
+  
+
+  var limit = config.paginate.default;
+  var page = req.query.page || 1;
+  if (page < 1) page = 1;
+  var start_offset = (page - 1) * limit;
+
+  Promise.all([
+    productModel.countBySubCat(id),
+    productModel.pageBySubCat(id, start_offset)
+  ]).then(([nRows, rows]) => {
+
+    for (var c of res.locals.lcCategories) {
+      if (c.CatID === +id) {
+        c.active = true;
+      }
+    }
+
+    var total = nRows[0].total;
+    var nPages = Math.floor(total / limit);
+    if (total % limit > 0)
+      nPages++;
+
+    var page_numbers = [];
+    for (i = 1; i <= nPages; i++) {
+      page_numbers.push({
+        value: i,
+        active: i === +page
+      })
+    }
+
+
+    res.render('vwProducts/byCat', {
+      error: false,
+      empty: rows.length === 0,
+      products: rows,
+      page_numbers
+    });
+
+  }).catch(next);
+})
+
+router.get('/tag/:tg', (req, res, next) => {
+  
+  var id = req.params.tg;
+  console.log(id);
+  
+
+  var limit = config.paginate.default;
+  var page = req.query.page || 1;
+  if (page < 1) page = 1;
+  var start_offset = (page - 1) * limit;
+
+  Promise.all([
+    productModel.countByTag(id),
+    productModel.pageByTag(id, start_offset)
+  ]).then(([nRows, rows]) => {
+
+    for (var c of res.locals.lcCategories) {
+      if (c.CatID === +id) {
+        c.active = true;
+      }
+    }
+
+    var total = nRows[0].total;
+    var nPages = Math.floor(total / limit);
+    if (total % limit > 0)
+      nPages++;
+
+    var page_numbers = [];
+    for (i = 1; i <= nPages; i++) {
+      page_numbers.push({
+        value: i,
+        active: i === +page
+      })
+    }
+
+
+    res.render('vwProducts/byCat', {
+      error: false,
+      empty: rows.length === 0,
+      products: rows,
+      page_numbers
+    });
+
+  }).catch(next);
+})
+
 // router.get('/:id/products', (req, res, next) => {
 //   var id = req.params.id;
 //   if (isNaN(id)) {

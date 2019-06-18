@@ -143,6 +143,7 @@ router.post('/sp/:id', [b, cmt2,relatee], function (req, res, next) {
       if (rows.length > 0) {
 
         var product = rows[0];
+        
         var k = rows;
 
         for (var c of res.locals.lcCategories) {
@@ -188,14 +189,21 @@ router.post('/',(req,res) =>{
  
   entity.Click=0;
   entity.CreatedAt= moment().format('YYYY-MM-DD HH:mm:ss');
+  console.log(req.body.author);
+  entity.author= req.body.author;
   var tagg = req.body.tags;
   var tag  = tagg.split(",");
-
+console.log("ok");
  
   productModel.add(entity);
-  productModel.IDsingle(req.body.ProName)
+  console.log("ok");
+  console.log(req.body.TinyDes);
+  productModel.IDsingle(req.body.TinyDes)
   .then(rows => {
+    console.log("ok");
+    console.log(rows[0]);
     res.iddd = rows[0];
+    console.log(res.iddd);
     res.i= 0;
     while(res.i<tag.length)
     {
@@ -206,11 +214,27 @@ router.post('/',(req,res) =>{
       res.i3 = 0;
       productModel.tagInfo(tag[res.i2]).then(row2=>{
         console.log(tag[res.i2]);
+        console.log(res.i2);
         var kt= row2[0];
-        
+      
         if(kt)
         {
-       
+         
+              console.log(kt);
+              console.log(res.iddd);
+             
+              var enti = new Object;
+              enti.proID=res.iddd.ProID;
+              enti.tagID = kt.tagID;
+              
+              productModel.addITag(enti);
+             
+              console.log(enti.tagID);
+              console.log("thanh cong 2");
+            
+           
+              
+        
          
         }else{
           console.log("2");
