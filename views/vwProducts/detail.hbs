@@ -8,6 +8,34 @@
    margin: 25px
    
 }</style>
+<script>
+   function check_submit_addnew()
+{
+   var frm = window.document.set;         
+   if(frm.username.value=='')
+   {
+      alert('Xin vui lòng Đăng nhập để comment!');           
+      document.forms['set'].username.focus();
+      return false;
+   }
+   else
+   if(frm.comment.value=='')
+   {
+      alert('Xin vui lòng nhập comment !');           
+      document.forms['set'].comment.focus();
+      return false;
+   }
+  
+ 
+   else        
+   {
+       alert('please wait!');
+       return true;   
+
+   }               
+      
+}
+</script>
 <div class="card shadow">
   <h5 class="card-header">
     Product
@@ -45,11 +73,14 @@
     <label for="staticEmail" class="col-sm-2 col-form-label">{{f_Name}}</label>
     <div class="col-sm-10">
       <input type="text"  readonly class="form-control-plaintext" id="staticEmail" value="{{Content}}">
+      <small style="float:right"><span>{{CreatedAt}}</span></small>
     </div>
+    
   </div>
+  
   </form>
   {{/each}}
-    <form method="POST" >
+    <form name="set" method="POST" onsubmit="return check_submit_addnew()" >
   <div class="form-group row">
     <label for="staticEmail" class="col-sm-2 col-form-label">Name</label>
     <div class="col-sm-10">

@@ -89,12 +89,12 @@ var tag = function(req,res,next){
    
  
 router.get('/',[top3host,top10host,b,tag],function(req,res,next){
-     
+  var dob5 = moment(req.New.CreatedAt, 'YYYY-MM-DD').format('DD/MM/YYYY');
      var dob = moment(req.H1.CreatedAt, 'YYYY-MM-DD').format('DD/MM/YYYY');
      var dob2 = moment(req.H2.CreatedAt, 'YYYY-MM-DD').format('DD/MM/YYYY');
      var dob3 = moment(req.H3.CreatedAt, 'YYYY-MM-DD').format('DD/MM/YYYY');
      var dob4 = moment(req.Host2.CreatedAt, 'YYYY-MM-DD').format('DD/MM/YYYY');
-     var dob5 = moment(req.New.CreatedAt, 'YYYY-MM-DD').format('DD/MM/YYYY');
+     
      var entity1 = req.H1;
      var entity2 = req.H2;
      var entity3 = req.H3;
