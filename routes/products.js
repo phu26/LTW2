@@ -156,7 +156,7 @@ router.post('/sp/:id', [b, cmt2,relatee], function (req, res, next) {
        
 
     
-        res.redirect('/products/sp/'+id);
+        res.redirect('/products/sp  /'+id);
       } else {
         res.render('vwProducts/detail', {
           error: true

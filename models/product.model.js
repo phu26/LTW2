@@ -97,4 +97,43 @@ alltag: () => {
             
   return db.load(`SELECT  tagName from  tag `);
 },
+proByUser0: id => {
+            
+  return db.load(`SELECT * FROM products WHERE author = ${id} and TrangThai = 0 `);
+},
+proByUser1: id => {
+            
+  return db.load(`SELECT * FROM products WHERE author = ${id} and TrangThai = 1 `);
+},
+proByUser2: id => {
+            
+  return db.load(`SELECT * FROM products WHERE author = ${id} and TrangThai = 2 `);
+},
+proByUser3: id => {
+            
+  return db.load(`SELECT * FROM products WHERE author = ${id} and TrangThai = 3 `);
+},
+proByUser4: id => {
+            
+  return db.load(`SELECT * FROM products WHERE author = ${id} and TrangThai = 4 `);
+},
+single3: id => {
+            
+  return db.load(`SELECT p.*,c.CatName,s.subName FROM products p,categories c,subcategories s WHERE p.ProID = ${id} and p.CatID = c.CatID and s.CatID = c.CatID and p.subCatID = s.subID`);
+},
+gettag: id=> {
+            
+  return db.load(`SELECT t.* FROM tag t , itiemtag i WHERE i.proID = ${id} and t.tagID = i.tagID`);
+},
+delP: id=> {
+            
+  return db.load(`DELETE FROM products WHERE ProID =${id}`);
+},
+delI: id=> {
+            
+  return db.load(`DELETE FROM itiemtag WHERE proID = ${id}`);
+},
+
+
 };
+
