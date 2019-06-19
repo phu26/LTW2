@@ -1,4 +1,10 @@
 {{#if admin}}
+<head>
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.jqueryui.min.css">
+  
+</head>
+<body>
 <form>
 <style>
   .header {
@@ -8,6 +14,10 @@
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/select/1.3.0/js/dataTables.select.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/dataTables.jqueryui.min.js"></script>
 <script>
 $(document).ready(function(){
   $("#myInput").on("keyup", function() {
@@ -18,19 +28,29 @@ $(document).ready(function(){
   });
 });
 </script>
+<script>
+  $(document).ready( function () {
+    $('#tbNews').DataTable({
+      select: true,
+    });
+} );
+</script>
+
 <div class="card">
   <div class="card-header">
     <div class="header">
-        <h5> Category</h5>
-        <input id="myInput" type="text" placeholder="Search..">
+        <h5> Danh sách bài viết</h5>
     </div>
   </div>
-  <table name="tbCat" class="table table-hover table-dark table-striped">
+  <table id="tbNews" class="table table-condensed table-hover table-striped">
     <thead>
       <tr>
         <th scope="col">#</th>
-        <th scope="col">Name</th>
-        <th scope="col">Sub Categories</th>
+        <th scope="col">Tên</th>
+        <th scope="col">Mô tả</th>
+        <th scope="col">Thời gian</th>
+        <th scope="col">Trạng thái</th>
+        <th scope="col">Người đăng</th>
         <th scope="col" class="text-right">
           <a class="btn btn-outline-success btn-sm" href="/products/" role="button" title="Add">
             <i class="fa fa-plus" aria-hidden="true"></i>
@@ -42,11 +62,12 @@ $(document).ready(function(){
     </thead>
     <tbody id="tbcats">
       {{#each products}}
-      <tr class='clickable-row' data-href="/categories/edit/{{ProID}}">
+      <tr data-href="/categories/edit/{{ProID}}">
         <th scope="row">{{ProID}}</th>
         <td>{{ProName}}</td>
         <td>{{TinyDes}}</td>
         <td>{{CreatedAt}}</td>
+        <td>{{author}}</td>
           <td>{{TrangThai}}</td>
         <td class="text-right">
             
@@ -68,3 +89,4 @@ $(document).ready(function(){
 </div>
 </form>
 {{/if}}
+</body>
