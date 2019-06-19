@@ -54,7 +54,7 @@ app.use(require('./routes/home'));
 app.use('/categories', require('./routes/categories'));
 app.use('/products', require('./routes/products'));
 app.use('/account', require('./routes/account'));
-app.use('/admin', require('./routes/admin'));
+app.use('/user', require('./routes/user'));
 
 
  
