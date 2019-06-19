@@ -8,6 +8,22 @@ var router = express.Router();
 
 router.get('/', (req, res, next) => {
 
-    res.render("vwAdmin/dashboard",{ layout: false});
-  })
+    res.render("vwAdmin/dashboard", { layout: 'main2.hbs' });
+})
+router.get('/table', (req, res, next) => {
+
+    res.render("vwAdmin/table", { layout: 'main2.hbs' });
+})
+router.get('/profile', (req, res, next) => {
+
+    res.render("vwAdmin/table", { layout: 'main2.hbs' });
+})
+router.get('/table', (req, res, next) => {
+
+    res.render("vwAdmin/table", { layout: 'main2.hbs' });
+})
+router.get('/table', (req, res, next) => {
+
+    res.render("vwAdmin/table", { layout: 'main2.hbs' });
+})
 module.exports = router;
