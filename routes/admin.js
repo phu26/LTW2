@@ -14,9 +14,9 @@ router.get('/table', (req, res, next) => {
 
     res.render("vwAdmin/table", { layout: 'main2.hbs' });
 })
-router.get('/profile', (req, res, next) => {
+router.get('/table/profile', (req, res, next) => {
 
-    res.render("vwAdmin/table", { layout: 'main2.hbs' });
+    res.render("vwAdmin/profile", { layout: 'main2.hbs' });
 })
 router.get('/table', (req, res, next) => {
 

@@ -39,12 +39,10 @@ app.use(express.urlencoded({
 // parse application/json
 app.use(express.json({limit: '100mb'}));
 app.use(flash());
-app.use(express.static('public'));
-
+app.use(express.static(__dirname + '/public'));
 require('./middlewares/session')(app);
 require('./middlewares/passport')(app);
 require('./middlewares/upload')(app);
-
 app.use(require('./middlewares/auth.mdw'));
 app.use(require('./middlewares/category.mdw'));
 
@@ -55,6 +53,9 @@ app.use('/categories', require('./routes/categories'));
 app.use('/products', require('./routes/products'));
 app.use('/account', require('./routes/account'));
 app.use('/admin', require('./routes/admin'));
+
+
+
 
 
  
