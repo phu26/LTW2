@@ -85,12 +85,16 @@ addTag: entity => {
 addITag: entity => {
   return db.add('itiemtag',entity);
 },
-IDsingle: id => {
+IDsingle: () => {
             
-  return db.load(`select ProID from products where TinyDes= "${id}"`);
+  return db.load(`SELECT ProID FROM products ORDER by CreatedAt DESC limit 1`);
 },
 IDsingle2: id => {
             
   return db.load(`select tagID from tag where tagName = '${id}' `);
+},
+alltag: () => {
+            
+  return db.load(`SELECT  tagName from  tag `);
 },
 };

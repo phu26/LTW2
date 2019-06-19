@@ -169,7 +169,18 @@ router.get('/',(req,res) =>{
   res.render('vwProducts/upload');
 })
 
-router.post('/',(req,res) =>{
+var b2= function (req, res, next) {
+  console.log(req.body.TinyDes);
+  productModel.IDsingle()
+    .then(rows => {
+      req.iddd = rows[0].ProID;
+     
+      return next();
+
+    })
+    .catch(err => next(err));
+}
+router.post('/',b2,function(req,res) {
 
 
  var entity = new Object;
@@ -188,7 +199,7 @@ router.post('/',(req,res) =>{
  entity.TinyDes = req.body.TinyDes; 
  entity.FullDes = req.body.FullDes; 
  
-  entity.Click=0;
+ entity.Click=0;
   entity.CreatedAt= moment().format('YYYY-MM-DD HH:mm:ss');
   console.log(req.body.author);
   entity.author= req.body.author;
@@ -198,81 +209,93 @@ router.post('/',(req,res) =>{
 console.log("ok");
  
   productModel.add(entity);
-  console.log("ok");
+ console.log("ok");
+ 
   console.log(req.body.TinyDes);
-  productModel.IDsingle(req.body.TinyDes)
-  .then(rows => {
-    console.log("ok");
-    console.log(rows[0]);
-    res.iddd = rows[0];
+ 
+    console.log(req.body.TinyDes);
+    console.log(req.iddd);
+   res.iddd=req.iddd + 1 ;
     console.log(res.iddd);
     res.i= 0;
-    while(res.i<tag.length)
-    {
+    res.i2= 0;
       
-      console.log(tag.length);
-      console.log(tag[res.i]);
-      res.i2= 0;
-      res.i3 = 0;
-      productModel.tagInfo(tag[res.i2]).then(row2=>{
-        console.log(tag[res.i2]);
-        console.log(res.i2);
-        var kt= row2[0];
-      
-        if(kt)
+      var tagarray = [];
+      productModel.alltag().then(rew=>{
+        for( res.i in rew)
         {
-         
-              console.log(kt);
-              console.log(res.iddd);
-             
-              var enti = new Object;
-              enti.proID=res.iddd.ProID;
-              enti.tagID = kt.tagID;
-              
-              productModel.addITag(enti);
-             
-              console.log(enti.tagID);
-              console.log("thanh cong 2");
-            
-           
-              
-        
-         
-        }else{
-          console.log("2");
-            console.log(tag[res.i2]);
-            console.log("3");
-          console.log(tag[res.i3]);
-          console.log("4");
-             productModel.addTag(tag[res.i2]);
-            productModel.IDsingle2(tag[res.i3]).then(
-            r=>{
-              console.log(tag[res.i3]);
-              console.log(res.iddd);
-              res.idtag = r[0];
-              var enti = new Object;
-              enti.proID=res.iddd.ProID;
-              enti.tagID = res.idtag.tagID;
-              
-              productModel.addITag(enti);
-             
-              console.log(enti.tagID);
-              console.log("thanh cong 2");
-            
-            }
-            
-          )
-          res.i3 = res.i3+1;
+          tagarray.push(rew[res.i].tagName);
+         res.i = res.i+1;
         }
-        
-        res.i2= res.i2+1;
-
+        console.log(tagarray.length);
+        for(res.i2 in tag)
+        {
+          res.i3 = 0;
+          console.log(res.i2);
+          for(res.i3 in tagarray)
+          {
+            console.log(res.i3);
+            if(tagarray[res.i3]===tag[res.i2])
+            {
+                console.log("da co ");
+                console.log(tag[res.i2]);
+                productModel.IDsingle2(tag[res.i2]).then(
+                  r=>{
+                    console.log(tag[res.i2]);
+                    console.log(res.iddd);
+                    res.idtag = r[0];
+                    var enti = new Object;
+                    enti.proID=res.iddd;
+                    enti.tagID = res.idtag.tagID;
+                    
+                    productModel.addITag(enti);
+                   
+                    console.log(enti.tagID);
+                    console.log("thanh cong 1");
+                  
+                  }
+                  
+                )
+                break;
+            }
+            else{
+              
+              if(res.i3==(tagarray.length-1))
+              {
+                console.log("canthem vao");
+              console.log(tag[res.i2]);
+              productModel.addTag(tag[res.i2]);
+              console.log(tag[res.i2]);
+              productModel.IDsingle2(tag[res.i2]).then(
+                r=>{
+    
+                  
+                  console.log(res.iddd);
+                  console.log(r[0]);
+                  res.idtag = r[0];
+                  var enti = new Object;
+                  enti.proID=res.iddd;
+                  enti.tagID = res.idtag.tagID;
+                  
+                  productModel.addITag(enti);
+                 
+                  console.log(enti.tagID);
+                  console.log("thanh cong 2");
+                
+                }
+                
+              )
+            }
+            console.log(res.i3);
+            res.i3=res.i3+1;
+            }
+           
+          }
+          res.i2=res.i2+1;
+        }
       })
       
-      res.i = res.i + 1;
-      
-    }
-  })
+  
 
   res.redirect(/products/);
 
