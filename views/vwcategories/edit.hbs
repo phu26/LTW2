@@ -25,7 +25,7 @@
     <div class="card-body">
       {{#if this.error}}
       <div class="alert alert-danger" role="alert">
-        Invalid categoryId. <a href="/categories" class="alert-link">Back to List</a>.
+        Invalid categoryId. <a href="/user/{{authUser.f_ID}}/categories" class="alert-link">Back to List</a>.
       </div>
       {{else}}
       <div class="form-group">
@@ -36,10 +36,19 @@
         <label for="txtCatName">Category Name</label>
         <input type="text" class="form-control" id="txtCatName" name="CatName" value="{{this.category.CatName}}">
       </div>
+      <div class="form-group">
+        <label for="txtCatName">Editor</label>
+        <select class="form-control" name="CatID" id="cat" onchange="getSubCat()" >
+          {{#each lcCategories}}
+          <option value="{{cat_id}}">{{cat_name}}</option>
+          {{/each}}         
+        </select>
+        <input readonly type="text" class="form-control" id="txtEditor" name="CatName" value="{{userName}}">
+      </div>
       {{/if}}
     </div>
     <div class="card-footer text-right">
-      <a class="btn btn-outline-primary" href="/categories" role="button" title="Back">
+      <a class="btn btn-outline-primary" href="/user/{{authUser.f_ID}}/categories" role="button" title="Back">
         <i class="fa fa-backward" aria-hidden="true"></i>
         List
       </a>

@@ -9,7 +9,7 @@
     <div class="card-body">
       {{#if this.error}}
       <div class="alert alert-danger" role="alert">
-        Invalid categoryId. <a href="/categories" class="alert-link">Back to List</a>.
+        Invalid categoryId. <a href="/user/{{authUser.f_ID}}/categories" class="alert-link">Back to List</a>.
       </div>
       {{else}}
       <div class="form-group">

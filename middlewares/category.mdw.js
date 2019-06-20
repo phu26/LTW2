@@ -20,7 +20,8 @@ var cache = new LRU(cache_options);
 
 
   function getCategoryTree(callback) {
-    conn.query("SELECT * FROM `categories`", function(error, results, fields) {
+    conn.query("SELECT c.*,e.userName,e.user_ID FROM categories c left join editor e on c.CatID = e.CatID", function(error, results, fields) {
+   
       async.map(results, getCategory, callback);
     });
   }
@@ -29,12 +30,28 @@ var cache = new LRU(cache_options);
   and p.TinyDes!='' and c.CatID = 1
   group by c.subID, c.subName*/
 function getCategory(resultItem, callback) {
+  if(resultItem.userName)
+  { 
+    var userid = resultItem.user_ID;
+    var userN = resultItem.userName;
+    var supcat_id = resultItem.CatID;
+    var cat_name = resultItem.CatName;
+    conn.query("SELECT * FROM `subcategories` WHERE `CatID` = " + supcat_id, function(error, results, fields) {
+         var subcategories = results.map(getSubCategory);
+         callback(error, { cat_id: supcat_id, cat_name: cat_name,userName: userN,userID: userid, subcats: subcategories });
+       });}
+   
+  else
+  { var userN = resultItem.userName;
     var supcat_id = resultItem.CatID;
     var cat_name = resultItem.CatName;
     conn.query("SELECT * FROM `subcategories` WHERE `CatID` = " + supcat_id, function(error, results, fields) {
          var subcategories = results.map(getSubCategory);
          callback(error, { cat_id: supcat_id, cat_name: cat_name, subcats: subcategories });
-       });
+       });}
+ 
+   
+   
   }
 
   
@@ -66,6 +83,7 @@ function getCategory(resultItem, callback) {
     res.locals.lcCategories = data;
     next();
   }
+  //console.log(res.locals.lcCategories);
   //
 
   

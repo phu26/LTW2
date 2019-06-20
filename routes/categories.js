@@ -15,11 +15,12 @@ router.get('/', (req, res, next) => {
 })
 
 router.get('/add', (req, res, next) => {
-  res.render('vwCategories/add', { error: false, subcat: false });
+  res.render('vwCategories/add', { error: false, subcat: false,layout: 'main2.hbs' });
 })
+
 router.post('/add', (req, res, next) => {
   categoryModel.add(req.body).then(id => {
-    res.redirect('/categories');
+    res.redirect('/user/'+res.locals.authUser.f_ID+'/categories');
   }).catch(next);
 })
 
@@ -55,6 +56,15 @@ router.get('/edit/:id', (req, res, next) => {
 
   categoryModel.single(id)
     .then(rows => {
+      for(var c in res.locals.lcCategories)
+        {
+          if(res.locals.lcCategories[c].cat_id == id )
+          {  
+            res.userID = res.locals.lcCategories[c].userID;
+            res.userName = res.locals.lcCategories[c].userName;
+          }
+        }
+        console.log(res.userName);
       if (rows.length > 0) {
         res.cat = rows[0];
         categoryModel.subCatbyCat(res.cat.CatID).then(rows2 => {
@@ -62,6 +72,8 @@ router.get('/edit/:id', (req, res, next) => {
             res.render('vwCategories/edit', {
               error: false,
               category: res.cat,
+              userID: res.userID,
+              userName: res.userName,
               subcat: false,
             }).catch(next);
             return;
@@ -71,6 +83,8 @@ router.get('/edit/:id', (req, res, next) => {
           if (rows2.length > 0) {
             res.render('vwCategories/edit', {
               error: false,
+              userID: res.userID,
+              userName: res.userName,
               category: res.cat,
               subcat: res.sub,
             })
@@ -192,7 +206,7 @@ router.post('/:id/delete', (req, res, next) => {
   categoryModel.single(catid).then(rows => {
     if (rows.length > 0) {
       categoryModel.delete(catid).then(rows => {
-        res.redirect('/categories');
+        res.redirect('/user/'+res.locals.authUser.f_ID +'/categories');
       })
     }
     else { res.redirect('/categories' + catid); }
@@ -207,7 +221,7 @@ router.post('/:id1/delete/:id2', (req, res, next) => {
   var subid = req.params.id2;
   console.log(catid);
   if (isNaN(catid) || isNaN(subid)) {
-    res.redirect('/categories');
+    res.redirect('/user/'+res.locals.authUser.f_ID +'/categories');
   }
 
   categoryModel.single(catid).then(rows => {
@@ -226,20 +240,20 @@ router.post('/edit/update', (req, res, next) => {
   entity = req.body;
 
   categoryModel.update(entity).then(n => {
-    res.redirect('/categories/');
+    res.redirect('/user/'+res.locals.authUser.f_ID +'/categories');
   }).catch(next);
 })
 
 router.post('/delete', (req, res, next) => {
   categoryModel.delete(+req.body.CatID).then(n => {
-    res.redirect('/categories/');
+    res.redirect('/user/'+res.locals.authUser.f_ID +'/categories');
   }).catch(next);
 })
 
 router.post('/add/:id', (req, res, next) => {
   var id = req.params.id;
   if (isNaN(id)) {
-    res.redirect('/categories');
+    res.redirect('/user/'+res.locals.authUser.f_ID +'/categories');
   }
   var entity = req.body;
   categoryModel.addsub(entity).then(rows => {

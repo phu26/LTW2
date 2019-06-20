@@ -4,6 +4,7 @@ var async = require("async");
 var moment = require('moment');
 var mysql = require('mysql');
 var productModel = require('../models/product.model');
+var categoryModel = require('../models/product.model');
 var userModel = require('../models/user.model');
 var router = express.Router();
 var crypto = require('crypto');
@@ -93,6 +94,28 @@ var gCD = function (req, res, next) {
         })
         .catch(err => next(err));
 }
+router.get('/:id/categories', (req,res,next) => {
+    id = req.params.id;
+    if(res.locals.admin)
+    {
+    categoryModel.all()
+    .then(rows => {
+      res.render('vwCategories/index', {
+        categories: rows,
+        layout: 'main2.hbs'
+      });
+    }).catch(next);
+    }
+})
+router.get('/:id/typography', (req,res,next) => {
+    id = req.params.id;
+    if(res.locals.admin)
+    {
+        res.render('vwAdmin/typography', {
+            layout: 'main2.hbs'
+          });
+    }
+})
 router.get('/:id/table/', [p,p1, p2, p3, p4,gCD], function (req, res, next) {
     id = req.params.id;
 
@@ -100,17 +123,7 @@ router.get('/:id/table/', [p,p1, p2, p3, p4,gCD], function (req, res, next) {
         .then(rows => {
             account = rows[0];
             var dob = moment(account.f_DOB, 'YYYY-MM-DD').format('DD/MM/YYYY');
-            prod = req.prod;
-            prod1 = req.prod1;
-            prod2 = req.prod2;
-            prod3 = req.prod3;
-            prod4 = req.prod4;
-           
-           
-                
-           
-            
-            var entity = account;
+           var entity = account;
 
             entity.f_DOB = dob;
 
@@ -123,6 +136,11 @@ router.get('/:id/table/', [p,p1, p2, p3, p4,gCD], function (req, res, next) {
             }
             else
                 if (entity.f_Permission == 3) {
+                    prod = req.prod;
+                    prod1 = req.prod1;
+                    prod2 = req.prod2;
+                    prod3 = req.prod3;
+                    prod4 = req.prod4;
                     res.render("vwWriter/table", {
                         prod, prod1, prod2, prod3, prod4,
                         layout: 'main2.hbs'
