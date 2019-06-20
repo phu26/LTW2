@@ -58,9 +58,20 @@ var relatee = function (req, res, next) {
     })
     .catch(err => next(err));
 }
+var gTag = function (req, res, next) {
 
-router.get('/sp/:id', [cmt, relatee], function (req, res, next) {
+  productModel.gettag(req.params.id)
+      .then(rows4 => {
+          req.gT = rows4;
+
+          return next();
+
+      })
+      .catch(err => next(err));
+}
+router.get('/sp/:id', [cmt,gTag, relatee], function (req, res, next) {
   var id = req.params.id;
+  Tag= req.gT;
   console.log(id);
   if (id == '') {
     res.render('vwProducts/detail', { error: true });
@@ -96,7 +107,7 @@ router.get('/sp/:id', [cmt, relatee], function (req, res, next) {
 
     
         res.render('vwProducts/detail', {
-          error: false, product, k, showcmt, productRelate
+          error: false, product, k, showcmt, productRelate,Tag
 
         });
       } else {

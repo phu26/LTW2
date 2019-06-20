@@ -70,7 +70,30 @@ var p4 = function (req, res, next) {
         })
         .catch(err => next(err));
 }
-router.get('/:id/table/', [p,p1, p2, p3, p4], function (req, res, next) {
+var gCD = function (req, res, next) {
+
+    productModel.getCD(req.params.id)
+        .then(rows5 => {
+            console.log(rows5[0]);
+            var k= rows5[0];
+            if(k)
+            { res.getCD = rows5[0].CatID;
+         
+                productModel.getProCat(res.getCD) .then(rows6 => {
+                    req.PC = rows6;
+                    
+                    return next();
+                });}
+           else 
+           return next();
+
+            
+           
+
+        })
+        .catch(err => next(err));
+}
+router.get('/:id/table/', [p,p1, p2, p3, p4,gCD], function (req, res, next) {
     id = req.params.id;
 
     userModel.single(id)
@@ -82,10 +105,11 @@ router.get('/:id/table/', [p,p1, p2, p3, p4], function (req, res, next) {
             prod2 = req.prod2;
             prod3 = req.prod3;
             prod4 = req.prod4;
-            console.log(prod);
-            console.log(prod1);
-            console.log(prod2);
-            console.log(prod3);
+           
+           
+                
+           
+            
             var entity = account;
 
             entity.f_DOB = dob;
@@ -101,6 +125,17 @@ router.get('/:id/table/', [p,p1, p2, p3, p4], function (req, res, next) {
                 if (entity.f_Permission == 3) {
                     res.render("vwWriter/table", {
                         prod, prod1, prod2, prod3, prod4,
+                        layout: 'main2.hbs'
+
+
+                    });
+                }
+                else
+                if(entity.f_Permission == 4)
+                {
+                    prod5 = req.PC;
+                    res.render("vwEditor/table", {
+                        prod5,
                         layout: 'main2.hbs'
 
 
@@ -132,7 +167,7 @@ router.get('/:id/profile', (req, res, next) => {
                 });
             }
             else
-                if (entity.f_Permission == 3) {
+                if (entity.f_Permission !=5) {
                     res.render("vwWriter/profile", {
                         entity,
                         layout: 'main2.hbs'
@@ -243,7 +278,7 @@ router.get('/edit/:id', gTag,function(req, res, next) {
             
                     res.render("vwWriter/edit", {
                        product,Tag,
-                        layout: 'main2.hbs'
+                        layout: 'main2.hbs',
 
 
                     });

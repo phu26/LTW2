@@ -133,7 +133,13 @@ delI: id=> {
             
   return db.load(`DELETE FROM itiemtag WHERE proID = ${id}`);
 },
-
-
+getCD: id=> {
+            
+  return db.load(`Select CatID FROM editor WHERE user_ID  = ${id}`);
+},
+getProCat: id=> {
+            
+  return db.load(`SELECT p.*,u.f_Name FROM products p,users u,editor e WHERE p.CatID =${id} and p.CatID=e.CatID and p.author=u.f_ID`);
+},
 };
 

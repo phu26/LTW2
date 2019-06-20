@@ -14,6 +14,7 @@
 
     <!-- Bootstrap core CSS     -->
     <link href="http://localhost:3000/assets/css/bootstrap.min.css" rel="stylesheet" />
+    
 
     <!-- Animation library for notifications   -->
     <link href="http://localhost:3000/assets/css/animate.min.css" rel="stylesheet" />
@@ -43,8 +44,10 @@
 
     -->
             {{#if admin}}
+            
             <div class="sidebar-wrapper">
                 <div class="logo">
+                    <a href="/"><i  class="fa fa-arrow-circle-left fa-3x"></i></a>  
                     <a href="#" class="simple-text">
                         Administrator
                     </a>
@@ -101,12 +104,18 @@
                     </li>
                 </ul>
             </div>
-            {{/if}}
-            {{#if writer}}
+           {{else}}
+           
             <div class="sidebar-wrapper">
+              
                 <div class="logo">
+                  <a href="/"><i  class="fa fa-arrow-circle-left fa-3x"></i></a>  
                     <a href="#" class="simple-text">
+                        {{#if Writer}}
                         Writer
+                        {{else}}
+                        Editor
+                        {{/if}}
                     </a>
 
                 </div>

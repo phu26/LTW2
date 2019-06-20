@@ -61,11 +61,14 @@
           {{{FullDes}}}
         </p>
         <p class="card-text text-muted">
-          <small>Last upadated 3 minutes ago.</small>
+          <small>{{CreatedAt}}</small>
+         
         </p>
       </div>
     </div>
     {{/with}}
+    {{#each Tag}}
+    <span  class="badge badge-light"><a href="/categories/tag/{{tagID}}" style="float:left"> {{tagName}}</a></span>  {{/each}}
     {{/if}}
     {{#each showcmt}}
      <form >
