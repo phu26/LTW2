@@ -55,7 +55,7 @@
                                           <td id="tt{{ProID}}"> {{TrangThai}}</td>
                                        
   <td id="edit{{ProID}}" class="text-right">
-          <a class="btn btn-primary btn-sm" href="/user/edit/{{ProID}}" role="button" title="Edit">
+          <a class="btn btn-primary btn-sm" href="#" onClick="doSomething({{ProID}});" role="button" title="Edit">
             <i class="fa fa-pencil" aria-hidden="true"></i>
           </a>
          
@@ -86,11 +86,18 @@
                                             document.getElementById("tt{{ProID}}").innerText ="Đã xuất bản";
                                             if(id==4)
                                             document.getElementById("tt{{ProID}}").innerText ="Premium";
-                                           
+                                             
                                             if(id!=0)
+                                            {
+                                             
                                             document.getElementById("edit{{ProID}}").innerText =null;
-                                          
+                                            }
+
+                                             
                                           {{/each}}
+                                          function doSomething(id) {
+                                                   location.href = "/user/{{id}}/edit/"+id;
+                                            }
                                         </script>
 
 

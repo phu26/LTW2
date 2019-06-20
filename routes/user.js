@@ -100,11 +100,7 @@ router.get('/:id/table/', [p,p1, p2, p3, p4,gCD], function (req, res, next) {
         .then(rows => {
             account = rows[0];
             var dob = moment(account.f_DOB, 'YYYY-MM-DD').format('DD/MM/YYYY');
-            prod = req.prod;
-            prod1 = req.prod1;
-            prod2 = req.prod2;
-            prod3 = req.prod3;
-            prod4 = req.prod4;
+         
            
            
                 
@@ -113,7 +109,7 @@ router.get('/:id/table/', [p,p1, p2, p3, p4,gCD], function (req, res, next) {
             var entity = account;
 
             entity.f_DOB = dob;
-
+            console.log(entity.f_Permission) ;
             if (entity.f_Permission == 5) {
                 res.render("vwAdmin/table", {
                     layout: 'main2.hbs'
@@ -123,8 +119,13 @@ router.get('/:id/table/', [p,p1, p2, p3, p4,gCD], function (req, res, next) {
             }
             else
                 if (entity.f_Permission == 3) {
+                    prod = req.prod;
+                    prod1 = req.prod1;
+                    prod2 = req.prod2;
+                    prod3 = req.prod3;
+                    prod4 = req.prod4;
                     res.render("vwWriter/table", {
-                        prod, prod1, prod2, prod3, prod4,
+                        prod, prod1, prod2, prod3, prod4,id ,
                         layout: 'main2.hbs'
 
 
@@ -134,8 +135,9 @@ router.get('/:id/table/', [p,p1, p2, p3, p4,gCD], function (req, res, next) {
                 if(entity.f_Permission == 4)
                 {
                     prod5 = req.PC;
+                    console.log(id);
                     res.render("vwEditor/table", {
-                        prod5,
+                        prod5,id ,
                         layout: 'main2.hbs'
 
 
@@ -267,17 +269,26 @@ var gTag = function (req, res, next) {
         })
         .catch(err => next(err));
 }
-router.get('/edit/:id', gTag,function(req, res, next) {
+router.get('/:idu/edit/:id', gTag,function(req, res, next) {
     id = req.params.id;
     productModel.single3(id)
         .then(rows => {
             product = rows[0];
        console.log(product);
             Tag= req.gT;
+            res.tga = '';
+            for(var i =0; i<Tag.length ; i++)
+            {
+                if(i==(Tag.length -1) )
+              res.tga = res.tga + Tag[i].tagName;
+              else
+              res.tga = res.tga + Tag[i].tagName +',';
+            }
+            console.log(res.tga);
             console.log(Tag);
-            
+            t = res.tga;
                     res.render("vwWriter/edit", {
-                       product,Tag,
+                       product,Tag,t,
                         layout: 'main2.hbs',
 
 
@@ -297,9 +308,11 @@ var b2= function (req, res, next) {
       })
       .catch(err => next(err));
   }
-router.post('/edit/:id',b2,function(req,res) {
+router.post('/:idu/edit/:id',b2,function(req,res) {
 
-    
+    console.log(res.locals.authUser.f_Permission);
+    if(res.locals.authUser.f_Permission ==3)
+    {
     var entity = new Object;
     entity.CatID = req.body.CatID; 
     if(req.body.subCatID != null)
@@ -420,11 +433,65 @@ router.post('/edit/:id',b2,function(req,res) {
              res.i2=res.i2+1;
            }
          })
-         
+        }
+        else
+        if(res.locals.authUser.f_Permission == 4)
+        {
+            productModel.isNT(req.params.id)
+            .then(rows => {
+                
+              if(rows.length >0)
+              {
+                  
+              
+                  productModel.updateNT(req.params.id,req.body.SMS);
+                
+              }
+              else{
+                     
+                     
+                      productModel.addNT(req.params.id,req.body.SMS);
+              }
+             
+            
+        
+            })
+            .catch(err => next(err));
+       
+
+        }
      
    
      res.redirect(/user/);
    
     
+   })
+var KT= function (req, res, next) {
+    console.log(req.body.TinyDes);
+    
+  }
+router.post('/:idu/Accept/:id',b2,function(req,res) {
+    console.log(res.locals.authUser.f_Permission);
+    productModel.isNT(req.params.id)
+      .then(rows => {
+          
+        if(rows.length >0)
+        {
+            
+            productModel.Accept(req.params.id);
+            productModel.updateNT(req.params.id,req.body.SMS);
+          
+        }
+        else{
+                productModel.Accept(req.params.id);
+               
+                productModel.addNT(req.params.id,req.body.SMS);
+        }
+       
+      
+  
+      })
+      .catch(err => next(err));
+      res.redirect(/user/);
    })
 module.exports = router;

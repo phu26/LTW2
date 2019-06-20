@@ -101,29 +101,24 @@ router.post('/Newpass/:id', function (req, res) {
 
 
   var id = req.params.id;
-  var op = req.body.oldP;
+ 
   var np = req.body.newP;
   var saltRounds = 10;
 
   console.log(id);
   userModel.single(id).then(rows => {
     user = rows[0];
-    var ret = bcrypt.compareSync(op, user.f_Password);
+  
     var hash = bcrypt.hashSync(np, saltRounds);
-    console.log(ret);
-    if (ret) {
+    
+    
       userModel.updatePass(id, hash);
       res.render('vwAccount/Newpass', {
         message: 'completed',
         layout: false
       });
-    }
-    else {
-      res.render('vwAccount/Newpass', {
-        message: 'wrong pass',
-        layout: false
-      });
-    }
+    
+    
 
 
   });
@@ -170,7 +165,7 @@ router.post('/forgot', function (req, res, next) {
 
     var mailOptions = {
 
-      to: 'nguyentranphu1233@gmail.com',
+      to: ''+user.f_Email+'',
       from: '"Nodemailer Contact" <nguyentranphu1233@gmail.com>',
       subject: 'Node.js Password Reset',
       text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
