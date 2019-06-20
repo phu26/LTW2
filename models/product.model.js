@@ -141,5 +141,26 @@ getProCat: id=> {
             
   return db.load(`SELECT p.*,u.f_Name FROM products p,users u,editor e WHERE p.CatID =${id} and p.CatID=e.CatID and p.author=u.f_ID`);
 },
+Accept: id=> {
+            
+  return db.load(`UPDATE products SET TrangThai = 1 WHERE ProID = ${id}`);
+},
+Decline: id=> {
+            
+  return db.load(`UPDATE products SET TrangThai = 2 WHERE ProID = ${id}`);
+},
+isNT: id=> {
+            
+  return db.load(`SELECT noTi FROM notification WHERE ProID = ${id}`);
+},
+addNT:(id,message)=> {
+            
+  return db.load(`INSERT INTO notification( ProID, noTi) VALUES (${id},'${message}')`);
+},
+updateNT:(id,message)=> {
+            
+  return db.load(`UPDATE notification SET noTi= '${message}' where ProID=${id} `);
+},
 };
+
 

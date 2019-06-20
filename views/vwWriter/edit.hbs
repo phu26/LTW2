@@ -437,12 +437,11 @@
         {{/with}}
   <div class="form-group">
     <div class="input-group input-group-lg">
-      <div class="input-group-prepend">
-        <span class="input-group-text">Nhập các Tag :</span>
-      </div>
-      <textarea class="form-control" maxlength="150" placeholder="#tag1,#tag2,#tag...." rows="1" name="tags"
-        aria-label="With textarea">{{#each Tag}} {{tagName}} {{/each}}
-        </textarea>
+        <div class="input-group-prepend">
+          <span class="input-group-text">Nhập các Tag :</span>
+        </div>
+        <textarea class="form-control" maxlength="150" placeholder="#tag1,#tag2,#tag...." rows="1" name="tags"
+          aria-label="With textarea">{{#if t}}{{t}}{{else}}''{{/if}}</textarea>
     </div>
     <div class="card-footer text-right">
       <div class="input-group input-group-lg">
@@ -450,6 +449,7 @@
         <span class="input-group-text">Tác giả:{{authUser.f_Name}}
            
            </span>
+           
            <div class="col-sm-10">
       <input type="hidden" name="author" readonly class="form-control-plaintext" id="staticEmail" value="{{authUser.f_ID}}">
     </div>
@@ -457,8 +457,20 @@
       </div>
       
     </div>
+     <div class="input-group input-group-lg">
+      <div class="input-group-prepend">
+          <span class="input-group-text">Nhập Lời Nhắn:</span>
+        </div>
+        <textarea class="form-control" maxlength="150" placeholder="...." rows="1" name="SMS"
+          ></textarea>
+      
+    </div>
+    
+      <button type="submit" formaction="/user/{{authUser.f_ID}}/Accept/{{#with product}}{{ProID}}{{/with}}" class="btn btn-lg btn-primary btn-block">
+        Duyệt
+      </button>
       <button type="submit" class="btn btn-lg btn-primary btn-block">
-        Upload
+        Từ chối
       </button>
     </div>
 
