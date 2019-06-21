@@ -15,15 +15,8 @@ router.get('/', (req, res, next) => {
     }).catch(next);
 })
 
-router.get('/add', (req, res, next) => {
-  res.render('vwCategories/add', { error: false, subcat: false,layout: 'main2.hbs' });
-})
 
-router.post('/add', (req, res, next) => {
-  categoryModel.add(req.body).then(id => {
-    res.redirect('/user/'+res.locals.authUser.f_ID+'/categories');
-  }).catch(next);
-})
+
 
 router.get('/add/:id', (req, res, next) => {
   var id = req.params.id;

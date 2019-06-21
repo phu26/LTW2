@@ -131,16 +131,14 @@
     </form>
     {{#if isAuthenticated}}
     {{#if guest}}
-    <div class="dropdown show">
-      <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
+   
+      <a class="btn btn-secondary dropdown-toggle" href="/user/{{authUser.f_ID}}/profile" role="button" id="dropdownMenuLink"   
         aria-haspopup="true" aria-expanded="false">
         Guest
       </a>
 
-      <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
-        <a class="dropdown-item" href="#">Nâng cấp Subscriber</a>
-      </div>
-    </div>
+    
+   
     {{/if}}
     
     {{#if subscriber}}

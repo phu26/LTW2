@@ -13,7 +13,22 @@ var bcrypt = require('bcrypt');
 var passport = require('passport');
 router.get('/', (req, res, next) => {
 
-    res.render("vwAdmin/dashboard", { layout: 'main2.hbs' });
+    userModel.allNT().then(rows=>{
+
+
+      notification = rows;
+      userModel.allNT2().then(x=>{
+        notification2 =x;
+        userModel.countByNoti().then(r=>{
+          count = r[0].tong;
+          console.log(count);
+          res.render("vwAdmin/dashboard", { notification,count,notification2,layout: 'main2.hbs' });
+        })
+      })
+     
+     
+    })
+   
 })
 
 
@@ -101,12 +116,28 @@ router.get('/:id/categories', (req,res,next) => {
     {
     categoryModel.all()
     .then(rows => {
-      res.render('vwCategories/index', {
-        categories: rows,
-        layout: 'main2.hbs'
+
+      var chuck = [];
+      for(var i=0;i<rows.length;i+=1){
+      chuck.push(rows.slice(i,i+1));
+      console.log(rows.slice(i,i+1));
+     
+      }
+      console.log(rows);
+      res.render('vwAdmin/index', {
+      categories : rows,
+      layout:'main2.hbs'
       });
     }).catch(next);
     }
+})
+router.get('/:id/categories/add', (req, res, next) => {
+  res.render('vwAdmin/add', { error: false, subcat: false,layout: 'main2.hbs' });
+})
+router.post('/:id/categories/add', (req, res, next) => {
+  categoryModel.add(req.body).then(id => {
+    res.redirect('/user/'+res.locals.authUser.f_ID+'/categories');
+  }).catch(next);
 })
 router.get('/:id/members', (req,res,next) => {
     id = req.params.id;
@@ -258,8 +289,13 @@ router.get('/:id/profile', (req, res, next) => {
             var entity = account;
 
             entity.f_DOB = dob;
+            productModel.isNT(entity.f_ID).then(kq=>{
+              if(kq)
+                var mes = 1;
+              else
+                var mes = null;
 
-            if (entity.f_Permission == 5) {
+              if (entity.f_Permission == 5) {
                 res.render("vwAdmin/profile", {
                     entity,
                     layout: 'main2.hbs'
@@ -269,13 +305,26 @@ router.get('/:id/profile', (req, res, next) => {
             }
             else
                 if (entity.f_Permission !=5) {
-                    res.render("vwWriter/profile", {
-                        entity,
-                        layout: 'main2.hbs'
+                  if(mes==1)
+                  { res.render("vwWriter/profile", {
+                    entity,mes,
+                    layout: 'main2.hbs'
 
 
-                    });
+                });}
+                else{
+                  res.render("vwWriter/profile", {
+                    entity,
+                    layout: 'main2.hbs'
+
+
+                });
                 }
+                   
+                }
+            })
+           
+              
         }).catch(next);
 })
 // Khởi tạo biến cấu hình cho việc lưu trữ file upload
@@ -542,14 +591,14 @@ router.post('/:idu/edit/:id',b2,function(req,res) {
               if(rows.length >0)
               {
                   
-              
-                  productModel.updateNT(req.params.id,req.body.SMS);
+                  res.sms = "Từ chối:"+"  "+req.body.SMS;
+                  productModel.updateNT(req.params.id,res.sms);
                 
               }
               else{
                      
-                     
-                      productModel.addNT(req.params.id,req.body.SMS);
+                res.sms = "Từ chối:"+"  "+req.body.SMS;
+                      productModel.addNT(req.params.id,res.sms,0);
               }
              
             
@@ -570,27 +619,162 @@ var KT= function (req, res, next) {
     
   }
 router.post('/:idu/Accept/:id',b2,function(req,res) {
-    console.log(res.locals.authUser.f_Permission);
+    
+    console.log(req.body.ProName);
+    console.log(req.body.TinyDes);
+    console.log(req.body.FullDes);
+    console.log(req.body.CatID);
+    console.log(req.body.subCatID);
+    console.log(req.body.pic);
+    var tagg = req.body.tags;
+    var tag  = tagg.split(",");
+
     productModel.isNT(req.params.id)
       .then(rows => {
           
         if(rows.length >0)
         {
+            res.sms = "duyệt:"+req.body.SMS;
+           productModel.Accept(req.params.id);
+            productModel.updateNT(req.params.id,res.sms);
+        productModel.updatePro(req.params.id,req.body.ProName,req.body.TinyDes,req.body.FullDes,req.body.CatID,req.body.subCatID,req.body.pic);
+
             
-            productModel.Accept(req.params.id);
-            productModel.updateNT(req.params.id,req.body.SMS);
           
         }
         else{
+          res.sms = "duyệt:"+req.body.SMS;
                 productModel.Accept(req.params.id);
                
-                productModel.addNT(req.params.id,req.body.SMS);
+                productModel.addNT(req.params.id,res.sms,0);
+              productModel.updatePro(req.params.id,req.body.ProName,req.body.TinyDes,req.body.FullDes,req.body.CatID,req.body.subCatID,req.body.pic);
+          
         }
        
       
   
       })
       .catch(err => next(err));
+
+      var tagarray = [];
+      productModel.alltag().then(rew=>{
+        for( res.i in rew)
+        {
+          tagarray.push(rew[res.i].tagName);
+         res.i = res.i+1;
+        }
+        console.log(tagarray.length);
+        for(res.i2 in tag)
+        {
+          res.i3 = 0;
+          console.log(res.i2);
+          for(res.i3 in tagarray)
+          {
+            console.log(res.i3);
+            if(tagarray[res.i3]===tag[res.i2])
+            {
+
+                console.log("da co ");
+                console.log(tag[res.i2]);
+                res.newi = tag[res.i2];
+                console.log(req.params.id)
+                productModel.tagInfo(tag[res.i2]).then(tg=>{
+                  console.log(tg[0].tagID);
+                  productModel.isitiemTag(req.params.id,tg[0].tagID).then(re=>{
+                    res.proi =req.params.id;
+                    console.log(res.proi);
+                    if(re.length>0)
+                    {
+
+                        console.log("có");
+                        productModel.updateitiemTag(req.params.id,tg[0].tagID);
+                    }
+                    else
+                    {
+                      console.log("không có");
+                      var enti = new Object;
+                      enti.proID=res.proi;
+                      enti.tagID = tg[0].tagID;
+                      
+                      productModel.addITag(enti);
+                     
+                      console.log(enti.tagID);
+                      console.log("thanh cong rôi");
+                    }
+                  })
+                })
+               
+               break;
+               
+            }
+            else{
+              
+              if(res.i3==(tagarray.length-1))
+              {
+                console.log("canthem vao");
+              console.log(tag[res.i2]);
+            productModel.addTag(tag[res.i2]);
+            console.log(tag[res.i2]);
+            res.newi = tag[res.i2];
+            console.log(req.params.id)
+            productModel.tagInfo(tag[res.i2]).then(tg=>{
+              console.log(tg[0].tagID);
+              productModel.isitiemTag(req.params.id,tg[0].tagID).then(re=>{
+                res.proi =req.params.id;
+                console.log(res.proi);
+                if(re.length>0)
+                {
+
+                    console.log("có");
+                    productModel.updateitiemTag(req.params.id,tg[0].tagID);
+                }
+                else
+                {
+                  console.log("không có");
+                  var enti = new Object;
+                  enti.proID=res.proi;
+                  enti.tagID = tg[0].tagID;
+                  
+                  productModel.addITag(enti);
+                 
+                  console.log(enti.tagID);
+                  console.log("thanh cong rôi");
+                }
+              })
+            })
+           
+            
+            }
+            console.log(res.i3);
+            res.i3=res.i3+1;
+            }
+           
+          }
+          res.i2=res.i2+1;
+        }
+      }).catch(err => next(err));
+     
       res.redirect(/user/);
    })
+  router.get('/:id/Update', (req, res, next) => {
+    res.sms2 = res.locals.authUser.f_Name+" "+"Gửi yêu cầu làm subriber";
+    productModel.isNT(req.params.id).then(ro=>{
+
+      if(ro.length >0)
+      {
+        productModel.updateNT(req.params.id,res.sms2).then(id => {
+          res.redirect('/user/'+res.locals.authUser.f_ID+'/profile');
+        }).catch(next);
+      }
+      else{
+        productModel.addNT(0,res.sms2,req.params.id).then(id => {
+          res.redirect('/user/'+res.locals.authUser.f_ID+'/profile');
+        }).catch(next);
+      }
+
+
+    
+    })
+   
+  })
 module.exports = router;

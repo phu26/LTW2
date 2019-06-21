@@ -74,8 +74,15 @@
                                <center> <button type="submit" class="btn btn-info btn-fill ">Update Profile</button></center>    
                                     
                                 </form>
+                                
                             </div>
+                            
                         </div>
+                         {{#if isAuthenticated}}
+                          {{#if guest}}
+                        <center> <a href="/user/{{f_ID}}/Update/"><button type="submit"  style="width: 200px" class="btn btn-info btn-fill ">{{#if mes}}Đã gửi yêu cầu{{else}}Update{{/if}} </button></center>  </a> 
+                        {{/if}}
+                        {{/if}}
                     </div>
                     <div class="col-md-4">
                         <div class="card card-user">

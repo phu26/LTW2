@@ -49,4 +49,16 @@ module.exports = {
   updatePass: (id ,newP)=> {
     return db.load(`UPDATE users SET f_Password = '${newP}' where f_ID = ${id}`);
   },
+  allNT: ()=> {
+    return db.load(`SELECT * FROM notification n , products p where n.ProID = p.ProID `);
+  },
+  allNT2: ()=> {
+    return db.load(`SELECT * FROM notification n ,users u where u.f_ID = n.user_ID`);
+  },
+  
+  countByNoti: ()=> {
+    return db.load(`SELECT count(*) as tong FROM notification`);
+  },
 };
+
+

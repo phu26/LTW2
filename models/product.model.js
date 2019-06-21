@@ -151,15 +151,27 @@ Decline: id=> {
 },
 isNT: id=> {
             
-  return db.load(`SELECT noTi FROM notification WHERE ProID = ${id}`);
+  return db.load(`SELECT noTi FROM notification WHERE ProID = ${id} or user_ID = ${id} `);
 },
-addNT:(id,message)=> {
+addNT:(id,message,idu)=> {
             
-  return db.load(`INSERT INTO notification( ProID, noTi) VALUES (${id},'${message}')`);
+  return db.load(`INSERT INTO notification( ProID, noTi,user_ID) VALUES (${id},'${message}',${idu})`);
 },
 updateNT:(id,message)=> {
             
-  return db.load(`UPDATE notification SET noTi= '${message}' where ProID=${id} `);
+  return db.load(`UPDATE notification SET noTi= '${message}' where ProID=${id} or user_ID=${id} `);
+},
+updatePro:(id,ProName,TinyDes,FullDes,CatID,subCatID,pic)=> {
+            
+  return db.load(`UPDATE products SET ProName="${ProName}",TinyDes='${TinyDes}',FullDes='${FullDes}',CatID=${CatID},subCatID=${subCatID},pic='${pic}' WHERE ProID =${id} `);
+},
+isitiemTag: (id,idtag)=> {
+            
+  return db.load(`SELECT * FROM itiemtag WHERE proID = ${id} and tagID= ${idtag}`);
+},
+updateitiemTag: (id,idtag)=> {
+            
+  return db.load(`UPDATE itiemtag SET tagID = ${idtag} WHERE proID = ${id}`);
 },
 };
 
