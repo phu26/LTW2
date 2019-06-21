@@ -4,7 +4,12 @@ module.exports = {
   all: () => {
     return db.load('select * from users');
   },
-
+  allByP: (id) => {
+    return db.load(`select * from users where f_Permission = ${id}`);
+  },
+  alltag: () => {
+    return db.load(`select * from tag order by tagID`);
+  },
   single: id => {
     return db.load(`select * from users where f_ID = ${id}`);
   },
