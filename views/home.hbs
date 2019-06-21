@@ -54,7 +54,9 @@ text-decoration:solid;
    text-align: center;
   box-shadow: inset 0px 0px  14px #BAD3C7;
 }
+
 </style>
+
 <main  role="main">
       <div>
         <div><card-header> <div class="input-group-prepend">
@@ -107,10 +109,11 @@ text-decoration:solid;
           </div>
       <div  class="card-deck mb-4 text-center">
 
-      
+
+      {{#if New}}
         {{#each New}}
         
-    
+      
          <a style="background-image:url({{pic}})" id="d" href="products/sp/{{ProID}}"  >
           
             <h5  class="mb-1"> <b>{{CatName}}</b></h5>
@@ -135,22 +138,24 @@ text-decoration:solid;
                
                 </small></span>
                 <br>
-              <span class="badge badge-light" href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> 25</span>
-              <span class="badge badge-light" href="#"><i class="fa fa-eye" aria-hidden="true"></i> 25</span>
+              <span class="badge badge-light" href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> </span>
+              <span class="badge badge-light" href="#"><i class="fa fa-eye" aria-hidden="true"></i> {{Click}}</span>
                 
      </footer>
   </a>
        
              {{/each}}
-            
+            {{/if}}
       </div>
         </div>
+         {{#if subscriber}}
           <div class="col-sm-2 news" >
              <div  id="border" style="width: 100" class="card-header">
-               <h4  class="my-0 font-weight-normal"> gggggggggggg</h4>
+               <h4  class="my-0 font-weight-normal"> Premium</h4>
           </div>
            
           </div>
+          {{/if}}
     <div class="col-sm-4  news   " >
       
       <div  id="border" style="width: 100" class="card-header">
@@ -160,6 +165,7 @@ text-decoration:solid;
     
      <div class="col-sd-6"> 
        <div class="list-group">
+
          {{#each tcm}}
           {{#each subcats}}
   <a style="background-image:url({{sub_pic}})" id="c" href="products/sp/{{sub_id}}" >
@@ -196,7 +202,7 @@ text-decoration:solid;
           </div>
       <div style="background-image:url('/pic/xc.jpg')" class="card-deck mb-3 text-center">
 
-      
+      {{#if Host}}
         {{#each Host}}
         <div class="card mb-{TinyDes}}4 box-shadow">
     
@@ -217,6 +223,7 @@ text-decoration:solid;
     
         </div>
              {{/each}}
+             {{/if}}
       </div>
     
       <div class="card-columns">
@@ -231,6 +238,7 @@ text-decoration:solid;
       </footer>
     </blockquote>
   </div>
+  {{#if Host2}}
        {{#each Host2}}
         <a style="color: black"  href="/products/sp/{{ProID}}">
   <div class="card">
@@ -245,7 +253,7 @@ text-decoration:solid;
   
   {{/each}}
 
-  
+  {{/if}}
   
   
 </div>

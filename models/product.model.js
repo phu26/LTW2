@@ -3,15 +3,15 @@ var config = require('../config/default.json');
 module.exports = {
     all: () => {
             
-        return db.load(`SELECT * FROM products `);
+        return db.load(`SELECT * FROM products and TrangThai = 3`);
     },
     allByCat: catID => {
             
-        return db.load(`select * from products where CatID= ${catID} and TinyDes!=''` );
+        return db.load(`select * from products where CatID= ${catID} and TinyDes!='' and TrangThai = 3` );
     },
     single: id => {
             
-        return db.load(`select * from products where ProID = '${id}'`);
+        return db.load(`select * from products where ProID = '${id}' and TrangThai = 3`);
     },
     single2: id => {
             
@@ -22,26 +22,26 @@ module.exports = {
         return db.add('products',entity);
     },
     countByCat: catId => {
-        return db.load(`select count(*) as total from products where CatID = ${catId} and TinyDes!=''`);
+        return db.load(`select count(*) as total from products where CatID = ${catId} and TinyDes!='' and TrangThai = 3`);
       },
       pageByCat: (catId, start_offset) => {
         var lim = config.paginate.default;
-        return db.load(`select * from products where CatID = ${catId} and TinyDes!='' limit ${lim} offset ${start_offset}`);
+        return db.load(`select * from products where CatID = ${catId} and TinyDes!='' and TrangThai = 3 limit ${lim} offset ${start_offset}`);
       },
      
       countBySubCat: (subcatId) => {  
-        return db.load(`select count(*) as total from products where subCatID = ${subcatId} and TinyDes!=''`);
+        return db.load(`select count(*) as total from products where subCatID = ${subcatId} and TinyDes!='' and TrangThai = 3`);
       },
       pageBySubCat: (subID, start_offset) => {
         var lim = config.paginate.default;
-        return db.load(`select * from products where subCatID = ${subID} and TinyDes!='' limit ${lim} offset ${start_offset}`);
+        return db.load(`select * from products where subCatID = ${subID} and TinyDes!='' and TrangThai = 3 limit ${lim} offset ${start_offset}`);
       },
       countByTag: (tagID) => {  
-        return db.load(`select COUNT(*) as total from products p ,itiemtag i where p.ProID=i.proID and i.tagID=${tagID} and TinyDes!=''`);
+        return db.load(`select COUNT(*) as total from products p ,itiemtag i where p.ProID=i.proID and i.tagID=${tagID} and TinyDes!='' and p.TrangThai = 3`);
       },
       pageByTag: (tagID, start_offset) => {
         var lim = config.paginate.default;
-        return db.load(`select p.*  from products p ,itiemtag i where p.ProID=i.proID and i.tagID=${tagID} and TinyDes!='' limit ${lim} offset ${start_offset}`);
+        return db.load(`select p.*  from products p ,itiemtag i where p.ProID=i.proID and i.tagID=${tagID} and TinyDes!='' and p.TrangThai = 3 limit ${lim} offset ${start_offset}`);
       },
       update: entity => {
         var id = entity.ProID;
@@ -62,17 +62,17 @@ module.exports = {
       return db.load(`select * from users where f_Name = '${name}'`);
   },
    AddCmt: (content, idU,idP) => {
-    return db.load(`INSERT INTO  comment( Content, idUser, idProduct,CreatedAt) VALUES ('${content}',${idU},'${idP}',now())`);
+    return db.load(`INSERT INTO  comment( Content, idUser, idProduct,CreatedAt) VALUES ('${content}',${idU},${idP},now())`);
 },
 ShowCmt: name => {
             
   return db.load(`SELECT DISTINCT c.*,u.f_Name FROM  comment c 
   LEFT JOIN users u on c.idUser = u.f_ID
-  RIGHT JOIN products p on c.idProduct = '${name}'`);
+  RIGHT JOIN products p on c.idProduct = ${name}`);
 },
 related: name => {
             
-  return db.load(`select * from products where ProName != '${name}' `);
+  return db.load(`select * from products where ProID != ${name} and TrangThai = 3 `);
 },
 
 tagInfo: name => {

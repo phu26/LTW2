@@ -118,19 +118,20 @@
 
                         Nhà báo
 
-                        {{else}}
+                        {{/if}}
+                        {{#if editor}}
                         Biên tập viên
+                      
+                
+                        {{/if}}
+                        {{#if subscriber}}
+                        subscriber
                         {{/if}}
                     </a>
 
                 </div>
                 <ul class="nav">
-                    <li>
-                        <a href="/user/">
-                            <i class="pe-7s-graph"></i>
-                            <p>Dashboard</p>
-                        </a>
-                    </li>
+                  
                     <li>
                         <a href="/user/{{authUser.f_ID}}/profile">
                             <i class="pe-7s-user"></i>

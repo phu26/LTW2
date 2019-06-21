@@ -70,7 +70,7 @@ var tag = function(req,res,next){
  function getCategory(resultItem, callback) {
      var supcat_id = resultItem.CatID;
      var cat_name = resultItem.CatName;
-     conn.query(`SELECT * from  products p WHERE p.CatID = ${supcat_id} ORDER by p.CreatedAt DESC limit 1`, function(error, results, fields) {
+     conn.query(`SELECT * from  products p WHERE p.CatID = ${supcat_id} and p.TrangThai=3 ORDER by p.CreatedAt DESC limit 1`, function(error, results, fields) {
           var subcategories = results.map(getSubCategory);
           callback(error, { cat_id: supcat_id, cat_name: cat_name, subcats: subcategories });
         });
@@ -89,24 +89,47 @@ var tag = function(req,res,next){
    
  
 router.get('/',[top3host,top10host,b,tag],function(req,res,next){
-  var dob5 = moment(req.New.CreatedAt, 'YYYY-MM-DD').format('DD/MM/YYYY');
-     var dob = moment(req.H1.CreatedAt, 'YYYY-MM-DD').format('DD/MM/YYYY');
-     var dob2 = moment(req.H2.CreatedAt, 'YYYY-MM-DD').format('DD/MM/YYYY');
-     var dob3 = moment(req.H3.CreatedAt, 'YYYY-MM-DD').format('DD/MM/YYYY');
-     var dob4 = moment(req.Host2.CreatedAt, 'YYYY-MM-DD').format('DD/MM/YYYY');
+  if(req.New)
+  { var dob5 = moment(req.New.CreatedAt, 'YYYY-MM-DD').format('DD/MM/YYYY');
+ 
+  var entity5 = req.New;
+  entity5.CreatedAt = dob5;
+}
+ 
+  if(req.H1)
+  {var dob = moment(req.H1.CreatedAt, 'YYYY-MM-DD').format('DD/MM/YYYY');
+  var entity1 = req.H1;
+  entity1.CreatedAt = dob;
+ }
      
-     var entity1 = req.H1;
+     if(req.H2)
+     {var dob2 = moment(req.H2.CreatedAt, 'YYYY-MM-DD').format('DD/MM/YYYY');
      var entity2 = req.H2;
+     entity2.CreatedAt = dob2;}
+     
+     
+     if(req.H3)
+     {var dob3 = moment(req.H3.CreatedAt, 'YYYY-MM-DD').format('DD/MM/YYYY');
      var entity3 = req.H3;
+     entity3.CreatedAt = dob3;}
+    
+     if(req.Host2)
+     {var dob4 = moment(req.Host2.CreatedAt, 'YYYY-MM-DD').format('DD/MM/YYYY');
      var entity4 = req.Host2;
-     var entity5 = req.New;
+     entity4.CreatedAt = dob4;}
+     
+    
+  
+     
+
+   
      var TAG = req.Tag;
    
-     entity1.CreatedAt = dob;
-     entity2.CreatedAt = dob2;
-     entity3.CreatedAt = dob3;
-     entity4.CreatedAt = dob4;
-     entity5.CreatedAt = dob5;
+    
+    
+  
+    
+   
 
      getCategoryTree(function(err, result) {
           console.log(JSON.stringify(result, null, "  "));
