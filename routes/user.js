@@ -107,6 +107,16 @@ router.get('/:id/categories', (req,res,next) => {
     }).catch(next);
     }
 })
+router.get('/:id/members', (req,res,next) => {
+    id = req.params.id;
+    if(res.locals.admin)
+    {
+    
+      res.render('vwAdmin/members', {
+        layout: 'main2.hbs'
+      });
+    }
+})
 router.get('/:id/typography', (req,res,next) => {
     id = req.params.id;
     if(res.locals.admin)

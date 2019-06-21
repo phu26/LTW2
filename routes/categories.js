@@ -9,7 +9,8 @@ router.get('/', (req, res, next) => {
   categoryModel.all()
     .then(rows => {
       res.render('vwCategories/index', {
-        categories: rows
+        categories: rows,
+        layout: 'main2.hbs'
       });
     }).catch(next);
 })
@@ -235,10 +236,15 @@ router.post('/:id1/delete/:id2', (req, res, next) => {
     else { res.redirect('/categories/edit' + catid); }
   }).catch(next);
 })
-
+// lỗi
 router.post('/edit/update', (req, res, next) => {
   entity = req.body;
-
+  editor = entity.editor;
+  delete entity.editor;
+  if(editor)
+  {
+    id = req.body.CatID;
+  }
   categoryModel.update(entity).then(n => {
     res.redirect('/user/'+res.locals.authUser.f_ID +'/categories');
   }).catch(next);

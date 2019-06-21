@@ -21,14 +21,14 @@ var cache = new LRU(cache_options);
 
   function getUsersTree(callback) {
     conn.query("SELECT * FROM permission", function(error, results, fields) {
-      console.log(results);
+      //console.log(results);
       async.map(results, getPermission, callback);
     });   
   }
 
 function getPermission(resultItem, callback) {
-  console.log("resultItem");
-  console.log(resultItem);
+  //console.log("resultItem");
+  //console.log(resultItem);
     var permission_id = resultItem.id;
     var permission = resultItem.permission;
     conn.query("SELECT * FROM `users` WHERE `f_Permission` = " + permission_id, function(error, results, fields) {
@@ -41,6 +41,7 @@ function getPermission(resultItem, callback) {
     return {
       user_id: resultItem.f_ID,
       user_name: resultItem.f_Name,
+      user_username: resultItem.f_Username,
       user_email: resultItem.f_Email
     };
   }

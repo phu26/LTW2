@@ -33,18 +33,22 @@
         <input readonly type="text" class="form-control" id="txtCatID" name="CatID" value="{{this.category.CatID}}">
       </div>
       <div class="form-group">
-        <label for="txtCatName">Category Name</label>
+        <label for="txtCatName">Tên danh mục</label>
         <input type="text" class="form-control" id="txtCatName" name="CatName" value="{{this.category.CatName}}">
       </div>
       <div class="form-group">
-        <label for="txtCatName">Editor</label>
-        <select class="form-control" name="CatID" id="cat" onchange="getSubCat()" >
-          {{#each lcCategories}}
-          <option value="{{cat_id}}">{{cat_name}}</option>
-          {{/each}}         
-        </select>
+        <label for="txtCatName">Biên tập viên phụ trách</label>
         <input readonly type="text" class="form-control" id="txtEditor" name="CatName" value="{{userName}}">
       </div>
+      <div class="form-group">
+        <label for="txtCatName">Điều chỉnh biên tập viên cho chuyên mục</label>
+        <select class="form-control" name="editor" id="cat" >
+          {{#each lcUsers.[3].users}}
+          <option value="{{user_id}}">{{user_name}}</option>         
+          {{/each}}
+        </select>
+      </div>
+      
       {{/if}}
     </div>
     <div class="card-footer text-right">

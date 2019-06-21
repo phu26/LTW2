@@ -7,6 +7,9 @@ module.exports = {
   subcat: id  => {
     return db.load(`select * from subcategories where subid= ${id}`);
   },
+  updateEditor: (catid,editorid)  => {
+    return db.load(`insert into editor`);
+  },
   allWithDetails: () => {
     return db.load(`
     select c.*, count(p.ProID) as num_of_products

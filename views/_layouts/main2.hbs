@@ -35,7 +35,7 @@
     {{#if isAuthenticated}}
 
     <div class="wrapper">
-        <div class="sidebar" data-color="purple" data-image="http://localhost:3000/assets/img/sidebar-5.jpg">
+        <div class="sidebar" data-color="red" data-image="http://localhost:3000/assets/img/sidebar-5.jpg">
 
             <!--
 
@@ -76,6 +76,12 @@
                         <a href="/user/{{authUser.f_ID}}/categories/">
                             <i class="pe-7s-note2"></i>
                             <p>Quản lý danh mục</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/user/{{authUser.f_ID}}/members/">
+                            <i class="pe-7s-note2"></i>
+                            <p>Quản lý tài khoản thành viên</p>
                         </a>
                     </li>
                     <li>
