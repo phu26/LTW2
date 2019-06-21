@@ -129,22 +129,22 @@
                                         <th scope="col">Tên đăng nhập</th>
                                         <th scope="col">Email</th>
                                         <th scope="col" class="text-right">
-                                            <a class="btn btn-outline-success btn-sm" href="/categories/add"
+                                            <a class="btn btn-outline-success btn-sm" href="/user/admin/register"
                                                 role="button" title="Add">
                                                 <i class="fa fa-plus" aria-hidden="true"></i>
-                                                Add Category
+                                                Thêm tài khoản
                                             </a>
                                         </th>
 
                                     </tr>
                                 </thead>
                                 <tbody id="tbAdmin">
-                                    {{#each lcUsers.[4].users}}
+                                    {{#each admins}}
                                     <tr>
-                                        <th scope="row">{{user_id}}</th>
-                                        <td>{{user_name}}</td>
-                                        <td>{{user_username}}</td>
-                                        <td>{{user_email}}</td>
+                                        <th scope="row">{{f_ID}}</th>
+                                        <td>{{f_Name}}</td>
+                                        <td>{{f_Username}}</td>
+                                        <td>{{f_Email}}</td>
                                         <td class="text-right">
                                             <a class="btn btn-primary btn-sm" href="/categories/edit/{{cat_id}}"
                                                 role="button" title="Edit">
@@ -202,12 +202,12 @@
                                     </tr>
                                 </thead>
                                 <tbody id="tbEditor">
-                                    {{#each lcUsers.[3].users}}
+                                    {{#each editors}}
                                     <tr>
-                                        <th scope="row">{{user_id}}</th>
-                                        <td>{{user_name}}</td>
-                                        <td>{{user_username}}</td>
-                                        <td>{{user_email}}</td>
+                                        <th scope="row">{{f_ID}}</th>
+                                        <td>{{f_Name}}</td>
+                                        <td>{{f_Username}}</td>
+                                        <td>{{f_Email}}</td>
                                         <td class="text-right">
                                             <a class="btn btn-secondary btn-sm" href="" role="button" title="Edit">
                                                 <i class="fa fa-bars"></i>
@@ -260,12 +260,12 @@
                                     </tr>
                                 </thead>
                                 <tbody id="tbWriter">
-                                    {{#each lcUsers.[2].users}}
+                                    {{#each writters}}
                                     <tr>
-                                        <th scope="row">{{user_id}}</th>
-                                        <td>{{user_name}}</td>
-                                        <td>{{user_username}}</td>
-                                        <td>{{user_email}}</td>
+                                        <th scope="row">{{f_ID}}</th>
+                                        <td>{{f_Name}}</td>
+                                        <td>{{f_Username}}</td>
+                                        <td>{{f_Email}}</td>
                                         <td class="text-right">
                                             <a class="btn btn-primary btn-sm" href="/categories/edit/{{cat_id}}"
                                                 role="button" title="Edit">

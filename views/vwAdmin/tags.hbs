@@ -1,32 +1,14 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <script>
-$(document).ready(function(){
-  $("#myInput").on("keyup", function() {
-    var value = $(this).val().toLowerCase();
-    $("#tbcats tr").filter(function() {
-      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    $(document).ready(function () {
+        $("#myInput").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#tbcats tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
     });
-  });
-});
-
-$(document).ready(function(){
-  $("#myInput").on("keyup", function() {
-    var value = $(this).val().toLowerCase();
-    $("#tbcats tr").filter(function() {
-      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-    });
-  });
-});
-
-$(document).ready(function(){
-  $("#myInput").on("keyup", function() {
-    var value = $(this).val().toLowerCase();
-    $("#tbcats tr").filter(function() {
-      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-    });
-  });
-});
 </script>
 <div class="main-panel">
     <nav class="navbar navbar-default navbar-fixed">
@@ -70,7 +52,7 @@ $(document).ready(function(){
                         <a href=#>
                             <i class="fa fa-search"></i>
                             <p class="hidden-lg hidden-md">Search</p>
-                            
+
                         </a>
                     </li>
                 </ul>
@@ -116,39 +98,42 @@ $(document).ready(function(){
                 <div class="col-md-12">
                     <div class="card">
                         <div class="header">
-                            <h4 class="title">Độc giả (Subscriber)</h4>
-                            <p class="category">Danh sách tài khoản</p>
+                            <h4 class="title">Tag</h4>
+                            <p class="category">Danh sách</p>
                             <input id="myInput" type="text" placeholder="Tìm kiếm..">
                         </div>
                         <div class="content table-responsive table-full-width">
-                            <table class="table table-hover table-dark table-striped">
+                            <table name="tbCat" class="table table-hover table-dark table-striped">
                                 <thead>
                                     <tr>
                                         <th scope="col">#</th>
-                                        <th scope="col">Họ tên</th>
-                                        <th scope="col">Tên đăng nhập</th>
-                                        <th scope="col">Email</th>
+                                        <th scope="col">Tên tag</th>
+                                        <th scope="col" class="text-right">
+                                            <a class="btn btn-outline-success btn-sm" href="/user/admin/register"
+                                                role="button" title="Add">
+                                                <i class="fa fa-plus" aria-hidden="true"></i>
+                                                Thêm tài khoản
+                                            </a>
+                                        </th>
 
                                     </tr>
                                 </thead>
                                 <tbody id="tbAdmin">
-                                    {{#each lcUsers.[1].users}}
+                                    {{#each tags}}
                                     <tr>
-                                        <th scope="row">{{user_id}}</th>
-                                        <td>{{user_name}}</td>
-                                        <td>{{user_username}}</td>
-                                        <td>{{user_email}}</td>
+                                        <th scope="row">{{tagID}}</th>
+                                        <td>{{tagName}}</td>
                                         <td class="text-right">
                                             <a class="btn btn-primary btn-sm" href="/categories/edit/{{cat_id}}"
                                                 role="button" title="Edit">
                                                 <i class="fa fa-pencil" aria-hidden="true"></i>
                                             </a>
-                                            <a class="btn btn-success btn-sm" href="/categories/add/{{cat_id}}"
-                                                role="button" title="Add Sub Category">
-                                                <i class="fa fa-plus" aria-hidden="true"></i>
+                                            <a class="btn btn-danger btn-sm" href="javascript:;" onclick="doPreview();"
+                                                role="button" title="Delete">
+                                                <i class="fa fa-trash-o" aria-hidden="true"></i>
                                             </a>
                                         </td>
-                                        
+
                                     </tr>
                                     {{/each}}
                                 </tbody>
@@ -159,66 +144,11 @@ $(document).ready(function(){
                 </div>
 
 
+            </div>
+        </div>
+    </div>
+    </div>
 </div>
-</div>
-</div>
-<div class="content">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="card">
-                        <div class="header">
-                            <h4 class="title">Độc giả vãng lai (Guest)</h4>
-                            <p class="category">Danh sách tài khoản</p>
-                            <input id="myInput" type="text" placeholder="Tìm kiếm..">
-                        </div>
-                        <div class="content table-responsive table-full-width">
-                            <table class="table table-hover table-dark table-striped">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">Họ tên</th>
-                                        <th scope="col">Tên đăng nhập</th>
-                                        <th scope="col">Email</th>
-                                        <th scope="col" class="text-right">                                        
-                                        </th>
-
-                                    </tr>
-                                </thead>
-                                <tbody id="tbEditor">
-                                    {{#each lcUsers.[0].users}}
-                                    <tr>
-                                        <th scope="row">{{user_id}}</th>
-                                        <td>{{user_name}}</td>
-                                        <td>{{user_username}}</td>
-                                        <td>{{user_email}}</td>
-                                        <td class="text-right">
-                                            <a class="btn btn-secondary btn-sm" href="/categories/edit/{{cat_id}}"
-                                                role="button" title="Edit">
-                                               <i class="fa fa-bars"></i>
-                                            </a>
-                                            <a class="btn btn-success btn-sm" href="/categories/add/{{cat_id}}"
-                                                role="button" title="Add Sub Category">
-                                                <i class="fa fa-plus" aria-hidden="true"></i>
-                                            </a>
-                                        </td>
-                                        
-                                    </tr>
-                                    {{/each}}
-                                </tbody>
-                            </table>
-
-                        </div>
-                    </div>
-                </div>
-
-
-</div>
-</div>
-</div>
-
-</div>
-
 
 </body>
 

@@ -9,7 +9,8 @@ var userModel = require('../models/user.model');
 var router = express.Router();
 var crypto = require('crypto');
 var multer = require('multer');
-
+var bcrypt = require('bcrypt');
+var passport = require('passport');
 router.get('/', (req, res, next) => {
 
     res.render("vwAdmin/dashboard", { layout: 'main2.hbs' });
@@ -111,10 +112,24 @@ router.get('/:id/members', (req,res,next) => {
     id = req.params.id;
     if(res.locals.admin)
     {
-    
-      res.render('vwAdmin/members', {
-        layout: 'main2.hbs'
-      });
+      userModel.allByP(5).then(rows =>
+        {
+          res.admin = rows;
+          userModel.allByP(4).then(rows2 =>
+            {
+              res.editor = rows2;
+              userModel.allByP(3).then(rows3 =>
+                {
+                  res.writter = rows3;
+                  res.render('vwAdmin/members', {
+                    layout: 'main2.hbs',
+                    admins: res.admin,
+                    editors: res.editor,
+                    writters: res.writter,
+                  });
+                })
+            })
+        })
     }
 })
 router.get('/:id/users', (req,res,next) => {
@@ -127,6 +142,33 @@ router.get('/:id/users', (req,res,next) => {
       });
     }
 })
+router.get('/admin/register', (req,res,next) => {
+  id = req.params.id;
+  if(res.locals.admin)
+  {
+  
+    res.render('vwAdmin/register');
+    return;
+  }
+})
+router.post('/admin/register', (req, res, next) => {
+  var saltRounds = 10;
+  var hash = bcrypt.hashSync(req.body.password, saltRounds);
+  var dob = moment(req.body.dob, 'DD/MM/YYYY').format('YYYY-MM-DD');
+
+  var entity = req.body;
+  entity.f_Password = hash;
+  entity.f_DOB = dob;
+  entity.f_Permission = 5;
+
+  delete entity.password;
+  delete entity.confirm;
+  delete entity.dob;
+
+  userModel.add(entity).then(id => {
+    res.redirect('/user/');
+  })
+})
 router.get('/:id/typography', (req,res,next) => {
     id = req.params.id;
     if(res.locals.admin)
@@ -135,6 +177,25 @@ router.get('/:id/typography', (req,res,next) => {
             layout: 'main2.hbs'
           });
     }
+})
+router.get('/:id/tags',(req,res,next) => {
+  id = req.params.id;
+  if(res.locals.admin)
+  {
+    userModel.alltag().then(rows =>
+      {
+        console.log(rows);
+        if(rows.length>0)
+        {
+          res.tags= rows;
+          res.render('vwAdmin/tags', {
+            layout: 'main2.hbs',
+            tags: res.tags
+          });
+        }
+        
+      })
+  }
 })
 router.get('/:id/table/', [p,p1, p2, p3, p4,gCD], function (req, res, next) {
     id = req.params.id;
