@@ -117,6 +117,16 @@ router.get('/:id/members', (req,res,next) => {
       });
     }
 })
+router.get('/:id/users', (req,res,next) => {
+    id = req.params.id;
+    if(res.locals.admin)
+    {
+    
+      res.render('vwAdmin/users', {
+        layout: 'main2.hbs'
+      });
+    }
+})
 router.get('/:id/typography', (req,res,next) => {
     id = req.params.id;
     if(res.locals.admin)

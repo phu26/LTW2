@@ -6,7 +6,7 @@
     <link rel="icon" type="image/png" href="http://localhost:3000/assets/img/favicon.ico">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-    <title>Light Bootstrap Dashboard by Creative Tim</title>
+    <title>Phân hệ người dùng</title>
 
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
@@ -66,12 +66,7 @@
                             <p>User Profile</p>
                         </a>
                     </li>
-                    <li>
-                        <a href="/user/{{authUser.f_ID}}/table/">
-                            <i class="pe-7s-note2"></i>
-                            <p>Table List</p>
-                        </a>
-                    </li>
+                    
                     <li>
                         <a href="/user/{{authUser.f_ID}}/categories/">
                             <i class="pe-7s-note2"></i>
@@ -85,23 +80,19 @@
                         </a>
                     </li>
                     <li>
+                        <a href="/user/{{authUser.f_ID}}/users/">
+                            <i class="pe-7s-note2"></i>
+                            <p>Quản lý tài khoản độc giả</p>
+                        </a>
+                    </li>
+                    <li>
                         <a href="/user/{{authUser.f_ID}}/typography">
                             <i class="pe-7s-news-paper"></i>
                             <p>Typography</p>
                         </a>
                     </li>
-                    <li>
-                        <a href="/user/{{authUser.f_ID}}/icons">
-                            <i class="pe-7s-science"></i>
-                            <p>Icons</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="admin/maps">
-                            <i class="pe-7s-map-marker"></i>
-                            <p>Maps</p>
-                        </a>
-                    </li>
+                    
+                    
                     <li>
                         <a href="/admin/notification">
                             <i class="pe-7s-bell"></i>
@@ -158,7 +149,7 @@
         </div>
         {{/if}}
         <main>
-
+            
             {{{body}}}
 
         </main>
