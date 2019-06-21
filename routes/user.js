@@ -290,10 +290,10 @@ router.get('/:id/profile', (req, res, next) => {
 
             entity.f_DOB = dob;
             productModel.isNT(entity.f_ID).then(kq=>{
-              if(kq)
+              console.log(kq);
+              if(kq.length>0)
                 var mes = 1;
-              else
-                var mes = null;
+             
 
               if (entity.f_Permission == 5) {
                 res.render("vwAdmin/profile", {
@@ -304,24 +304,40 @@ router.get('/:id/profile', (req, res, next) => {
                 });
             }
             else
-                if (entity.f_Permission !=5) {
-                  if(mes==1)
-                  { res.render("vwWriter/profile", {
-                    entity,mes,
-                    layout: 'main2.hbs'
+            {if (entity.f_Permission !=5) {
+              if(mes==1)
+              {
+                var button = 1;
+                console.log(mes);
+                 res.render("vwWriter/profile", {
+                entity,mes,button,
+                layout: 'main2.hbs'
 
 
-                });}
-                else{
-                  res.render("vwWriter/profile", {
-                    entity,
-                    layout: 'main2.hbs'
+            });
+          }
+            else{
+              if(entity.f_Permission==1)
+              {
+                var button = 1;
+                res.render("vwWriter/profile", {
+                  entity,button,
+                  layout: 'main2.hbs'
+  
+  
+              });
+              }
+              else{ res.render("vwWriter/profile", {
+                entity,
+                layout: 'main2.hbs'
 
 
-                });
-                }
-                   
-                }
+            });}
+             
+            }
+               
+            }}
+                
             })
            
               
@@ -762,7 +778,7 @@ router.post('/:idu/Accept/:id',b2,function(req,res) {
 
       if(ro.length >0)
       {
-        productModel.updateNT(req.params.id,res.sms2).then(id => {
+        productModel.delNT(req.params.id).then(id => {
           res.redirect('/user/'+res.locals.authUser.f_ID+'/profile');
         }).catch(next);
       }

@@ -173,6 +173,10 @@ updateitiemTag: (id,idtag)=> {
             
   return db.load(`UPDATE itiemtag SET tagID = ${idtag} WHERE proID = ${id}`);
 },
+delNT: (id)=> {
+            
+  return db.load(`delete from notification WHERE proID = ${id} or user_ID=${id}`);
+},
 };
 
 
