@@ -59,6 +59,17 @@ module.exports = {
   countByNoti: ()=> {
     return db.load(`SELECT count(*) as tong FROM notification`);
   },
+  upPermiss: id=> {
+    return db.load(`UPDATE users SET f_Permission= 2 where f_ID = ${id}`);
+  },
+  addsub: id=> {
+    return db.load(`INSERT INTO subscriber( f_ID, CreatedAt) VALUES (${id},DATE_ADD(now(),INTERVAL 7 DAY))`);
+  },
+  isSub: id=> {
+    return db.load(`SELECT * FROM subscriber WHERE f_ID = ${id}`);
+  },
+
+
 };
 
 

@@ -9,6 +9,7 @@ var mysql = require('mysql');
 var datatable = require('datatables.net');
 var app = express();
 
+
 var connection = mysql.createConnection({
   host     : 'localhost',
   user     : 'root',

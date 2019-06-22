@@ -172,7 +172,7 @@ Decline: id=> {
 },
 isNT: id=> {
             
-  return db.load(`SELECT noTi FROM notification WHERE ProID = ${id} or user_ID = ${id} `);
+  return db.load(`SELECT noTi FROM notification WHERE ProID = ${id} and user_ID=0 or ProID=0 and user_ID = ${id} `);
 },
 addNT:(id,message,idu)=> {
             
@@ -180,7 +180,7 @@ addNT:(id,message,idu)=> {
 },
 updateNT:(id,message)=> {
             
-  return db.load(`UPDATE notification SET noTi= '${message}' where ProID=${id} or user_ID=${id} `);
+  return db.load(`UPDATE notification SET noTi= '${message}' where ProID=${id} and user_ID=0  or ProID= and user_ID=${id} `);
 },
 updatePro:(id,ProName,TinyDes,FullDes,CatID,subCatID,pic)=> {
             
@@ -196,7 +196,7 @@ updateitiemTag: (id,idtag)=> {
 },
 delNT: (id)=> {
             
-  return db.load(`delete from notification WHERE proID = ${id} or user_ID=${id}`);
+  return db.load(`delete from notification WHERE proID = ${id} and user_ID=0 or  proID = 0 and user_ID=${id}`);
 },
 };
 

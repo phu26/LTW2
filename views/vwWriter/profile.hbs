@@ -10,7 +10,30 @@
                         <span class="icon-bar"></span>
                     </button>
                     <a class="navbar-brand" href="#">{{f_Name}}</a>
+                    {{/with}}
+                    {{#with sub}}
+              <div  class="navbar-brand" ><ul id="han">{{CreatedAt}}</ul> </div> 
+               <script>
+                        console.log( document.getElementById('han').textContent);
+                       var date =  document.getElementById('han').textContent ;
+                       var now = new Date(); 
+                       var newdate = new Date(date);
+                        console.log(newdate.getDate());
+                        console.log(now);
+                       var i = (newdate.getDate()-now.getDate());
+                      
+                       if(i<0)
+                       {
+                            document.getElementById('han').textContent = "Hết hạn ";
+                       }
+                       else
+                        document.getElementById('han').textContent = "Thời hạn còn : "+i+" ngày";
+                      
+                     </script>
+                     {{/with}}
+                    
                 </div>
+                 {{#with entity}}
                 <div class="collapse navbar-collapse">
                     
 
