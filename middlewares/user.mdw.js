@@ -67,7 +67,7 @@ function getPermission(resultItem, callback) {
     res.locals.lcUsers = data2;
     next();
   }
-  console.log(res.locals.lcUsers);
+  //console.log(res.locals.lcUsers);
   //
 
   

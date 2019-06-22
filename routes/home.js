@@ -5,7 +5,7 @@ var async = require("async");
 var moment = require('moment');
 var mysql = require('mysql');
 var productModel = require('../models/product.model');
-
+var config = require('../config/default.json');
 var createConnection = () => mysql.createConnection({
     host:'localhost',
     
@@ -163,7 +163,40 @@ router.get('/',[top3host,top10host,b,tag],function(req,res,next){
   
     
 })
+router.post('/search', (req,res,next) =>{
+  res.input = req.body.typehead;
+  var limit = config.paginate.default;
+  var page = req.query.page || 1;
+  if (page < 1) page = 1;
+  var start_offset = (page - 1) * limit;
+  Promise.all([
+    productModel.searchCount(res.input),
+    productModel.search(res.input,start_offset)]).then(([nRows, rows]) => {
+      console.log(nRows);
 
+    var total = nRows[0].total;
+    var nPages = Math.floor(total / limit);
+    if (total % limit > 0)
+      nPages++;
+
+    var page_numbers = [];
+    for (i = 1; i <= nPages; i++) {
+      page_numbers.push({
+        value: i,
+        active: i === +page
+      })
+    }
+
+
+    res.render('vwProducts/byCat', {
+      error: false,
+      empty: rows.length === 0,
+      products: rows,
+      page_numbers
+    });
+
+    }).catch(next);
+})
 router.get('/Newsmt',(req,res) =>{
   productModel.all().then(rows=>{
     var products = rows;

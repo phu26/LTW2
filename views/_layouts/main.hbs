@@ -125,9 +125,9 @@
       </li>
       {{/if}}
     </ul>
-    <form action="search" method="POST" class="form-inline my-2 my-md-0">
+    <form action="http://localhost:3000/search" method="POST" class="form-inline my-2 my-md-0">
       <input name="typehead" class="typeahead tt-query" spellcheck="false" autocomplete="off" type="text"
-        placeholder="Search">
+        placeholder="Tìm kiếm">
     </form>
     {{#if isAuthenticated}}
     {{#if guest}}

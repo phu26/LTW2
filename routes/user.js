@@ -131,6 +131,35 @@ router.get('/:id/categories', (req,res,next) => {
     }).catch(next);
     }
 })
+router.get('/edit/user/:id', (req,res,next) =>{
+  id = req.params.id;
+  if(isNaN(id))
+  {
+    res.render('vwAdmin/dashboard');
+    return;
+  }
+  if(res.locals.admin)
+  {
+    userModel.single(id).then(rows =>
+      {
+        entity = rows[0];
+        var dob = moment(entity.f_DOB, 'YYYY-MM-DD').format('DD/MM/YYYY');
+        entity.f_DOB = dob;
+        res.render('vwAdmin/profile',{
+          entity,
+          layout: 'main2.hbs',
+          adminedit: true,
+        })
+      }).catch(next);
+  }
+})
+router.post('/edit/user/:id', (req,res,next)=>
+{
+  if(res.locals.admin)
+  {
+    
+  }
+})
 router.get('/:id/categories/add', (req, res, next) => {
   res.render('vwAdmin/add', { error: false, subcat: false,layout: 'main2.hbs' });
 })
@@ -173,7 +202,21 @@ router.get('/:id/users', (req,res,next) => {
       });
     }
 })
-router.get('/admin/register', (req,res,next) => {
+router.post('/delete/:id', (req,res,next) =>{
+  id = req.params.id;
+  if(isNaN(id)){
+    res.redirect('/user/'+res.locals.authUser.f_ID+'/users');
+  }
+  if(id == res.locals.authUser.f_ID)
+  {
+    res.redirect('/user/'+res.locals.authUser.f_ID+'/users');
+  }
+  userModel.delete(id).then(rows =>
+    {
+      res.redirect('/user/'+res.locals.authUser.f_ID+'/members');
+    })
+})
+router.get('/admin/register/:id', (req,res,next) => {
   id = req.params.id;
   if(res.locals.admin)
   {
@@ -182,7 +225,7 @@ router.get('/admin/register', (req,res,next) => {
     return;
   }
 })
-router.post('/admin/register', (req, res, next) => {
+router.post('/admin/register/:id', (req, res, next) => {
   var saltRounds = 10;
   var hash = bcrypt.hashSync(req.body.password, saltRounds);
   var dob = moment(req.body.dob, 'DD/MM/YYYY').format('YYYY-MM-DD');
@@ -190,7 +233,7 @@ router.post('/admin/register', (req, res, next) => {
   var entity = req.body;
   entity.f_Password = hash;
   entity.f_DOB = dob;
-  entity.f_Permission = 5;
+  entity.f_Permission = id;
 
   delete entity.password;
   delete entity.confirm;
@@ -281,6 +324,7 @@ router.get('/:id/table/', [p,p1, p2, p3, p4,gCD], function (req, res, next) {
 })
 router.get('/:id/profile', (req, res, next) => {
     id = req.params.id;
+    console.log(res.locals.lcUsers);
     userModel.single(id)
         .then(rows => {
             account = rows[0];

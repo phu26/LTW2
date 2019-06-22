@@ -3,8 +3,29 @@ var config = require('../config/default.json');
 module.exports = {
     all: () => {
             
-        return db.load(`SELECT * FROM products and TrangThai = 3`);
+        return db.load(`SELECT * FROM products where TrangThai = 3`);
     },
+    search: (string,start_offset) => {
+      var lim = config.paginate.default;
+      return db.load(`SELECT * FROM products p
+      WHERE 
+      	p.TrangThai =3 AND p.ProName LIKE '%${string}%'
+         OR p.TrangThai =3 AND p.TinyDes LIKE '%${string}%'
+         OR p.TrangThai =3 AND p.FullDes LIKE '%${string}%'
+         
+         ORDER BY p.ProID DESC
+         limit ${lim} offset ${start_offset}
+         `);
+  },
+  searchCount: string => {
+            
+    return db.load(`SELECT count(*) FROM products p
+    WHERE p.ProName LIKE '%${string}%'
+       OR p.TinyDes LIKE '%${string}%'
+       OR p.FullDes LIKE '%${string}%'
+       AND p.TrangThai =3
+       `);
+},
     allByCat: catID => {
             
         return db.load(`select * from products where CatID= ${catID} and TinyDes!='' and TrangThai = 3` );
