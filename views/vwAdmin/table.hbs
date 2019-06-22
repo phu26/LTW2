@@ -124,7 +124,7 @@
                                         <td>{{ProName}}</td>
 
  <td class="text-right">
-          <a class="btn btn-primary btn-sm" onClick="doSomething({{ProID}});" role="button" title="Edit">
+          <a class="btn btn-primary btn-sm" onClick="doSomething3({{ProID}});" role="button" title="Edit">
             <i class="fa fa-trash-o" aria-hidden="true"></i>
           </a>
           
@@ -205,6 +205,9 @@
                                             }
                                               function doSomething2(id) {
                                                    location.href = "/user/{{id}}/Created/"+id;
+                                            }
+                                            function doSomething3(id) {
+                                                   location.href = "/user/{{id}}/Delete/"+id;
                                             }
                                         </script>
 

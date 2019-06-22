@@ -1,4 +1,4 @@
- var express = require("express");
+var express = require("express");
 var catogoryModel = require('../models/category.model');
 var async = require("async");
 var moment = require('moment');
@@ -33,116 +33,126 @@ router.get('/', (req, res, next) => {
 
 
 var p = function (req, res, next) {
-if(req.params.id ==2)
-{
-  productModel.proByALL0()
-  .then(rows => {
-      req.prod = rows;
+  if (req.params.id == 2) {
+    productModel.proByALL0()
+      .then(rows => {
+        req.prod = rows;
 
-      return next();
+        return next();
 
-  })
-  .catch(err => next(err));
-}
-else{
-  productModel.proByUser0(req.params.id)
-  .then(rows => {
-      req.prod = rows;
+      })
+      .catch(err => next(err));
+  }
+  else {
+    productModel.proByUser0(req.params.id)
+      .then(rows => {
+        req.prod = rows;
 
-      return next();
+        return next();
 
-  })
-  .catch(err => next(err));
-}
-   
+      })
+      .catch(err => next(err));
+  }
+
 }
 var p1 = function (req, res, next) {
-  if(req.params.id ==2)
-  {
+  if (req.params.id == 2) {
     productModel.proByALL1()
-    .then(rows => {
+      .then(rows => {
         req.prod1 = rows;
-  
+
         return next();
-  
-    })
-    .catch(err => next(err));
+
+      })
+      .catch(err => next(err));
   }
-  else{
+  else {
     productModel.proByUser1(req.params.id)
-        .then(rows1 => {
-            req.prod1 = rows1;
+      .then(rows1 => {
+        req.prod1 = rows1;
 
-      return next();
+        return next();
 
-        })
-        .catch(err => next(err));
+      })
+      .catch(err => next(err));
   }
-    
+
 }
 var p2 = function (req, res, next) {
-  if(req.params.id ==2)
-  {
+  if (req.params.id == 2) {
     productModel.proByALL2()
-    .then(rows => {
+      .then(rows => {
         req.prod2 = rows;
-  
+
         return next();
-  
-    })
-    .catch(err => next(err));
-  }else{ 
+
+      })
+      .catch(err => next(err));
+  } else {
     productModel.proByUser2(req.params.id)
-    .then(rows2 => {
+      .then(rows2 => {
         req.prod2 = rows2;
 
         return next();
 
-    })
-    .catch(err => next(err));}
-   
+      })
+      .catch(err => next(err));
+  }
+
 }
 var p3 = function (req, res, next) {
-  if(req.params.id ==2)
-  {
+  if (req.params.id == 2) {
     productModel.proByALL3()
-    .then(rows => {
+      .then(rows => {
         req.prod3 = rows;
-  
+
         return next();
-  
-    })
-    .catch(err => next(err));
-  }else
-   { productModel.proByUser3(req.params.id)
-        .then(rows3 => {
-            req.prod3 = rows3;
 
-      return next();
+      })
+      .catch(err => next(err));
+  } else {
+    productModel.proByUser3(req.params.id)
+      .then(rows3 => {
+        req.prod3 = rows3;
 
-        })
-        .catch(err => next(err));}
+        return next();
+
+      })
+      .catch(err => next(err));
+  }
 }
 var p4 = function (req, res, next) {
-  if(req.params.id ==2)
-  {
+  if (req.params.id == 2) {
     productModel.proByALL4()
-    .then(rows => {
+      .then(rows => {
         req.prod4 = rows;
-  
+
         return next();
+
+      })
+      .catch(err => next(err));
+  } else {
+    productModel.proByUser4(req.params.id)
+      .then(rows4 => {
+        req.prod4 = rows4;
+
+        return next();
+
+      })
+      .catch(err => next(err));
+  }
+}
+var p5 = function (req, res, next) {
+
+    productModel.ED(req.params.id)
+      .then(rows5 => {
+        req.prod5 = rows5;
+
+        return next();
+
+      })
+      .catch(err => next(err));
   
-    })
-    .catch(err => next(err));
-  }else
-    {productModel.proByUser4(req.params.id)
-        .then(rows4 => {
-            req.prod4 = rows4;
-
-      return next();
-
-        })
-        .catch(err => next(err));}
 }
 var gCD = function (req, res, next) {
 
@@ -151,7 +161,7 @@ var gCD = function (req, res, next) {
       console.log(rows5[0]);
       var k = rows5[0];
       if (k) {
-      res.getCD = rows5[0].CatID;
+        res.getCD = rows5[0].CatID;
 
         productModel.getProCat(res.getCD).then(rows6 => {
           req.PC = rows6;
@@ -207,29 +217,8 @@ router.get('/edit/user/:id', (req, res, next) => {
     }).catch(next);
   }
 })
-router.post("/edit/user/:id", (req, res, next) => {
+router.post('/edit/user/:id', (req, res, next) => {
   if (res.locals.admin) {
-    entity = req.body;
-    if (entity.f_ID == res.locals.authUser.f_ID) {
-      if (entity.f_Permission != res.locals.authUser.f_Permission) {
-        userModel.update(entity).then(rows => {
-          res.redirect('/');
-        })
-        return;
-      }
-    }
-    userModel.update(entity).then(rows => {
-      if (entity.f_Permission == 1 || entity.f_Permission == 1)
-        res.redirect('/user/' + res.locals.authUser.f_ID + '/users');
-      else
-        res.redirect('/user/' + res.locals.authUser.f_ID + '/users');
-    })
-  }
-
-});
-router.post(':id/backoriginal', (req, res, next) => {
-  id = req.params.id;
-  if (res.locals.authUser == id) {
 
   }
 })
@@ -264,44 +253,23 @@ router.get('/:id/members', (req, res, next) => {
 router.get('/:id/users', (req, res, next) => {
   id = req.params.id;
   if (res.locals.admin) {
-      id = req.params.id;
-      if (res.locals.admin) {
-        userModel.allSubsc().then(rows => {
-          res.subscriber = rows;
-          for(var i in res.subscriber)
-          {
-            var cd = moment(res.subscriber[i].CreatedAt, 'DD/MM/YYYY').format('DD-MM-YYYY , h:mm:ss');
-            res.subscriber[i].CreatedAt = cd;
-            
-          }
-          userModel.allByP(1).then(rows1 => {
-            res.guest = rows1;
-            res.render('vwAdmin/users', {
-              layout: 'main2.hbs',
-              subscriber: res.subscriber,
-              guest: res.guest
-            });
-          })
-        })
-      }
+
+    res.render('vwAdmin/users', {
+      layout: 'main2.hbs'
+    });
   }
 })
 router.post('/delete/:id', (req, res, next) => {
   id = req.params.id;
   if (isNaN(id)) {
     res.redirect('/user/' + res.locals.authUser.f_ID + '/users');
-    return;
   }
   if (id == res.locals.authUser.f_ID) {
     res.redirect('/user/' + res.locals.authUser.f_ID + '/users');
-    return;
   }
-  else {
-    userModel.delete(id).then(rows => {
-      res.redirect('/user/' + res.locals.authUser.f_ID + '/members');
-    })
-  }
-
+  userModel.delete(id).then(rows => {
+    res.redirect('/user/' + res.locals.authUser.f_ID + '/members');
+  })
 })
 router.get('/admin/register/:id', (req, res, next) => {
   id = req.params.id;
@@ -353,7 +321,7 @@ router.get('/:id/tags', (req, res, next) => {
     })
   }
 })
-router.get('/:id/table/', [p, p1, p2, p3, p4, gCD], function (req, res, next) {
+router.get('/:id/table/', [p, p1, p2, p3, p4, gCD,p5], function (req, res, next) {
   id = req.params.id;
 
   userModel.single(id)
@@ -361,39 +329,20 @@ router.get('/:id/table/', [p, p1, p2, p3, p4, gCD], function (req, res, next) {
       account = rows[0];
       var dob = moment(account.f_DOB, 'YYYY-MM-DD').format('DD/MM/YYYY');
 
-            
-            var entity = account;
-            entity.f_DOB = dob;
-            console.log(entity.f_Permission) ;
-            if (entity.f_Permission == 5) {
-              prod = req.prod;
-              prod1 = req.prod1;
-              prod2 = req.prod2;
-              prod3 = req.prod3;
-              prod4 = req.prod4;
-                res.render("vwAdmin/table", {
-                  prod, prod1, prod2, prod3, prod4,id ,
-                    layout: 'main2.hbs'
 
       var entity = account;
       entity.f_DOB = dob;
       console.log(entity.f_Permission);
       if (entity.f_Permission == 5) {
+        prod = req.prod;
+        prod1 = req.prod1;
+        prod2 = req.prod2;
+        prod3 = req.prod3;
+        prod4 = req.prod4;
         res.render("vwAdmin/table", {
+          prod, prod1, prod2, prod3, prod4, id,
           layout: 'main2.hbs'
 
-                });
-            }
-            else
-                if (entity.f_Permission == 3   ) {
-                    prod = req.prod;
-                    prod1 = req.prod1;
-                    prod2 = req.prod2;
-                    prod3 = req.prod3;
-                    prod4 = req.prod4;
-                    res.render("vwWriter/table", {
-                        prod, prod1, prod2, prod3, prod4,id ,
-                        layout: 'main2.hbs'
 
         });
       }
@@ -414,9 +363,10 @@ router.get('/:id/table/', [p, p1, p2, p3, p4, gCD], function (req, res, next) {
         else
           if (entity.f_Permission == 4) {
             prod5 = req.PC;
+            prod6 =req.prod5;
             console.log(id);
             res.render("vwEditor/table", {
-              prod5, id,
+              prod5, id,prod6,
               layout: 'main2.hbs'
 
 
@@ -430,6 +380,7 @@ router.get('/:id/table/', [p, p1, p2, p3, p4, gCD], function (req, res, next) {
 })
 router.get('/:id/profile', (req, res, next) => {
   id = req.params.id;
+  console.log(res.locals.lcUsers);
   userModel.single(id)
     .then(rows => {
       account = rows[0];
@@ -691,23 +642,7 @@ router.post('/:idu/edit/:id', b2, function (req, res) {
     console.log("ok");
 
     console.log(req.body.TinyDes);
-    
-  }
-router.post('/:idu/Accept/:id',b2,function(req,res) {
- 
-  var xx = req.body.dob;
-  var dob5 = moment(xx, 'DD/MM/YYYY').format('YYYY-MM-DD');
-  var datee = moment(dob5);
-  console.log(Date(datee));
-  var enti = new Object();
-  enti.user_ID=req.params.idu;
-  enti.ProID = req.params.id;
-  enti.CreatedAt = dob5;
-  
-  productModel.add22(enti);
 
-   
-    console.log(req.body.ProName);
     console.log(req.body.TinyDes);
     console.log(req.iddd);
     res.iddd = req.iddd + 1;
@@ -821,6 +756,18 @@ var KT = function (req, res, next) {
 }
 router.post('/:idu/Accept/:id', b2, function (req, res) {
 
+  var xx = req.body.dob;
+  var dob5 = moment(xx, 'DD/MM/YYYY').format('YYYY-MM-DD');
+  var datee = moment(dob5);
+  console.log(Date(datee));
+  var enti = new Object();
+  enti.user_ID = req.params.idu;
+  enti.ProID = req.params.id;
+  enti.CreatedAt = dob5;
+
+  productModel.add22(enti);
+
+
   console.log(req.body.ProName);
   console.log(req.body.TinyDes);
   console.log(req.body.FullDes);
@@ -837,7 +784,7 @@ router.post('/:idu/Accept/:id', b2, function (req, res) {
         res.sms = "duyệt:" + req.body.SMS;
         productModel.Accept(req.params.id);
         productModel.updateNT(req.params.id, res.sms);
-        productModel.updatePro(req.params.id, req.body.ProName, req.body.TinyDes, req.body.FullDes, req.body.CatID, req.body.subCatID, req.body.pic);
+        productModel.updatePro(req.params.id, req.body.ProName, req.body.TinyDes, req.body.FullDes, req.body.CatID, req.body.subCatID);
 
 
 
@@ -847,7 +794,7 @@ router.post('/:idu/Accept/:id', b2, function (req, res) {
         productModel.Accept(req.params.id);
 
         productModel.addNT(req.params.id, res.sms, 0);
-        productModel.updatePro(req.params.id, req.body.ProName, req.body.TinyDes, req.body.FullDes, req.body.CatID, req.body.subCatID, req.body.pic);
+        productModel.updatePro(req.params.id, req.body.ProName, req.body.TinyDes, req.body.FullDes, req.body.CatID, req.body.subCatID);
 
       }
 
@@ -965,9 +912,34 @@ router.get('/:id/Update', (req, res, next) => {
 
 
   })
-  router.get('/:idu/Created/:id',function(req,res) {
-    productModel.XuatBan(req.params.id);
-    res.redirect('/user/'+req.params.idu+"/table");
-  })
 
+})
+router.get('/:id/check', (req, res, next) => {
+  id = req.params.id;
+  userModel.upPermiss(id);
+  productModel.delNT(id);
+  userModel.addsub(id);
+
+  res.redirect('/user');
+})
+router.get('/:idu/Created/:id', function (req, res) {
+  id = req.params.id;
+  productModel.XuatBan(req.params.id);
+  productModel.isNT(id).then(kq => {
+    if (kq.length > 0) {
+      productModel.delNT(id);
+    }
+  })
+  res.redirect('/user/' + req.params.idu + "/table");
+})
+router.get('/:idu/Delete/:id', function (req, res) {
+  id = req.params.id;
+  productModel.delete(req.params.id);
+  productModel.isNT(id).then(kq => {
+    if (kq.length > 0) {
+      productModel.delNT(id);
+    }
+  })
+  res.redirect('/user/' + req.params.idu + "/table");
+})
 module.exports = router;

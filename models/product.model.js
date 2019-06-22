@@ -182,9 +182,9 @@ updateNT:(id,message)=> {
             
   return db.load(`UPDATE notification SET noTi= '${message}' where ProID=${id} and user_ID=0  or ProID= and user_ID=${id} `);
 },
-updatePro:(id,ProName,TinyDes,FullDes,CatID,subCatID,pic)=> {
+updatePro:(id,ProName,TinyDes,FullDes,CatID,subCatID)=> {
             
-  return db.load(`UPDATE products SET ProName="${ProName}",TinyDes='${TinyDes}',FullDes='${FullDes}',CatID=${CatID},subCatID=${subCatID},pic='${pic}' WHERE ProID =${id} `);
+  return db.load(`UPDATE products SET ProName="${ProName}",TinyDes='${TinyDes}',FullDes='${FullDes}',CatID=${CatID},subCatID=${subCatID} WHERE ProID =${id} `);
 },
 isitiemTag: (id,idtag)=> {
             
@@ -235,6 +235,10 @@ XuatBan: (id) => {
   return db.load(`UPDATE products SET TrangThai= 3 WHERE ProID = ${id}`);
 },
 
+ED: (id) => {
+            
+  return db.load(`SELECT * FROM news n ,users u,products p where n.user_ID = u.f_ID and n.ProID=p.ProID and n.user_ID=${id}`);
+},
 
 };
 
