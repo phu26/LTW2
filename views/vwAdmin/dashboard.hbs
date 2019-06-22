@@ -13,11 +13,13 @@
                 });
 
         });
+          vex.dialog.defaultOptions.showCloseButton = false;
     </script>
-    
+     
     <div class="main-panel">
         <nav class="navbar navbar-default navbar-fixed">
             <div class="container-fluid">
+                
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation-example-2">
                         <span class="sr-only">Toggle navigation</span>
@@ -53,8 +55,35 @@
                                 <li><a href="#"> {{noTi}} {{ProName}}</a></li>
                                 {{/each}}
                                 {{#each notification2}}
-                                <li><a onclick="openW()" href="/user/"> {{noTi}}</a></li>
+                                <li><a  class="demo-link" > {{noTi}}</a></li>
                                 {{/each}}   
+                                <div class="vex-close" style="display: none">
+                                    <button>aaaaaaaaaaaaa</button>
+                                </div>
+                                
+                                  <script>
+                                      var x='<button> aa </button>';
+            $('.demo-link').click(function(){
+              
+               vex.dialog.open({
+    message: 'Xét Duyệt Yêu Cầu',
+    showCloseButton:true,
+    
+    buttons: [
+        $.extend({}, vex.dialog.buttons.YES, { text: 'Đồng Ý'  }),
+        $.extend({}, vex.dialog.buttons.NO, { text: 'Từ Chối' }),
+         
+    ],
+    callback: function (data) {
+        if (!data) {
+            console.log('Cancelled')
+        } else {
+            console.log('Username', data.username, 'Password', data.password)
+        }
+    }
+})
+            });
+        </script>
                               </ul>
                         </li>
                         <li>
@@ -104,6 +133,7 @@
         <div class="content">
             <div class="container-fluid">
                 <div class="row">
+                    
                     <div class="col-md-4">
                         <div class="card">
 

@@ -8,6 +8,9 @@ var flash = require('express-flash');
 var mysql = require('mysql');
 var datatable = require('datatables.net');
 var app = express();
+var vex = require('vex-js')
+vex.registerPlugin(require('vex-dialog'))
+vex.defaultOptions.className = 'vex-theme-os'
 
 var connection = mysql.createConnection({
   host     : 'localhost',
