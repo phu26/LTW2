@@ -144,15 +144,15 @@ var p4 = function (req, res, next) {
 }
 var p5 = function (req, res, next) {
 
-    productModel.ED(req.params.id)
-      .then(rows5 => {
-        req.prod5 = rows5;
+  productModel.ED(req.params.id)
+    .then(rows5 => {
+      req.prod5 = rows5;
 
-        return next();
+      return next();
 
-      })
-      .catch(err => next(err));
-  
+    })
+    .catch(err => next(err));
+
 }
 var gCD = function (req, res, next) {
 
@@ -229,19 +229,88 @@ router.post("/edit/user/:id", (req, res, next) => {
       }
     }
     userModel.update(entity).then(rows => {
-      if (entity.f_Permission == 1 || entity.f_Permission == 1)
+      if (entity.f_Permission == 1 || entity.f_Permission == 2)
         res.redirect('/user/' + res.locals.authUser.f_ID + '/users');
       else
-        res.redirect('/user/' + res.locals.authUser.f_ID + '/users');
+        res.redirect('/user/' + res.locals.authUser.f_ID + '/members');
     })
   }
 
 });
-router.post(':id/backoriginal', (req, res, next) => {
+router.post('/extend/:id', (req, res, next) => {
   id = req.params.id;
-  if (res.locals.authUser == id) {
-
+  if (res.locals.admin) {
+    if (res.locals.authUser.f_ID == id) {
+      res.redirect('/user/' + id + '/members');
+    }
+    else {
+      userModel.singleSub(id).then(rows => {
+        if (rows.length > 0) {
+          entity = rows[0];
+          oldDay = entity.CreatedAt;
+          newDay = moment(oldDay, 'YYYY-MM-DD hh:mm:ss').add(7, 'days').format('YYYY-MM-DD hh:mm:ss');
+          entity.CreatedAt = newDay;
+          userModel.updateSub(entity).then(rows => {
+            res.redirect('/user/' + res.locals.authUser.f_ID + '/users');
+          }).catch(next);
+        }
+      })
+    }
   }
+  else res.redirect('/');
+})
+router.post('/backtoguest/:id', (req, res, next) => {
+  id = req.params.id;
+  if (res.locals.admin) {
+    if (res.locals.authUser.f_ID == id) {
+      res.redirect('/user/' + id + '/members');
+    }
+    else {
+      userModel.singleSub(id).then(rows1 => {
+        if (rows1.length > 0) {
+          userModel.deleteSub(id).then(rows2 => {
+            userModel.single(id).then(rows => {
+              if (rows.length > 0) {
+                entity = rows[0];
+                per = entity.f_Permission;
+                entity.f_Permission = 1;
+                userModel.update(entity).then(rows2 => {
+                  if (per == 5 || per == 4 || per == 3) {
+                    res.redirect('/users/' + res.locals.authUser.f_ID + '/members');
+                    return;
+                  }
+                  else {
+                    res.redirect('/users/' + res.locals.authUser.f_ID + '/users');
+                    return;
+                  }
+                })
+              }
+            })
+          })
+        }
+        else {
+          userModel.single(id).then(rows => {
+            if (rows.length > 0) {
+              entity = rows[0];
+              per = entity.f_Permission;
+              entity.f_Permission = 1;
+              userModel.update(entity).then(rows2 => {
+                if (per == 5 || per == 4 || per == 3) {
+                  res.redirect('/users/' + res.locals.authUser.f_ID + '/members');
+                  return;
+                }
+                else {
+                  res.redirect('/users/' + res.locals.authUser.f_ID + '/users');
+                  return;
+                }
+              })
+            }
+          })
+        }
+      })
+    }
+  }
+  else res.redirect('/');
 })
 router.get('/:id/categories/add', (req, res, next) => {
   res.render('vwAdmin/add', { error: false, subcat: false, layout: 'main2.hbs' });
@@ -274,26 +343,25 @@ router.get('/:id/members', (req, res, next) => {
 router.get('/:id/users', (req, res, next) => {
   id = req.params.id;
   if (res.locals.admin) {
-      id = req.params.id;
-      if (res.locals.admin) {
-        userModel.allSubsc().then(rows => {
-          res.subscriber = rows;
-          for(var i in res.subscriber)
-          {
-            var cd = moment(res.subscriber[i].CreatedAt, 'DD/MM/YYYY').format('DD-MM-YYYY , h:mm:ss');
-            res.subscriber[i].CreatedAt = cd;
-            
-          }
-          userModel.allByP(1).then(rows1 => {
-            res.guest = rows1;
-            res.render('vwAdmin/users', {
-              layout: 'main2.hbs',
-              subscriber: res.subscriber,
-              guest: res.guest
-            });
-          })
+    id = req.params.id;
+    if (res.locals.admin) {
+      userModel.allSubsc().then(rows => {
+        res.subscriber = rows;
+        for (var i in res.subscriber) {
+          var cd = moment(res.subscriber[i].CreatedAt, 'DD/MM/YYYY').format('DD-MM-YYYY , h:mm:ss');
+          res.subscriber[i].CreatedAt = cd;
+
+        }
+        userModel.allByP(1).then(rows1 => {
+          res.guest = rows1;
+          res.render('vwAdmin/users', {
+            layout: 'main2.hbs',
+            subscriber: res.subscriber,
+            guest: res.guest
+          });
         })
-      }
+      })
+    }
   }
 })
 router.post('/delete/:id', (req, res, next) => {
@@ -305,10 +373,11 @@ router.post('/delete/:id', (req, res, next) => {
     res.redirect('/user/' + res.locals.authUser.f_ID + '/users');
     return;
   }
-  else{
-  userModel.delete(id).then(rows => {
-    res.redirect('/user/' + res.locals.authUser.f_ID + '/members');
-  })}
+  else {
+    userModel.delete(id).then(rows => {
+      res.redirect('/user/' + res.locals.authUser.f_ID + '/members');
+    })
+  }
 })
 router.get('/admin/register/:id', (req, res, next) => {
   id = req.params.id;
@@ -360,7 +429,7 @@ router.get('/:id/tags', (req, res, next) => {
     })
   }
 })
-router.get('/:id/table/', [p, p1, p2, p3, p4, gCD,p5], function (req, res, next) {
+router.get('/:id/table/', [p, p1, p2, p3, p4, gCD, p5], function (req, res, next) {
   id = req.params.id;
 
   userModel.single(id)
@@ -402,10 +471,10 @@ router.get('/:id/table/', [p, p1, p2, p3, p4, gCD,p5], function (req, res, next)
         else
           if (entity.f_Permission == 4) {
             prod5 = req.PC;
-            prod6 =req.prod5;
+            prod6 = req.prod5;
             console.log(id);
             res.render("vwEditor/table", {
-              prod5, id,prod6,
+              prod5, id, prod6,
               layout: 'main2.hbs'
 
 

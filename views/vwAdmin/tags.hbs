@@ -4,7 +4,7 @@
     $(document).ready(function () {
         $("#myInput").on("keyup", function () {
             var value = $(this).val().toLowerCase();
-            $("#tbcats tr").filter(function () {
+            $("#tbtags tr").filter(function () {
                 $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
             });
         });
@@ -54,17 +54,11 @@
                                     <tr>
                                         <th scope="col">#</th>
                                         <th scope="col">Tên tag</th>
-                                        <th scope="col" class="text-right">
-                                            <a class="btn btn-outline-success btn-sm" href="/user/admin/register"
-                                                role="button" title="Add">
-                                                <i class="fa fa-plus" aria-hidden="true"></i>
-                                                Thêm tài khoản
-                                            </a>
-                                        </th>
+                                        
 
                                     </tr>
                                 </thead>
-                                <tbody id="tbAdmin">
+                                <tbody id="tbtags">
                                     {{#each tags}}
                                     <tr>
                                         <th scope="row">{{tagID}}</th>

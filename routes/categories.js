@@ -2,7 +2,7 @@ var express = require('express');
 var categoryModel = require('../models/category.model');
 var productModel = require('../models/product.model');
 var config = require('../config/default.json');
-
+var userModel = require('../models/user.model');
 var router = express.Router();
 //get
 router.get('/', (req, res, next) => {
@@ -199,9 +199,20 @@ router.post('/:id/delete', (req, res, next) => {
 
   categoryModel.single(catid).then(rows => {
     if (rows.length > 0) {
-      categoryModel.delete(catid).then(rows => {
-        res.redirect('/user/'+res.locals.authUser.f_ID +'/categories');
+      productModel.allByCat(catid).then(rows1 =>{
+        if(rows.length >0)
+        {
+          window.alert("Không thể xóa danh mục do còn tồn tại bài viết");
+          res.redirect('/user/'+res.locals.authUser.f_ID +'/categories');
+          return;
+        }
+        else{
+          categoryModel.delete(catid).then(rows => {
+            res.redirect('/user/'+res.locals.authUser.f_ID +'/categories');
+          })
+        }
       })
+      
     }
     else { res.redirect('/categories' + catid); }
   })
@@ -221,9 +232,18 @@ router.post('/:id1/delete/:id2', (req, res, next) => {
   categoryModel.single(catid).then(rows => {
     if (rows.length > 0) {
       categoryModel.subsingle(subid).then(rows2 => {
-        categoryModel.subdelete(subid).then(rows3 => {
-          res.redirect('/categories/edit/' + catid);
-        })
+        if(rows2.length>0)
+        {
+          productModel.allbySub(subid).then(rows3 =>{
+            if(rows3.length==0)
+            {
+              categoryModel.subdelete(subid).then(rows3 => {
+                res.redirect('/categories/edit/' + catid);
+              })
+              return;
+            }
+          })
+        } 
       })
     }
     else { res.redirect('/categories/edit' + catid); }
@@ -232,15 +252,42 @@ router.post('/:id1/delete/:id2', (req, res, next) => {
 // lỗi
 router.post('/edit/update', (req, res, next) => {
   entity = req.body;
-  editor = entity.editor;
-  delete entity.editor;
-  if(editor)
+  var entity2 = new Object;
+  entity2.user_ID = entity.editor_id;
+  entity2.CatID = entity.CatID;
+  userModel.single(entity2.user_ID).then(rows2 =>{
+    if(rows2.length>0)
+    {
+      user = rows2[0];
+      entity2.userName = user.f_Name;
+    }
+  })
+  entity2.userName = entity.editor_name;
+  delete entity.editor_id;
+  delete entity.editor_name;
+  delete entity.Temp;
+
+  if(res.locals.admin)
   {
-    id = req.body.CatID;
+    categoryModel.update(entity).then(n => {
+      categoryModel.singleEditor(entity2.CatID).then(rows =>{
+        if(rows.length>0)
+        {
+          edit = rows[0];
+          entity2.id=edit.id;
+          categoryModel.updateEditor(entity2).then(rows1=>{
+            res.redirect('/user/'+res.locals.authUser.f_ID +'/categories');
+          }).catch(next);
+        }
+        else{
+          categoryModel.insertEditor(entity2).then(rows1=>{
+            res.redirect('/user/'+res.locals.authUser.f_ID +'/categories');
+          }).catch(next);
+        }
+      }).catch(next);
+    }).catch(next);
   }
-  categoryModel.update(entity).then(n => {
-    res.redirect('/user/'+res.locals.authUser.f_ID +'/categories');
-  }).catch(next);
+  else{ res.redirect('/');}
 })
 
 router.post('/delete', (req, res, next) => {
