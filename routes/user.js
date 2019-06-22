@@ -218,15 +218,21 @@ router.get('/edit/user/:id', (req, res, next) => {
   }
 })
 router.post('/edit/user/:id', (req, res, next) => {
-  if (res.locals.admin) {
-
-  }
+  var xx = req.body.f_DOB;
+  var dob5 = moment(xx, 'DD/MM/YYYY').format('YYYY-MM-DD');
   var dob6 = moment(dob5,'YYYY-MM-DD' ).format('DD/MM/YYYY');
     var entity  = new Object();
     entity.f_ID=req.body.f_ID;
     entity.f_Name = req.body.f_Name;
     entity.f_Email= req.body.f_Email;
     entity.f_DOB = dob5;
+    entity.f_Username= req.body.f_UserName;
+    entity.f_Permission = req.body.f_Permission;
+    entity.Pic = req.body.f_Pic;
+      userModel.update(entity);
+      
+  
+  res.redirect("/user/"+req.params.id+"/profile")
 })
 router.get('/:id/categories/add', (req, res, next) => {
   res.render('vwAdmin/add', { error: false, subcat: false, layout: 'main2.hbs' });
