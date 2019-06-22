@@ -237,6 +237,10 @@ XuatBan: (id) => {
             
   return db.load(`UPDATE products SET TrangThai= 3 WHERE ProID = ${id}`);
 },
+Upper: (id) => {
+            
+  return db.load(`UPDATE products SET TrangThai= 4 WHERE ProID = ${id}`);
+},
 
 ED: (id) => {
             
