@@ -327,12 +327,41 @@ router.get('/:id/profile', (req, res, next) => {
   
               });
               }
-              else{ res.render("vwWriter/profile", {
-                entity,
-                layout: 'main2.hbs'
+              else{
+                if(entity.f_Permission==2){
+                  userModel.isSub(entity.f_ID).then(rr=>{
+                    if(rr.length>0)
+                    var yes = 1;
 
+                    sub = rr[0];
+                    if(yes==1)
+                    {
+                      res.render("vwWriter/profile", {
+                        entity,sub,
+                        layout: 'main2.hbs'
+        
+        
+                    });
+                    }
+                    else{ res.render("vwWriter/profile", {
+                      entity,
+                      layout: 'main2.hbs'
+      
+      
+                  });}
 
-            });}
+                   
+                  })
+                
+                }else{
+                  res.render("vwWriter/profile", {
+                    entity,
+                    layout: 'main2.hbs'
+    
+    
+                });
+                }
+              }
              
             }
                
@@ -792,5 +821,13 @@ router.post('/:idu/Accept/:id',b2,function(req,res) {
     
     })
    
+  })
+  router.get('/:id/check', (req, res, next) => {
+    id = req.params.id;
+    userModel.upPermiss(id);
+    productModel.delNT(id);
+    userModel.addsub(id);
+
+    res.redirect('/user');
   })
 module.exports = router;

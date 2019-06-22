@@ -56,11 +56,12 @@
                                 {{/each}}
                                 {{#each notification2}}
                                 <li><a  class="demo-link" > {{noTi}}</a></li>
-                                {{/each}}   
-                                <div class="vex-close" style="display: none">
-                                    <button>aaaaaaaaaaaaa</button>
-                                </div>
+                                 <a id="k" href="/user/{{f_ID}}/check ">aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk</a>
                                 
+                                {{/each}}   
+                               
+                                   
+                              
                                   <script>
                                       var x='<button> aa </button>';
             $('.demo-link').click(function(){
@@ -78,7 +79,12 @@
         if (!data) {
             console.log('Cancelled')
         } else {
-            console.log('Username', data.username, 'Password', data.password)
+            
+          document.getElementById('k').click();
+              
+   
+
+  
         }
     }
 })
@@ -87,6 +93,7 @@
                               </ul>
                         </li>
                         <li>
+                             
                            <a href="">
                                 <i class="fa fa-search"></i>
 								<p class="hidden-lg hidden-md">Search</p>
