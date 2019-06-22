@@ -217,22 +217,31 @@ router.get('/edit/user/:id', (req, res, next) => {
     }).catch(next);
   }
 })
-router.post('/edit/user/:id', (req, res, next) => {
-  var xx = req.body.f_DOB;
-  var dob5 = moment(xx, 'DD/MM/YYYY').format('YYYY-MM-DD');
-  var dob6 = moment(dob5,'YYYY-MM-DD' ).format('DD/MM/YYYY');
-    var entity  = new Object();
-    entity.f_ID=req.body.f_ID;
-    entity.f_Name = req.body.f_Name;
-    entity.f_Email= req.body.f_Email;
-    entity.f_DOB = dob5;
-    entity.f_Username= req.body.f_UserName;
-    entity.f_Permission = req.body.f_Permission;
-    entity.Pic = req.body.f_Pic;
-      userModel.update(entity);
-      
-  
-  res.redirect("/user/"+req.params.id+"/profile")
+router.post("/edit/user/:id", (req, res, next) => {
+  if (res.locals.admin) {
+    entity = req.body;
+    if (entity.f_ID == res.locals.authUser.f_ID) {
+      if (entity.f_Permission != res.locals.authUser.f_Permission) {
+        userModel.update(entity).then(rows => {
+          res.redirect('/');
+        })
+        return;
+      }
+    }
+    userModel.update(entity).then(rows => {
+      if (entity.f_Permission == 1 || entity.f_Permission == 1)
+        res.redirect('/user/' + res.locals.authUser.f_ID + '/users');
+      else
+        res.redirect('/user/' + res.locals.authUser.f_ID + '/users');
+    })
+  }
+
+});
+router.post(':id/backoriginal', (req, res, next) => {
+  id = req.params.id;
+  if (res.locals.authUser == id) {
+
+  }
 })
 router.get('/:id/categories/add', (req, res, next) => {
   res.render('vwAdmin/add', { error: false, subcat: false, layout: 'main2.hbs' });
@@ -265,10 +274,26 @@ router.get('/:id/members', (req, res, next) => {
 router.get('/:id/users', (req, res, next) => {
   id = req.params.id;
   if (res.locals.admin) {
-
-    res.render('vwAdmin/users', {
-      layout: 'main2.hbs'
-    });
+      id = req.params.id;
+      if (res.locals.admin) {
+        userModel.allSubsc().then(rows => {
+          res.subscriber = rows;
+          for(var i in res.subscriber)
+          {
+            var cd = moment(res.subscriber[i].CreatedAt, 'DD/MM/YYYY').format('DD-MM-YYYY , h:mm:ss');
+            res.subscriber[i].CreatedAt = cd;
+            
+          }
+          userModel.allByP(1).then(rows1 => {
+            res.guest = rows1;
+            res.render('vwAdmin/users', {
+              layout: 'main2.hbs',
+              subscriber: res.subscriber,
+              guest: res.guest
+            });
+          })
+        })
+      }
   }
 })
 router.post('/delete/:id', (req, res, next) => {
@@ -278,10 +303,12 @@ router.post('/delete/:id', (req, res, next) => {
   }
   if (id == res.locals.authUser.f_ID) {
     res.redirect('/user/' + res.locals.authUser.f_ID + '/users');
+    return;
   }
+  else{
   userModel.delete(id).then(rows => {
     res.redirect('/user/' + res.locals.authUser.f_ID + '/members');
-  })
+  })}
 })
 router.get('/admin/register/:id', (req, res, next) => {
   id = req.params.id;
