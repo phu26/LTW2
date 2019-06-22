@@ -72,7 +72,9 @@ module.exports = {
   isSub: id=> {
     return db.load(`SELECT * FROM subscriber WHERE f_ID = ${id}`);
   },
-
+  upInfor: (id,name,mail,date)=> {
+    return db.load(`UPDATE users SET f_Name='${name}',f_Email='${mail}',f_DOB='${date}' WHERE f_ID = ${id}`);
+  },
 
 };
 

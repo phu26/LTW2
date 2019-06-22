@@ -221,6 +221,12 @@ router.post('/edit/user/:id', (req, res, next) => {
   if (res.locals.admin) {
 
   }
+  var dob6 = moment(dob5,'YYYY-MM-DD' ).format('DD/MM/YYYY');
+    var entity  = new Object();
+    entity.f_ID=req.body.f_ID;
+    entity.f_Name = req.body.f_Name;
+    entity.f_Email= req.body.f_Email;
+    entity.f_DOB = dob5;
 })
 router.get('/:id/categories/add', (req, res, next) => {
   res.render('vwAdmin/add', { error: false, subcat: false, layout: 'main2.hbs' });
