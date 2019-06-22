@@ -8,7 +8,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">{{entity.f_Name}}</a>
+                    <a class="navbar-brand" href="#">{{authUser.f_Name}}</a>
                 </div>
                 <div class="collapse navbar-collapse">
                     
@@ -37,30 +37,31 @@
                                 <h4 class="title">Profile</h4>
                             </div>
                             <div class="content">
-                                <form>
+                                <form method="POST" action="/user/edit/user/{{entity.f_ID}}">
                                             <div class="form-group">
                                                 <label>Username</label>
-                                                <input type="text" class="form-control" placeholder="Username" value="{{entity.f_Username}}">
+                                                <input type="text" class="form-control" name="f_UserName" placeholder="Username" value="{{entity.f_Username}}">
                                             </div>
 
                                             <div class="form-group">
                                                 <label for="exampleInputEmail1">Email address</label>
-                                                <input type="email" class="form-control" placeholder="Email" value="{{entity.f_Email}}">
+                                                <input type="email" class="form-control" name="f_Email" placeholder="Email" value="{{entity.f_Email}}">
                                             </div>
 
                                             <div class="form-group">
                                                 <label>Full Name</label>
-                                                <input type="text" class="form-control" placeholder="Company" value="{{entity.f_Name}}">
+                                                <input type="text" class="form-control" name="f_Name" placeholder="Company" value="{{entity.f_Name}}">
                                             </div>
                                         
                                             <div class="form-group">
                                                 <label>Date of birth</label>
-                                                <input type="text" class="form-control" placeholder="Company" value="{{entity.f_DOB}}">
+                                                <input type="text" class="form-control" name="f_DOB" placeholder="Company" value="{{entity.f_DOB}}">
+                                                <input type="hidden" name="f_ID" value="{{entity.f_ID}}">
                                             </div>
                                             {{#if adminedit}}
                                             <div class="form-group">
                                                 <label>Phân quyền :</label>
-                                                <select id="permissions">
+                                                <select id="permissions" name="f_Permission">
                                                     {{#each lcUsers}}
                                                     <option value="{{per_id}}">{{per_name}}</option>
                                                     {{/each}}
@@ -88,13 +89,16 @@
                                 <img src="/pic/{{entity.Pic}}" alt="..."/>
                                 
                             </div>
+                            {{#if adminedit}}
+                            {{else}}
                             <form  method="POST"  enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="example-input-file" >&nbsp;</label>
                         <input type="file" name="file" class="form-control-file border">
                     </div>
-                    <button type="submit" class="btn btn-info btn-fill pull-center">Submit</button>
+                    <center><button type="submit" class="btn btn-info btn-fill pull-center">Submit</button></center>    
                 </form>
+                {{/if}}
                             <div class="content">
                                 <div >
                                      <a href="#">

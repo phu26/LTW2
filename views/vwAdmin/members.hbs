@@ -156,7 +156,7 @@
                                                     <i class="fa fa-trash-o" aria-hidden="true"></i>
                                                 </button></span>
                                             <span><button class="btn btn-secondary btn-sm"
-                                                    onclick="doPreview();" role="button" title="Chuyển về Guest">
+                                                    formaction="/user/{{f_ID}}/backoriginal" role="button" title="Chuyển về Guest">
                                                     <i class="fa fa-sign-out" aria-hidden="true"></i>
                                                 </button></span>
                                             <span><input type="hidden" id="a" name="userid" value="{{f_ID}}"></span>
@@ -196,10 +196,10 @@
                                         <th scope="col">Tên đăng nhập</th>
                                         <th scope="col">Email</th>
                                         <th scope="col" class="text-right">
-                                            <a class="btn btn-outline-success btn-sm" href="/categories/add"
+                                            <a class="btn btn-outline-success btn-sm" href="/user/admin/register/4"
                                                 role="button" title="Add">
                                                 <i class="fa fa-plus" aria-hidden="true"></i>
-                                                Add Category
+                                                Thêm tài khoản
                                             </a>
                                         </th>
 
@@ -213,13 +213,20 @@
                                         <td>{{f_Username}}</td>
                                         <td>{{f_Email}}</td>
                                         <td class="text-right">
-                                            <a class="btn btn-secondary btn-sm" href="" role="button" title="Edit">
-                                                <i class="fa fa-bars"></i>
-                                            </a>
-                                            <a class="btn btn-success btn-sm" href="/categories/add/{{cat_id}}"
-                                                role="button" title="Add Sub Category">
-                                                <i class="fa fa-plus" aria-hidden="true"></i>
-                                            </a>
+                                            <span><a class="btn btn-primary btn-sm" href="/user/edit/user/{{f_ID}}"
+                                                    role="button" title="Sửa">
+                                                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                                                </a></span>
+                                            <span><button class="btn btn-danger btn-sm" formaction="/user/delete/{{f_ID}}"
+                                                    onclick="doPreview();" role="button" title="Xóa tài khoản">
+                                                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                                </button></span>
+                                            <span><button class="btn btn-secondary btn-sm"
+                                                    formaction="/user/{{f_ID}}/backoriginal" role="button" title="Chuyển về Guest">
+                                                    <i class="fa fa-sign-out" aria-hidden="true"></i>
+                                                </button></span>
+                                            <span><input type="hidden" id="a" name="userid" value="{{f_ID}}"></span>
+                                            
                                         </td>
 
                                     </tr>
@@ -254,10 +261,10 @@
                                         <th scope="col">Tên đăng nhập</th>
                                         <th scope="col">Email</th>
                                         <th scope="col" class="text-right">
-                                            <a class="btn btn-outline-success btn-sm" href="/categories/add"
+                                            <a class="btn btn-outline-success btn-sm" href="/user/admin/register/4"
                                                 role="button" title="Add">
                                                 <i class="fa fa-plus" aria-hidden="true"></i>
-                                                Add Category
+                                                Thêm tài khoản
                                             </a>
                                         </th>
 
@@ -271,15 +278,20 @@
                                         <td>{{f_Username}}</td>
                                         <td>{{f_Email}}</td>
                                         <td class="text-right">
-
-                                            <a class="btn btn-primary btn-sm" href="/categories/edit/{{cat_id}}"
-                                                role="button" title="Edit">
-                                                <i class="fa fa-pencil" aria-hidden="true"></i>
-                                            </a>
-                                            <a class="btn btn-success btn-sm" href="/categories/add/{{cat_id}}"
-                                                role="button" title="Add Sub Category">
-                                                <i class="fa fa-plus" aria-hidden="true"></i>
-                                            </a>
+                                            <span><a class="btn btn-primary btn-sm" href="/user/edit/user/{{f_ID}}"
+                                                    role="button" title="Sửa">
+                                                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                                                </a></span>
+                                            <span><button class="btn btn-danger btn-sm" formaction="/user/delete/{{f_ID}}"
+                                                    onclick="doPreview();" role="button" title="Xóa tài khoản">
+                                                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                                </button></span>
+                                            <span><button class="btn btn-secondary btn-sm"
+                                                    formaction="/user/{{f_ID}}/backoriginal" role="button" title="Chuyển về Guest">
+                                                    <i class="fa fa-sign-out" aria-hidden="true"></i>
+                                                </button></span>
+                                            <span><input type="hidden" id="a" name="userid" value="{{f_ID}}"></span>
+                                            
                                         </td>
 
                                     </tr>
