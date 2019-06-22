@@ -979,4 +979,14 @@ router.get('/:idu/Delete/:id', function (req, res) {
   })
   res.redirect('/user/' + req.params.idu + "/table");
 })
+router.get('/:idu/UpPer/:id', function (req, res) {
+  id = req.params.id;
+  productModel.Upper(id);
+  res.redirect('/user/' + req.params.idu + "/table");
+})
+router.get('/:idu/DPer/:id', function (req, res) {
+  id = req.params.id;
+  productModel.XuatBan(id);
+  res.redirect('/user/' + req.params.idu + "/table");
+})
 module.exports = router;

@@ -157,7 +157,12 @@
                                         <td>{{ProID}}</td>
                                         <td>{{ProName}}</td>
 
-
+<td class="text-right">
+          <a class="btn btn-primary btn-sm" onClick="doSomething4({{ProID}});" role="button" title="Edit">
+           Premium <i class="fa fa-arrow-circle-up"></i>
+          </a>
+          
+        </td>
                                     </tr>
                                     {{/each}}
 
@@ -186,7 +191,12 @@
                                         <td>{{ProID}}</td>
                                         <td>{{ProName}}</td>
 
-
+<td class="text-right">
+          <a class="btn btn-primary btn-sm" onClick="doSomething5({{ProID}});" role="button" title="Edit">
+           Về Normal <i class="fa fa-arrow-circle-down"></i>
+          </a>
+          
+        </td>
                                     </tr>
                                     {{/each}}
 
@@ -208,6 +218,12 @@
                                             }
                                             function doSomething3(id) {
                                                    location.href = "/user/{{id}}/Delete/"+id;
+                                            }
+                                            function doSomething4(id) {
+                                                   location.href = "/user/{{id}}/UpPer/"+id;
+                                            }
+                                             function doSomething5(id) {
+                                                   location.href = "/user/{{id}}/DPer/"+id;
                                             }
                                         </script>
 

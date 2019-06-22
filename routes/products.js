@@ -250,6 +250,7 @@ console.log("ok");
             {
                 console.log("da co ");
                 console.log(tag[res.i2]);
+                
                 productModel.IDsingle2(tag[res.i2]).then(
                   r=>{
                     console.log(tag[res.i2]);
@@ -266,7 +267,7 @@ console.log("ok");
                   
                   }
                   
-                )
+                ).catch(err => next(err));
                 break;
             }
             else{
@@ -295,7 +296,7 @@ console.log("ok");
                 
                 }
                 
-              )
+              ).catch(err => next(err));
             }
             console.log(res.i3);
             res.i3=res.i3+1;
@@ -304,7 +305,7 @@ console.log("ok");
           }
           res.i2=res.i2+1;
         }
-      })
+      }).catch(err => next(err));
       
   
 
