@@ -41,11 +41,24 @@
     resize: horizontal;
   }
 </style>
+{{#section 'css'}}
+<link rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
+{{/section}}
 {{#section 'js'}}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+
+
+
 <script>
   $(function () {
+    $('#txtDOB').datetimepicker({
+      // format: 'd/m/Y H:i'
+      format: 'd/m/Y',
+      timepicker: false,
+      mask: true,
+    });
+  })
+
     $('#uploadForm').validate({
       onkeyup: false,
       rules: {
@@ -107,9 +120,7 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
-  {{#if mes}}
-     {{mes}}
-     {{/if}}
+ 
 {{#if isAuthenticated}}
 
 {{#if writer}}
@@ -233,6 +244,7 @@
 
 {{/if}}
 {{#if admin}}
+
 <div class="card">
   <div class="card-header">
     <h1>Upload bài viết</h1>
@@ -242,21 +254,28 @@
       <div class="form-group">
         <label class="col-form-label-lg" for="CatID">Chọn danh mục :</label>
         <select class="form-control-lg" name="CatID" id="cat" onchange="getSubCat()" >
+            {{#with product}}
+           <option value="{{CatID}}">{{CatName}}</option>
+           {{/with}} 
           {{#each lcCategories}}
           <option value="{{cat_id}}">{{cat_name}}</option>
-          {{/each}}         
+          {{/each}}    
+             
         </select>
       </div>
   <div class="form-group">
     <label class="col-form-label-lg" for="subCatID">Chọn danh mục phụ :</label>
     <select class="form-control-lg" name="subCatID" id="subcat">
+       {{#with product}}
+         <option value="{{subCatID}}">{{subName}}</option>
+           {{/with}} 
     </select>
     <script language="javascript">
           function getSubCat()
           {
             var value = document.getElementById("cat").value;
             $("#subcat").empty();
-              console.log(value);
+             
               //var local_data =!{JSON.stringify(lcCategories)};
               var d=document.getElementById("subcat");
               {{#each lcCategories}}
@@ -272,13 +291,15 @@
                   {{/each}}
                 }              
               {{/each}}
+             
           }
           </script>
   </div>
+  {{#with product}}
   <div class="form-group">
     <label class="col-form-label-lg" for="editor1">Chọn hình đại diện bài viết :</label>
     <textarea rows="4" name="pic" cols="500" name="pic" placeholder="Chèn hình vào đây" id="editor1">
-
+     {{pic}}
         </textarea>
   </div>
   <div class="form-group">
@@ -287,7 +308,7 @@
         <span class="input-group-text">Nhập tiêu đề:</span>
       </div>
       <textarea class="form-control" name="ProName" maxlength="150" placeholder="Tiêu đề" rows="1" name="Title"
-        aria-label="With textarea"></textarea>
+        aria-label="With textarea">{{ProName}}</textarea>
     </div>
   </div>
   <div class="form-group">
@@ -296,21 +317,22 @@
         <span class="input-group-text">Mô tả:</span>
       </div>
       <textarea class="form-control" maxlength="150" placeholder="Mô tả ngắn gọn" rows="2" name="TinyDes"
-        aria-label="With textarea"></textarea>
+        aria-label="With textarea">{{TinyDes}}</textarea>
     </div>
   </div>
   <div>
     <label class="form-control-lg" for="editor1">Nhập bài viết :</label>
     <textarea name="FullDes" id="editor2">
-
+{{FullDes}}
         </textarea></div>
+        {{/with}}
   <div class="form-group">
     <div class="input-group input-group-lg">
       <div class="input-group-prepend">
         <span class="input-group-text">Nhập các Tag :</span>
       </div>
       <textarea class="form-control" maxlength="150" placeholder="#tag1,#tag2,#tag...." rows="1" name="tags"
-        aria-label="With textarea"></textarea>
+        aria-label="With textarea">{{#each Tag}}{{tagName}}{{/each}}</textarea>
     </div>
     <div class="card-footer text-right">
       <div class="input-group input-group-lg">
@@ -325,31 +347,30 @@
       </div>
       
     </div>
+     <div class="input-group input-group-lg">
+      <div class="input-group-prepend">
+          <span class="input-group-text">Nhập Lời Nhắn:</span>
+        </div>
+        <textarea class="form-control" maxlength="150" placeholder="...." rows="1" name="SMS"
+          ></textarea>
+      
+    </div>
+    
       <button type="submit" class="btn btn-lg btn-primary btn-block">
         Upload
+      </button>
+        <button type="submit" formaction="/user/{{authUser.f_ID}}/Accept/{{#with product}}{{ProID}}{{/with}}" class="btn btn-lg btn-primary btn-block">
+        Duyệt
+      </button>
+      
+      <button type="submit" class="btn btn-lg btn-primary btn-block">
+        Từ chối
       </button>
     </div>
 
     </form>
   </div>
 </div>
-<script type="text/javascript">
-
-  CKEDITOR.replace('editor1', {
-    "removeButtons": 'youtube,Source,Save,NewPage,Preview,Print,Templates,Cut,Copy,Paste,PasteText,PasteFromWord,Redo,Undo,Find,Replace,SelectAll,Scayt,Form,Radio,TextField,Textarea,Select,Button,ImageButton,HiddenField,About,Maximize,ShowBlocks,BGColor,TextColor,Styles,Format,Font,FontSize,Iframe,PageBreak,SpecialChar,Smiley,HorizontalRule,Table,Flash,Unlink,Link,Anchor,Language,BidiRtl,BidiLtr,JustifyLeft,JustifyCenter,JustifyRight,JustifyBlock,CreateDiv,Blockquote,Outdent,Indent,BulletedList,NumberedList,CopyFormatting,Bold,Italic,RemoveFormat,Underline,Strike,Subscript,Superscript,Checkbox',
-    "imageBrowser_listUrl": "/products/files",
-  });
-
-  CKEDITOR.replace('editor2', {
-    "imageBrowser_listUrl": "/products/files",
-  });
-
-
-
-
-
-</script>
-
 
 {{else}}
 {{#if editor}}
@@ -464,6 +485,11 @@
           ></textarea>
       
     </div>
+     <div class="form-group">
+        <div for="txtDOB" class="input-group-text">Nhập thời điểm xuất bản :</div>
+      
+        <input type="text" class="form-control" id="txtDOB" name="dob">
+      </div>
     
       <button type="submit" formaction="/user/{{authUser.f_ID}}/Accept/{{#with product}}{{ProID}}{{/with}}" class="btn btn-lg btn-primary btn-block">
         Duyệt

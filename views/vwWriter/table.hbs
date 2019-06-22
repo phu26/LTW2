@@ -50,7 +50,7 @@
                                         <td>{{ProName}}</td>
                                         
   <td class="text-right">
-          <a class="btn btn-primary btn-sm" href="/user/edit/{{ProID}}" role="button" title="Edit">
+          <a class="btn btn-primary btn-sm" onClick="doSomething({{ProID}});" role="button" title="Edit">
             <i class="fa fa-pencil" aria-hidden="true"></i>
           </a>
          
@@ -66,6 +66,7 @@
                         
                     </div>
                 </div>
+               
                 <div class="col-md-12">
                     <div class="card">
                         <div class="header">
@@ -115,7 +116,7 @@
                                         <td>{{ProName}}</td>
 
  <td class="text-right">
-          <a class="btn btn-primary btn-sm" href="/user/{{authUser.f_ID}}/edit/{{ProID}}" role="button" title="Edit">
+          <a class="btn btn-primary btn-sm" onClick="doSomething({{ProID}});"  role="button" title="Edit">
             <i class="fa fa-pencil" aria-hidden="true"></i>
           </a>
           
@@ -129,6 +130,11 @@
                         </div>
                     </div>
                 </div>
+                 <script>
+                                          function doSomething(id) {
+                                                   location.href = "/user/{{id}}/edit/"+id;
+                                            }
+                                        </script>
                 <div class="col-md-12">
                     <div class="card">
                         <div class="header">

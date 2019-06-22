@@ -198,6 +198,44 @@ delNT: (id)=> {
             
   return db.load(`delete from notification WHERE proID = ${id} and user_ID=0 or  proID = 0 and user_ID=${id}`);
 },
+proByALL0: ()=> {
+            
+  return db.load(`SELECT p.*,u.f_Name FROM products p,users u WHERE  p.author=u.f_ID and TrangThai =0`);
+},
+proByALL1: ()=> {
+            
+  return db.load(`SELECT p.*,u.f_Name FROM products p,users u WHERE  p.author=u.f_ID and TrangThai =1 `);
+},
+
+proByALL2: ()=> {
+            
+  return db.load(`SELECT p.*,u.f_Name FROM products p,users u WHERE  p.author=u.f_ID and TrangThai =2 `);
+},
+
+proByALL3: () => {
+            
+  return db.load(`SELECT p.*,u.f_Name FROM products p,users u WHERE  p.author=u.f_ID and TrangThai =3`);
+},
+
+proByALL4: () => {
+            
+  return db.load(`SELECT p.*,u.f_Name FROM products p,users u WHERE  p.author=u.f_ID and TrangThai =4`);
+},
+
+acceptBy: (idu,proid,time) => {
+            
+  return db.load(`INSERT INTO news(user_ID, ProID, CreatedAt) VALUES (${idu},${proid},'${time}')`);
+},
+
+add22: entity => {
+  return db.add('news',entity);
+},
+XuatBan: (id) => {
+            
+  return db.load(`UPDATE products SET TrangThai= 3 WHERE ProID = ${id}`);
+},
+
+
 };
 
 

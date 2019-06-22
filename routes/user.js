@@ -1,4 +1,4 @@
-var express = require("express");
+ var express = require("express");
 var catogoryModel = require('../models/category.model');
 var async = require("async");
 var moment = require('moment');
@@ -33,18 +33,42 @@ router.get('/', (req, res, next) => {
 
 
 var p = function (req, res, next) {
+if(req.params.id ==2)
+{
+  productModel.proByALL0()
+  .then(rows => {
+      req.prod = rows;
 
-    productModel.proByUser0(req.params.id)
-        .then(rows => {
-            req.prod = rows;
+      return next();
 
-            return next();
+  })
+  .catch(err => next(err));
+}
+else{
+  productModel.proByUser0(req.params.id)
+  .then(rows => {
+      req.prod = rows;
 
-        })
-        .catch(err => next(err));
+      return next();
+
+  })
+  .catch(err => next(err));
+}
+   
 }
 var p1 = function (req, res, next) {
-
+  if(req.params.id ==2)
+  {
+    productModel.proByALL1()
+    .then(rows => {
+        req.prod1 = rows;
+  
+        return next();
+  
+    })
+    .catch(err => next(err));
+  }
+  else{
     productModel.proByUser1(req.params.id)
         .then(rows1 => {
             req.prod1 = rows1;
@@ -53,39 +77,72 @@ var p1 = function (req, res, next) {
 
         })
         .catch(err => next(err));
+  }
+    
 }
 var p2 = function (req, res, next) {
-
+  if(req.params.id ==2)
+  {
+    productModel.proByALL2()
+    .then(rows => {
+        req.prod2 = rows;
+  
+        return next();
+  
+    })
+    .catch(err => next(err));
+  }else{ 
     productModel.proByUser2(req.params.id)
-        .then(rows2 => {
-            req.prod2 = rows2;
+    .then(rows2 => {
+        req.prod2 = rows2;
 
-            return next();
+        return next();
 
-        })
-        .catch(err => next(err));
+    })
+    .catch(err => next(err));}
+   
 }
 var p3 = function (req, res, next) {
-
-    productModel.proByUser3(req.params.id)
+  if(req.params.id ==2)
+  {
+    productModel.proByALL3()
+    .then(rows => {
+        req.prod3 = rows;
+  
+        return next();
+  
+    })
+    .catch(err => next(err));
+  }else
+   { productModel.proByUser3(req.params.id)
         .then(rows3 => {
             req.prod3 = rows3;
 
             return next();
 
         })
-        .catch(err => next(err));
+        .catch(err => next(err));}
 }
 var p4 = function (req, res, next) {
-
-    productModel.proByUser4(req.params.id)
+  if(req.params.id ==2)
+  {
+    productModel.proByALL4()
+    .then(rows => {
+        req.prod4 = rows;
+  
+        return next();
+  
+    })
+    .catch(err => next(err));
+  }else
+    {productModel.proByUser4(req.params.id)
         .then(rows4 => {
             req.prod4 = rows4;
 
             return next();
 
         })
-        .catch(err => next(err));
+        .catch(err => next(err));}
 }
 var gCD = function (req, res, next) {
 
@@ -284,14 +341,20 @@ router.get('/:id/table/', [p,p1, p2, p3, p4,gCD], function (req, res, next) {
             entity.f_DOB = dob;
             console.log(entity.f_Permission) ;
             if (entity.f_Permission == 5) {
+              prod = req.prod;
+              prod1 = req.prod1;
+              prod2 = req.prod2;
+              prod3 = req.prod3;
+              prod4 = req.prod4;
                 res.render("vwAdmin/table", {
+                  prod, prod1, prod2, prod3, prod4,id ,
                     layout: 'main2.hbs'
 
 
                 });
             }
             else
-                if (entity.f_Permission == 3) {
+                if (entity.f_Permission == 3   ) {
                     prod = req.prod;
                     prod1 = req.prod1;
                     prod2 = req.prod2;
@@ -708,7 +771,19 @@ var KT= function (req, res, next) {
     
   }
 router.post('/:idu/Accept/:id',b2,function(req,res) {
-    
+ 
+  var xx = req.body.dob;
+  var dob5 = moment(xx, 'DD/MM/YYYY').format('YYYY-MM-DD');
+  var datee = moment(dob5);
+  console.log(Date(datee));
+  var enti = new Object();
+  enti.user_ID=req.params.idu;
+  enti.ProID = req.params.id;
+  enti.CreatedAt = dob5;
+  
+  productModel.add22(enti);
+
+   
     console.log(req.body.ProName);
     console.log(req.body.TinyDes);
     console.log(req.body.FullDes);
@@ -874,4 +949,9 @@ router.post('/:idu/Accept/:id',b2,function(req,res) {
 
     res.redirect('/user');
   })
+  router.get('/:idu/Created/:id',function(req,res) {
+    productModel.XuatBan(req.params.id);
+    res.redirect('/user/'+req.params.idu+"/table");
+  })
+
 module.exports = router;
