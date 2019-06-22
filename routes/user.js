@@ -217,8 +217,29 @@ router.get('/edit/user/:id', (req, res, next) => {
     }).catch(next);
   }
 })
-router.post('/edit/user/:id', (req, res, next) => {
+router.post("/edit/user/:id", (req, res, next) => {
   if (res.locals.admin) {
+    entity = req.body;
+    if (entity.f_ID == res.locals.authUser.f_ID) {
+      if (entity.f_Permission != res.locals.authUser.f_Permission) {
+        userModel.update(entity).then(rows => {
+          res.redirect('/');
+        })
+        return;
+      }
+    }
+    userModel.update(entity).then(rows => {
+      if (entity.f_Permission == 1 || entity.f_Permission == 1)
+        res.redirect('/user/' + res.locals.authUser.f_ID + '/users');
+      else
+        res.redirect('/user/' + res.locals.authUser.f_ID + '/users');
+    })
+  }
+
+});
+router.post(':id/backoriginal', (req, res, next) => {
+  id = req.params.id;
+  if (res.locals.authUser == id) {
 
   }
 })
@@ -253,10 +274,26 @@ router.get('/:id/members', (req, res, next) => {
 router.get('/:id/users', (req, res, next) => {
   id = req.params.id;
   if (res.locals.admin) {
-
-    res.render('vwAdmin/users', {
-      layout: 'main2.hbs'
-    });
+      id = req.params.id;
+      if (res.locals.admin) {
+        userModel.allSubsc().then(rows => {
+          res.subscriber = rows;
+          for(var i in res.subscriber)
+          {
+            var cd = moment(res.subscriber[i].CreatedAt, 'DD/MM/YYYY').format('DD-MM-YYYY , h:mm:ss');
+            res.subscriber[i].CreatedAt = cd;
+            
+          }
+          userModel.allByP(1).then(rows1 => {
+            res.guest = rows1;
+            res.render('vwAdmin/users', {
+              layout: 'main2.hbs',
+              subscriber: res.subscriber,
+              guest: res.guest
+            });
+          })
+        })
+      }
   }
 })
 router.post('/delete/:id', (req, res, next) => {
@@ -266,10 +303,12 @@ router.post('/delete/:id', (req, res, next) => {
   }
   if (id == res.locals.authUser.f_ID) {
     res.redirect('/user/' + res.locals.authUser.f_ID + '/users');
+    return;
   }
+  else{
   userModel.delete(id).then(rows => {
     res.redirect('/user/' + res.locals.authUser.f_ID + '/members');
-  })
+  })}
 })
 router.get('/admin/register/:id', (req, res, next) => {
   id = req.params.id;
