@@ -7,6 +7,10 @@ module.exports = {
   allByP: (id) => {
     return db.load(`select * from users where f_Permission = ${id}`);
   },
+  allSubsc: () =>
+  {
+    return db.load(`SELECT u.*,s.CreatedAt FROM users u, subscriber s WHERE u.f_ID = s.f_ID`);
+  },
   alltag: () => {
     return db.load(`select * from tag order by tagID`);
   },
