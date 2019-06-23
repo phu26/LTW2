@@ -1,0 +1,41 @@
+{{#if admin}}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<form action="/user/tag/{{tag.tagID}}" method="POST">
+  <div class="card shadow">
+    <h5 class="card-header">
+      Sửa tên nhãn
+    </h5>
+    <div class="card-body">
+      {{#if this.error}}
+      <div class="alert alert-danger" role="alert">
+        Nhãn không tồn tại <a href="/user/{{authUser.f_ID}}/tags" class="alert-link">Back to List</a>.
+      </div>
+      {{else}}
+      <div class="form-group">
+        <label for="txtCatID">Mã nhãn</label>
+        <input readonly type="text" class="form-control" name="tagID" value="{{tag.tagID}}">
+      </div>
+      <div class="form-group">
+        <label for="txtCatName">Tên nhãn</label>
+        <input type="text" class="form-control" name="tagName" value="{{tag.tagName}}">
+      </div>
+      {{/if}}
+    </div>
+    <div class="card-footer text-right">
+      <a class="btn btn-outline-primary" href="/user/{{authUser.f_ID}}/tags" role="button" title="Back">
+        <i class="fa fa-backward" aria-hidden="true"></i>
+        List
+      </a>
+      {{#unless this.error}}
+      <button type="submit" class="btn btn-danger" formaction="user/tag/delete">
+        <i class="fa fa-trash-o" aria-hidden="true"></i>
+        Delete
+      </button>
+      <button type="submit" class="btn btn-success">
+        <i class="fa fa-check" aria-hidden="true"></i>
+        Save
+      </button>
+    </div>
+    {{/unless}}
+ {{/if}}

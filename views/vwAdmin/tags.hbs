@@ -23,10 +23,10 @@
                 <a class="navbar-brand" href="#">Table List</a>
             </div>
             <div class="collapse navbar-collapse">
-               
+
 
                 <ul class="nav navbar-nav navbar-right">
-                    
+
                     <li>
                         <a href="/account/logout">
                             <p>Log out</p>
@@ -48,38 +48,47 @@
                             <p class="category">Danh sách</p>
                             <input id="myInput" type="text" placeholder="Tìm kiếm..">
                         </div>
+                        <form id="formEdit" method="POST">
                         <div class="content table-responsive table-full-width">
                             <table name="tbCat" class="table table-hover table-dark table-striped">
                                 <thead>
                                     <tr>
                                         <th scope="col">#</th>
                                         <th scope="col">Tên tag</th>
-                                        
+
 
                                     </tr>
                                 </thead>
                                 <tbody id="tbtags">
                                     {{#each tags}}
                                     <tr>
-                                        <th scope="row">{{tagID}}</th>
-                                        <td>{{tagName}}</td>
-                                        <td class="text-right">
-                                            <a class="btn btn-primary btn-sm" href="/categories/edit/{{cat_id}}"
-                                                role="button" title="Edit">
-                                                <i class="fa fa-pencil" aria-hidden="true"></i>
-                                            </a>
-                                            <a class="btn btn-danger btn-sm" href="javascript:;" onclick="doPreview();"
-                                                role="button" title="Delete">
-                                                <i class="fa fa-trash-o" aria-hidden="true"></i>
-                                            </a>
-                                        </td>
-
+                                        
+                                            <th scope="row">{{tagID}}</th>
+                                            <td>{{tagName}}</td>
+                                            <td class="text-right">
+                                                <a class="btn btn-primary btn-sm" href="/user/tag/{{tagID}}"
+                                                    role="button" title="Edit">
+                                                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                                                </a>
+                                                <a class="btn btn-danger btn-sm" href="javascript:;"
+                                                    onclick="doPreview();" role="button" title="Delete">
+                                                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                                </a>
+                                            </td>
+                                            <script>
+                                                function doPreview() {
+                                                    form = document.getElementById('formEdit');
+                                                    form.action = '/user/tag/delete/{{tagID}}';
+                                                    form.submit();
+                                                }
+                                            </script>
                                     </tr>
                                     {{/each}}
                                 </tbody>
                             </table>
 
                         </div>
+                        </form>
                     </div>
                 </div>
 
@@ -87,7 +96,7 @@
             </div>
         </div>
     </div>
-    </div>
+</div>
 </div>
 
 </body>

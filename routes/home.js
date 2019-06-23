@@ -49,6 +49,16 @@ var b = function(req,res,next){
      })
      .catch(err => next(err));
 }
+var pre = function(req,res,next){
+  catogoryModel.all3()
+  .then(rows => {
+  
+     req.Pre =rows;
+     return next();
+     
+   })
+   .catch(err => next(err));
+}
 
 var tag = function(req,res,next){
      catogoryModel.alltag()
@@ -88,7 +98,7 @@ var tag = function(req,res,next){
    }
    
  
-router.get('/',[top3host,top10host,b,tag],function(req,res,next){
+router.get('/',[top3host,top10host,b,tag,pre],function(req,res,next){
   if(req.New)
   { var dob5 = moment(req.New.CreatedAt, 'YYYY-MM-DD').format('DD/MM/YYYY');
  
@@ -118,8 +128,11 @@ router.get('/',[top3host,top10host,b,tag],function(req,res,next){
      var entity4 = req.Host2;
      entity4.CreatedAt = dob4;}
      
-    
-  
+     if(req.Pre)
+     {var premium = moment(req.Pre.CreatedAt, 'YYYY-MM-DD').format('DD/MM/YYYY');
+     var entityPre = req.Pre;
+     entity4.CreatedAt = premium;}
+
      
 
    
@@ -139,6 +152,7 @@ router.get('/',[top3host,top10host,b,tag],function(req,res,next){
                H2:entity2,
                H3:entity3,
                Host2: entity4,
+               Premium: entityPre,
                Tg : TAG,
                tcm : result,
                New : entity5,

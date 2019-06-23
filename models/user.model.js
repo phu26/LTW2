@@ -20,6 +20,12 @@ module.exports = {
   singleSub: id => {
     return db.load(`select * from subscriber where f_ID = ${id}`);
   },
+  singleTag: id => {
+    return db.load(`select * from tag where tagID = ${id}`);
+  },
+  singleTagitem: id =>{
+    return db.load(`select * from itiemtag where tagID = '${id}'`);
+  },
   singleByUserName: userName => {
     return db.load(`select * from users where f_Username = '${userName}'`);
   },
@@ -32,11 +38,25 @@ module.exports = {
   add: entity => {
     return db.add('users', entity);
   },
-
+  /**
+   * @param {*} entity { f_ID, f_Username, }
+   */
   update: entity => {
     var id = entity.f_ID;
     delete entity.f_ID;
     return db.update('users', 'f_ID', entity, id);
+  },
+
+  updateTag: entity => {
+    var id = entity.tagID;
+    delete entity.tagID;
+    return db.update('tag', 'tagID', entity, id);
+  },
+  deleteTag: id => {
+    return db.delete('tag', 'tagID', id);
+  },
+  deleteTagitem: id => {
+    return db.delete('itiemtag','tagID',id);
   },
 
   delete: id => {

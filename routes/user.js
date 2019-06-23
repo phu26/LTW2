@@ -217,26 +217,24 @@ router.get('/edit/user/:id', (req, res, next) => {
     }).catch(next);
   }
 })
-router.post("/edit/user/:id", (req, res, next) => {
-  if (res.locals.admin) {
-    entity = req.body;
-    if (entity.f_ID == res.locals.authUser.f_ID) {
-      if (entity.f_Permission != res.locals.authUser.f_Permission) {
-        userModel.update(entity).then(rows => {
-          res.redirect('/');
-        })
-        return;
-      }
-    }
-    userModel.update(entity).then(rows => {
-      if (entity.f_Permission == 1 || entity.f_Permission == 2)
-        res.redirect('/user/' + res.locals.authUser.f_ID + '/users');
-      else
-        res.redirect('/user/' + res.locals.authUser.f_ID + '/members');
-    })
-  }
-
-});
+router.post('/edit/user/:id', (req, res, next) => {
+ 
+  var xx = req.body.f_DOB;
+  var dob5 = moment(xx, 'DD/MM/YYYY').format('YYYY-MM-DD');
+  var dob6 = moment(dob5,'YYYY-MM-DD' ).format('DD/MM/YYYY');
+    var entity  = new Object();
+    entity.f_ID=req.body.f_ID;
+    entity.f_Name = req.body.f_Name;
+    entity.f_Email= req.body.f_Email;
+    entity.f_DOB = dob5;
+    entity.f_Username= req.body.f_UserName;
+    entity.f_Permission = req.body.f_Permission;
+    entity.Pic = req.body.f_Pic;
+      userModel.update(entity);
+      
+  
+  res.redirect("/user/"+req.params.id+"/profile")
+})
 router.post('/extend/:id', (req, res, next) => {
   id = req.params.id;
   if (res.locals.admin) {
