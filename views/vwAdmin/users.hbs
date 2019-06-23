@@ -2,27 +2,18 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <script>
 $(document).ready(function(){
-  $("#myInput").on("keyup", function() {
+  $("#myInput1").on("keyup", function() {
     var value = $(this).val().toLowerCase();
-    $("#tbcats tr").filter(function() {
+    $("#tbsub tr").filter(function() {
       $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
     });
   });
 });
 
 $(document).ready(function(){
-  $("#myInput").on("keyup", function() {
+  $("#myInput2").on("keyup", function() {
     var value = $(this).val().toLowerCase();
-    $("#tbcats tr").filter(function() {
-      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-    });
-  });
-});
-
-$(document).ready(function(){
-  $("#myInput").on("keyup", function() {
-    var value = $(this).val().toLowerCase();
-    $("#tbcats tr").filter(function() {
+    $("#tbg tr").filter(function() {
       $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
     });
   });
@@ -64,7 +55,7 @@ $(document).ready(function(){
                         <div class="header">
                             <h4 class="title">Độc giả (Subscriber)</h4>
                             <p class="category">Danh sách tài khoản</p>
-                            <input id="myInput" type="text" placeholder="Tìm kiếm..">
+                            <input id="myInput1" type="text" placeholder="Tìm kiếm..">
                         </div>
                         <div class="content table-responsive table-full-width">
                             <table class="table table-hover table-dark table-striped">
@@ -78,7 +69,7 @@ $(document).ready(function(){
                                         
                                     </tr>
                                 </thead>
-                                <tbody id="tbSub">
+                                <tbody id="tbsub">
                                     {{#each subscriber}}
                                     <tr>
                                         <th scope="row">{{f_ID}}</th>
@@ -128,7 +119,7 @@ $(document).ready(function(){
                         <div class="header">
                             <h4 class="title">Độc giả vãng lai (Guest)</h4>
                             <p class="category">Danh sách tài khoản</p>
-                            <input id="myInput" type="text" placeholder="Tìm kiếm..">
+                            <input id="myInput2" type="text" placeholder="Tìm kiếm..">
                         </div>
                         <div class="content table-responsive table-full-width">
                             <table class="table table-hover table-dark table-striped">
@@ -148,7 +139,7 @@ $(document).ready(function(){
 
                                     </tr>
                                 </thead>
-                                <tbody id="tbEditor">
+                                <tbody id="tbg">
                                     {{#each guest}}
                                     <tr>
                                         <th scope="row">{{f_ID}}</th>
