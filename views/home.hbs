@@ -1,325 +1,383 @@
-
-<style> 
-  
+<style>
   #c {
     color: white;
-    background-position:center;
-    width:4   00px;
-    height:200px;
-    text-align:inherit;
-    font-weight:bold;
-    box-shadow:  5px 5px 5px thistle;
-     margin: 10px
-     
-}
-[class~="news"] {
-  padding: 5px;
-  width: 100% !important;
-  border:  10px;
-  
-}
-[class~="box"] {
-  box-shadow: inset 0px 0px  14px #BAD3C7;
-}
- #d {
-   visibility: visible !important;
-      background-color: transparent;
-      color:black;
-text-decoration:solid;
-    font-weight:bold;
-    background-position:center;
-    width:300px;
-    box-shadow:  5px 5px 5px thistle;
-   font-weight: bold;
-   margin: 15px;
-   padding : 10px;
-   
- }
- #e{
-   background-position:center;
-    width:430px;
-    height:500px;
-    text-align:inherit;
-    font-weight:bold;
-    box-shadow:  5px 5px 5px thistle;
-     margin: 5px;
-     overflow-x: hidden; 
-  overflow-y: scroll; 
+    background-position: center;
+    width: 4 00px;
+    height: 200px;
+    text-align: inherit;
+    font-weight: bold;
+    box-shadow: 5px 5px 5px thistle;
+    margin: 10px
+  }
 
- }
- #border{
-   font-weight: bold;
-   margin-top: 10px;
-   font-family: cursive;
-   text-align: center;
-  box-shadow: inset 0px 0px  14px #BAD3C7;
-}
+  [class~="news"] {
+    padding: 5px;
+    width: 100% !important;
+    border: 10px;
 
+  }
+
+  [class~="box"] {
+    box-shadow: inset 0px 0px 14px #BAD3C7;
+  }
+
+  #d {
+    visibility: visible !important;
+    background-color: transparent;
+    color: black;
+    text-decoration: solid;
+    font-weight: bold;
+    background-position: center;
+    width: 300px;
+    box-shadow: 5px 5px 5px thistle;
+    font-weight: bold;
+    margin: 15px;
+    padding: 10px;
+    
+
+  }
+
+  #e {
+    background-position: center;
+    width: 430px;
+    height: 500px;
+    text-align: inherit;
+    font-weight: bold;
+    box-shadow: 5px 5px 5px thistle;
+    margin: 5px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+
+  }
+
+  #border {
+    font-weight: bold;
+    margin-top: 10px;
+    font-family: cursive;
+    text-align: center;
+    box-shadow: inset 0px 0px 14px #BAD3C7;
+  }
 </style>
 
-<main  role="main">
-      <div>
-        <div><card-header> <div class="input-group-prepend">
-          {{#each Tg}}
-      <a style="padding: 2px" href="/categories/tag/{{tagID}}" ><span class="input-group-text"> {{tagName}}</span></a>  
-        {{/each}}
-      </div></card-header>
-        <div>
-      <div id="carouselExampleIndicators"  class="carousel slide news"  data-ride="carousel">
-  <ol class="carousel-indicators">
-    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-  </ol>
-  <div class="carousel-inner">
-     {{#with H1}}
-       <a style="color: black" href="products/sp/{{ProID}}" class="carousel-item active">
-       
-         
-      <img class="d-block w-100" src="{{pic}}"  height="550" alt="First slide">
-      <Center>{{ProName}}</Center>
-    </a>
-  {{/with}}
-   {{#with H2}}
-    <a href="products/sp/{{ProID}}" class="carousel-item">
-      <img class="d-block w-100" src="{{pic}}" height="550" alt="Second slide">
-      <Center>{{ProName}}</Center>
-    </a>
-     {{/with}}
-      {{#with H3}}
-    <a href="products/sp/{{ProID}}" class="carousel-item">
-      <img class="d-block w-100" src="{{pic}}"  height="550" alt="Third slide">
-      <Center>{{ProName}}</Center>
-    </a>
-     {{/with}}
-  </div>
-  <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="sr-only">Previous</span>
-  </a>
-  <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="sr-only">Next</span>
-  </a>
-</div>
-      <div class="row news">
-        <div class="col-sm-6 news" >
-     <div  id="border" style="width: 100" class="card-header">
-               <h4  class="my-0 font-weight-normal">Tin Mới</h4>
-          </div>
-      <div  class="card-deck mb-4 text-center">
-
-
-      {{#if New}}
-        {{#each New}}
-        
+<main role="main">
+  <div>
+    <div>
       
-         <a style="background-image:url({{pic}})" id="d" href="products/sp/{{ProID}}"  >
-          
-            <h5  class="mb-1"> <b>{{CatName}}</b></h5>
-          <div class="d-flex w-100 justify-content-between">
-           
-            
-            <ul class="list-unstyled mt-3 mb-4">
-             
-              <li>{{ProName}}</li>
-              <li>{{TinyDes}}</li>
-        
-         
-            </ul>
-             
-                                       
-                                       
-                                 
-             
-          </div>
-     <footer class="text-muted"> 
-                <span class="badge badge-light"><small>{{CreatedAt}}
-               
-                </small></span>
-                <br>
-     
-              <span class="badge badge-light" href="#"><i class="fa fa-eye" aria-hidden="true"></i> {{Click}}</span>
-                
-     </footer>
-  </a>
+      <div>
        
-             {{/each}}
-            {{/if}}
-      </div>
-        </div>
-         {{#if subscriber}}
-          <div class="col-sm-2 news" >
-             <div  id="border" style="width: 100" class="card-header">
-               <h4  class="my-0 font-weight-normal"> Premium</h4>
+        <div id="carouselExampleIndicators" class="carousel slide news" data-ride="carousel">
+          <ol class="carousel-indicators">
+            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+          </ol>
+          <div class="carousel-inner">
+            {{#with H1}}
+            <a style="color: black" href="products/sp/{{ProID}}" class="carousel-item active">
+
+
+              <img class="d-block w-100" src="{{pic}}" height="550" alt="First slide">
+              <Center>{{ProName}}</Center>
+            </a>
+            {{/with}}
+            {{#with H2}}
+            <a href="products/sp/{{ProID}}" class="carousel-item">
+              <img class="d-block w-100" src="{{pic}}" height="550" alt="Second slide">
+              <Center>{{ProName}}</Center>
+            </a>
+            {{/with}}
+            {{#with H3}}
+            <a href="products/sp/{{ProID}}" class="carousel-item">
+              <img class="d-block w-100" src="{{pic}}" height="550" alt="Third slide">
+              <Center>{{ProName}}</Center>
+            </a>
+            {{/with}}
           </div>
+          <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+          </a>
+          <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+          </a>
+        </div>
+          <div class="featured_title">
+			<div class="container">
+				<div class="row">
+					<div class="col">
+						<div class="section_title_container d-flex flex-row align-items-start justify-content-start">
+							<div>
+								<div class="section_title">Top Chuyên Mục</div>
+								
+							</div>
+							<div class="section_bar"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+       
+          <div class="container">
+            <div class="row">
            
+               {{#each tcm}}
+                 
+              <!-- Intro Item -->
+              <div  class="col-md-4 intro_col">
+                <div id="d" class="intro_item" >
+                
+                  {{#each subcats}}
+                   
+                   <p class="mb-1">{{sub_name}}</p>
+                  
+                 <img  src="{{sub_pic}}" alt=""/>
+                
+               
+                  <div class="intro_content trans_300" ><a href="products/sp/{{sub_id}} {{/each}}">{{cat_name}}</a><div> 
+                    {{#each subcats}}
+                   
+
+                    <small>{{sub_CreatedAt}}</small>
+                    {{/each}}</div></div>
+                </div>
+              </div>
+
+             
+
+                  {{/each}}
+            
+
+
+            </div>
+          </div>
+          <br>
+           <div class="featured_title">
+			<div class="container">
+				<div class="row">
+					<div class="col">
+						<div class="section_title_container d-flex flex-row align-items-start justify-content-start">
+							<div>
+								<div class="section_title">Top 10 Bài Mới</div>
+								
+							</div>
+							<div class="section_bar"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+       <br>
+         <div class="container">
+            <div class="row">
+            
+            <div class="card-deck mb-4 text-center">
+
+
+              {{#if New}}
+              {{#each New}}
+
+
+              <a style="background-image:url({{pic}})" id="d" href="products/sp/{{ProID}}">
+
+                <h5 class="mb-1"> <b>{{CatName}}</b></h5>
+                <div class="d-flex w-100 justify-content-between">
+
+
+                  <ul class="list-unstyled mt-3 mb-4">
+
+                    <li>{{ProName}}</li>
+                    <li>{{TinyDes}}</li>
+
+
+                  </ul>
+
+
+
+
+
+                </div>
+                <footer class="text-muted">
+                  <span class="badge badge-light"><small>{{CreatedAt}}
+
+                    </small></span>
+                  <br>
+
+                  <span class="badge badge-light" href="#"><i class="fa fa-eye" aria-hidden="true"></i> {{Click}}</span>
+
+                </footer>
+              </a>
+
+              {{/each}}
+              {{/if}}
+            </div>
+          </div>
+          {{#if subscriber}}
+          <div class="col-sm-2 news">
+            <div id="border" style="width: 100" class="card-header">
+              <h4 class="my-0 font-weight-normal"> Premium</h4>
+            </div>
+
           </div>
           {{/if}}
-    <div class="col-sm-4  news   " >
-      
-      <div  id="border" style="width: 100" class="card-header">
-               <h4  class="my-0 font-weight-normal"> Top Chuyên Mục</h4>
-          </div>
-  <div id="e" >
-    
-     <div class="col-sd-6"> 
-       <div class="list-group">
-
-         {{#each tcm}}
-          {{#each subcats}}
-  <a style="background-image:url({{sub_pic}})" id="c" href="products/sp/{{sub_id}}" >
-     {{/each}}
-    <div class="d-flex w-100 justify-content-between">
-
-      <h5  class="mb-1">   {{cat_name}}</h5>
-     
-    </div>
-    {{#each subcats}}
-    <p class="mb-1">{{sub_name}}</p>
-    
-    <small>{{sub_CreatedAt}}</small>
-      {{/each}}
-  </a>
- 
-  {{/each}}
-  
-  
-</div>
-     </div>
-  
-     
-         </div>
          
-    </div>
-    </div>
+        </div>
       </div>
 
 
-   <div  class="container">
-     <div class="card-header">
-               <h4 class="my-0 font-weight-normal">Tin Nổi Bật Nhất Tuần</h4>
-          </div>
-      <div style="background-image:url('/pic/xc.jpg')" class="card-deck mb-3 text-center">
-
-      {{#if Host}}
-        {{#each Host}}
-        <div class="card mb-{TinyDes}}4 box-shadow">
-    
-         
-            
-          <div  class="card-body">
-            
-            <h1 class="card-title pricing-card-title">{{CatName}} </h1>
-            <ul class="list-unstyled mt-3 mb-4">
-              <img  src="{{pic}}" width="150" height="150"  >
-              <li>{{ProName}}</li>
-              <li>{{TinyDes}}</li>
-          <li>{{CreatedAt}}</li>
-            </ul>
-            <a href="/products/sp/{{ProID}}" class="btn btn-lg btn-block btn-outline-primary" type="button">View</a>
-             
-          </div>
-    
-        </div>
-             {{/each}}
-             {{/if}}
-      </div>
-    
-      <div class="card-columns">
-        
-  <div  class="card bg-primary text-white text-center p-1">
-    <blockquote class="blockquote mb-0" >
-      <p>Tin Được Xem Nhiều Nhất</p>
-      <footer class="blockquote-footer">
-        <small>
-          Someone famous in <cite title="Source Title">Live</cite>
-        </small>
-      </footer>
-    </blockquote>
-  </div>
-  {{#if Host2}}
-       {{#each Host2}}
-        <a style="color: black"  href="/products/sp/{{ProID}}">
-  <div class="card">
-    <img class="card-img-top" src="{{pic}}" width="100" height="300" >
-    <div class="card-body">
-      <h5 class="card-title">{{ProName}}</h5>
-      <p class="card-text">{{TinyDes}}</p>
-    </div>
-     <small><a style="color: black" href="/categories/{{CatID}}/products">#{{CatName}}</a></small>
-  </div>
-  </a>
-  
-  {{/each}}
-
-  {{/if}}
-  
-  
-</div>
-
-
-
-      <footer class="pt-4 my-md-5 pt-md-5 border-top">
-        <div class="row">
-          <div class="col-12 col-md">
-            <img width="24" height="24" class="mb-2" alt="" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg">
-            <small class="d-block mb-3 text-muted">© 2017-2018</small>
-          </div>
-          <div class="col-6 col-md">
-            <h5>Features</h5>
-            <ul class="list-unstyled text-small">
-              <li><a class="text-muted" href="#">Cool stuff</a></li>
-              <li><a class="text-muted" href="#">Random feature</a></li>
-              <li><a class="text-muted" href="#">Team feature</a></li>
-              <li><a class="text-muted" href="#">Stuff for developers</a></li>
-              <li><a class="text-muted" href="#">Another one</a></li>
-              <li><a class="text-muted" href="#">Last time</a></li>
-            </ul>
-          </div>
-          <div class="col-6 col-md">
-            <h5>Resources</h5>
-            <ul class="list-unstyled text-small">
-              <li><a class="text-muted" href="#">Resource</a></li>
-              <li><a class="text-muted" href="#">Resource name</a></li>
-              <li><a class="text-muted" href="#">Another resource</a></li>
-              <li><a class="text-muted" href="#">Final resource</a></li>
-            </ul>
-          </div>
-          <div class="col-6 col-md">
-            <h5>About</h5>
-            <ul class="list-unstyled text-small">
-              <li><a class="text-muted" href="#">Team</a></li>
-              <li><a class="text-muted" href="#">Locations</a></li>
-              <li><a class="text-muted" href="#">Privacy</a></li>
-              <li><a class="text-muted" href="#">Terms</a></li>
-            </ul>
-          </div>
-        </div>
-        </div>
-        
-      </footer>
-    
- 
-
-    </main>
-
-    <footer class="text-muted">
       <div class="container">
-        <p class="float-right">
-          <a href="#">Back to top</a>
-        </p>
-        <p>Album example is &copy; Bootstrap, but please download and customize it for yourself!</p>
-        <p>New to Bootstrap? <a href="../../">Visit the homepage</a> or read our <a href="../../getting-started/">getting started guide</a>.</p>
-      </div>
-      
-    </footer>
+        <div class="card-header">
+          <h4 class="my-0 font-weight-normal">Tin Nổi Bật Nhất Tuần</h4>
+        </div>
+        <div style="background-image:url('/pic/xc.jpg')" class="card-deck mb-3 text-center">
 
-    <!-- Bootstrap core JavaScript
+          {{#if Host}}
+          {{#each Host}}
+          <div class="card mb-{TinyDes}}4 box-shadow">
+
+
+
+            <div class="card-body">
+
+              <h1 class="card-title pricing-card-title">{{CatName}} </h1>
+              <ul class="list-unstyled mt-3 mb-4">
+                <img src="{{pic}}" width="150" height="150">
+                <li>{{ProName}}</li>
+                <li>{{TinyDes}}</li>
+                <li>{{CreatedAt}}</li>
+              </ul>
+              <a href="/products/sp/{{ProID}}" class="btn btn-lg btn-block btn-outline-primary" type="button">View</a>
+
+            </div>
+
+          </div>
+          {{/each}}
+          {{/if}}
+        </div>
+
+        <div class="card-columns">
+
+          <div class="card bg-primary text-white text-center p-1">
+            <blockquote class="blockquote mb-0">
+              <p>Tin Được Xem Nhiều Nhất</p>
+              <footer class="blockquote-footer">
+                <small>
+                  Someone famous in <cite title="Source Title">Live</cite>
+                </small>
+              </footer>
+            </blockquote>
+          </div>
+          {{#if Host2}}
+          {{#each Host2}}
+          <a style="color: black" href="/products/sp/{{ProID}}">
+            <div class="card">
+              <img class="card-img-top" src="{{pic}}" width="100" height="300">
+              <div class="card-body">
+                <h5 class="card-title">{{ProName}}</h5>
+                <p class="card-text">{{TinyDes}}</p>
+              </div>
+              <small><a style="color: black" href="/categories/{{CatID}}/products">#{{CatName}}</a></small>
+            </div>
+          </a>
+
+          {{/each}}
+
+          {{/if}}
+
+
+        </div>
+
+
+<div class="intro">
+          <div class="container">
+            <div class="row">
+              {{#each Tg}}
+          <a style="padding: 2px" href="/categories/tag/{{tagID}}"><span>{{tagName}}</span>
+              
+          {{/each}}
+            </a>
+            </div>
+            </div>
+            </div>
+        <footer class="pt-4 my-md-5 pt-md-5 border-top">
+          <div class="row">
+            <div class="col-12 col-md">
+              <img width="24" height="24" class="mb-2" alt=""
+                src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg">
+              <small class="d-block mb-3 text-muted">© 2017-2018</small>
+            </div>
+            <div class="col-6 col-md">
+              <h5>Features</h5>
+              <ul class="list-unstyled text-small">
+                <li><a class="text-muted" href="#">Cool stuff</a></li>
+                <li><a class="text-muted" href="#">Random feature</a></li>
+                <li><a class="text-muted" href="#">Team feature</a></li>
+                <li><a class="text-muted" href="#">Stuff for developers</a></li>
+                <li><a class="text-muted" href="#">Another one</a></li>
+                <li><a class="text-muted" href="#">Last time</a></li>
+              </ul>
+            </div>
+            <div class="col-6 col-md">
+              <h5>Resources</h5>
+              <ul class="list-unstyled text-small">
+                <li><a class="text-muted" href="#">Resource</a></li>
+                <li><a class="text-muted" href="#">Resource name</a></li>
+                <li><a class="text-muted" href="#">Another resource</a></li>
+                <li><a class="text-muted" href="#">Final resource</a></li>
+              </ul>
+            </div>
+            <div class="col-6 col-md">
+              <h5>About</h5>
+              <ul class="list-unstyled text-small">
+                <li><a class="text-muted" href="#">Team</a></li>
+                <li><a class="text-muted" href="#">Locations</a></li>
+                <li><a class="text-muted" href="#">Privacy</a></li>
+                <li><a class="text-muted" href="#">Terms</a></li>
+              </ul>
+            </div>
+          </div>
+      </div>
+
+      </footer>
+
+
+
+</main>
+
+<footer class="text-muted">
+  <div class="container">
+    <p class="float-right">
+      <a href="#">Back to top</a>
+    </p>
+    <p>Album example is &copy; Bootstrap, but please download and customize it for yourself!</p>
+    <p>New to Bootstrap? <a href="../../">Visit the homepage</a> or read our <a href="../../getting-started/">getting
+        started guide</a>.</p>
+  </div>
+
+        
+     
+</footer>
+
+<!-- Bootstrap core JavaScript
     ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+  integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+  integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+  integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <script src="js/jquery-3.2.1.min.js"></script>
+<script src="styles/bootstrap-4.1.2/popper.js"></script>
+
+<script src="plugins/greensock/TweenMax.min.js"></script>
+<script src="plugins/greensock/TimelineMax.min.js"></script>
+<script src="plugins/scrollmagic/ScrollMagic.min.js"></script>
+<script src="plugins/greensock/animation.gsap.min.js"></script>
+<script src="plugins/greensock/ScrollToPlugin.min.js"></script>
+<script src="plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
+<script src="plugins/easing/easing.js"></script>
+<script src="plugins/parallax-js-master/parallax.min.js"></script>
+<script src="js/custom.js"></script>

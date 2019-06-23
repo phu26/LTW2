@@ -761,8 +761,8 @@ var b2 = function (req, res, next) {
 }
 router.post('/:idu/edit/:id', b2, function (req, res) {
 
-  console.log(res.locals.authUser.f_Permission);
-  if (res.locals.authUser.f_Permission == 3) {
+  console.log(res.locals.authUser.f_Permission );
+  if (res.locals.authUser.f_Permission == 3 || res.locals.authUser.f_Permission == 5 ) {
     var entity = new Object;
     entity.CatID = req.body.CatID;
     if (req.body.subCatID != null)
@@ -880,7 +880,7 @@ router.post('/:idu/edit/:id', b2, function (req, res) {
     })
   }
   else
-    if (res.locals.authUser.f_Permission == 4) {
+    if (res.locals.authUser.f_Permission == 4 ) {
       productModel.isNT(req.params.id)
         .then(rows => {
 
@@ -913,6 +913,28 @@ var KT = function (req, res, next) {
   console.log(req.body.TinyDes);
 
 }
+router.post('/:idu/Deny/:id', b2, function (req, res) {
+  productModel.isNT(req.params.id)
+  .then(rows => {
+
+    if (rows.length > 0) {
+
+      res.sms = "Từ chối:" + "  " + req.body.SMS;
+      productModel.updateNT(req.params.id, res.sms);
+
+    }
+    else {
+
+      res.sms = "Từ chối:" + "  " + req.body.SMS;
+      productModel.addNT(req.params.id, res.sms, 0);
+    }
+
+
+
+  })
+  .catch(err => next(err));
+  res.redirect('/user/' + req.params.idu+ '/profile');
+})
 router.post('/:idu/Accept/:id', b2, function (req, res) {
 
   var xx = req.body.dob;
