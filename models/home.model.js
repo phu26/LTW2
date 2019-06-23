@@ -8,6 +8,11 @@ module.exports = {
             
         return db.load(`SELECT c.CatName,p.* from  categories c ,products p WHERE p.CatID=c.CatID and p.TinyDes!='' and Click>0 and p.TrangThai=3 ORDER BY Click DESC limit 10`);
     },
+    all3: () => {
+            
+        return db.load(`SELECT c.CatName,p.* from  categories c ,products p WHERE p.CatID=c.CatID and p.TinyDes!='' and p.TrangThai=4 `);
+    },
+
     New: () => {
             
         return db.load(`SELECT c.CatName,p.* from  categories c ,products p WHERE p.CatID=c.CatID and p.TinyDes!='' and p.TrangThai=3 ORDER by p.CreatedAt DESC limit 10  `);
