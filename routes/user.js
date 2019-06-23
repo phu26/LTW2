@@ -220,6 +220,9 @@ router.get('/edit/user/:id', (req, res, next) => {
 router.post('/edit/user/:id', (req, res, next) => {
   if (res.locals.admin) {
     entity = req.body;
+    var dob = moment(entity.f_DOB, 'DD/MM/YYYY').format('YYYY-MM-DD');
+    entity.f_DOB = dob;
+    delete entity.f_Pic;
     if (entity.f_ID == res.locals.authUser.f_ID) {
       if (entity.f_Permission != res.locals.authUser.f_Permission) {
         userModel.update(entity).then(rows => {
@@ -233,10 +236,28 @@ router.post('/edit/user/:id', (req, res, next) => {
         res.redirect('/user/' + res.locals.authUser.f_ID + '/users');
       else
         res.redirect('/user/' + res.locals.authUser.f_ID + '/members');
-    })
+    }).catch(next);
   }
 
 });
+router.post('/:id/profile', (req, res, next) => {
+ 
+  var xx = req.body.f_DOB;
+  var dob5 = moment(xx, 'DD/MM/YYYY').format('YYYY-MM-DD');
+  var dob6 = moment(dob5,'YYYY-MM-DD' ).format('DD/MM/YYYY');
+    var entity  = new Object();
+    entity.f_ID=req.body.f_ID;
+    entity.f_Name = req.body.f_Name;
+    entity.f_Email= req.body.f_Email;
+    entity.f_DOB = dob5;
+    entity.f_Username= req.body.f_UserName;
+    entity.f_Permission = req.body.f_Permission;
+    entity.Pic = req.body.f_Pic;
+      userModel.update(entity);
+      
+  
+  res.redirect("/user/"+req.params.id+"/profile")
+})
 router.get('/tag/:id', (req,res,next) => {
   id = req.params.id;
   if(isNaN(id))
@@ -270,12 +291,10 @@ router.post('/tag/delete/:id', (req,res,next) =>{
       if(rows3.length>0)
       {
         userModel.deleteTagitem(id).then(rows2=>{
-          window.alert("Xóa tag thành công.");
           res.redirect('/user/'+res.locals.authUser.f_ID+'/tags');
         })
       }
       else {
-        window.alert("Xóa tag thành công.");
         res.redirect('/user/'+res.locals.authUser.f_ID+'/tags');}
     })
     
@@ -669,7 +688,7 @@ var isPic = function (req, res, next) {
     .catch(err => next(err));
 }
 // Route này Xử lý khi client thực hiện hành động upload file
-router.post("/:id/profile", isPic, function (req, res) {
+router.post("/:id/profile/image", isPic, function (req, res) {
   id = req.params.id;
   if (req.KT != '') {
 
