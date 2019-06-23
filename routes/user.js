@@ -218,6 +218,29 @@ router.get('/edit/user/:id', (req, res, next) => {
   }
 })
 router.post('/edit/user/:id', (req, res, next) => {
+  if (res.locals.admin) {
+    entity = req.body;
+    var dob = moment(entity.f_DOB, 'DD/MM/YYYY').format('YYYY-MM-DD');
+    entity.f_DOB = dob;
+    delete entity.f_Pic;
+    if (entity.f_ID == res.locals.authUser.f_ID) {
+      if (entity.f_Permission != res.locals.authUser.f_Permission) {
+        userModel.update(entity).then(rows => {
+          res.redirect('/');
+        })
+        return;
+      }
+    }
+    userModel.update(entity).then(rows => {
+      if (entity.f_Permission == 1 || entity.f_Permission == 2)
+        res.redirect('/user/' + res.locals.authUser.f_ID + '/users');
+      else
+        res.redirect('/user/' + res.locals.authUser.f_ID + '/members');
+    }).catch(next);
+  }
+
+});
+router.post('/:id/profile', (req, res, next) => {
  
   var xx = req.body.f_DOB;
   var dob5 = moment(xx, 'DD/MM/YYYY').format('YYYY-MM-DD');
@@ -234,6 +257,55 @@ router.post('/edit/user/:id', (req, res, next) => {
       
   
   res.redirect("/user/"+req.params.id+"/profile")
+})
+router.get('/tag/:id', (req,res,next) => {
+  id = req.params.id;
+  if(isNaN(id))
+  {
+    res.render('vwAdmin/edittag', {error: true});
+  }
+  if(res.locals.admin)
+  {
+    userModel.singleTag(id).then(rows =>{
+      if(rows.length>0)
+      {
+        res.tag = rows[0];
+        res.render('vwAdmin/edittag',{
+          tag: res.tag,
+          error: false
+        })
+      }
+      else 
+      {
+        res.render('vwAdmin/edittag',{
+          error: true
+        })
+      }
+    }).catch(next);
+  }
+})
+router.post('/tag/delete/:id', (req,res,next) =>{
+  id = req.params.id;
+  userModel.deleteTag(id).then(rows =>{
+    userModel.singleTagitem(id).then(rows3 =>{
+      if(rows3.length>0)
+      {
+        userModel.deleteTagitem(id).then(rows2=>{
+          res.redirect('/user/'+res.locals.authUser.f_ID+'/tags');
+        })
+      }
+      else {
+        res.redirect('/user/'+res.locals.authUser.f_ID+'/tags');}
+    })
+    
+  }).catch(next);
+})
+router.post('/tag/:id', (req,res,next)=>{
+  var id = req.params.id;
+  entity = req.body;
+  userModel.updateTag(entity).then(rows =>{
+    res.redirect('/user/'+ res.locals.authUser.f_ID +'/tags');
+  })
 })
 router.post('/extend/:id', (req, res, next) => {
   id = req.params.id;
@@ -616,7 +688,7 @@ var isPic = function (req, res, next) {
     .catch(err => next(err));
 }
 // Route này Xử lý khi client thực hiện hành động upload file
-router.post("/:id/profile", isPic, function (req, res) {
+router.post("/:id/profile/image", isPic, function (req, res) {
   id = req.params.id;
   if (req.KT != '') {
 
