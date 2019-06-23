@@ -217,7 +217,7 @@ router.get('/edit/user/:id', (req, res, next) => {
     }).catch(next);
   }
 })
-router.post("/edit/user/:id", (req, res, next) => {
+router.post('/edit/user/:id', (req, res, next) => {
   if (res.locals.admin) {
     entity = req.body;
     if (entity.f_ID == res.locals.authUser.f_ID) {
@@ -237,6 +237,57 @@ router.post("/edit/user/:id", (req, res, next) => {
   }
 
 });
+router.get('/tag/:id', (req,res,next) => {
+  id = req.params.id;
+  if(isNaN(id))
+  {
+    res.render('vwAdmin/edittag', {error: true});
+  }
+  if(res.locals.admin)
+  {
+    userModel.singleTag(id).then(rows =>{
+      if(rows.length>0)
+      {
+        res.tag = rows[0];
+        res.render('vwAdmin/edittag',{
+          tag: res.tag,
+          error: false
+        })
+      }
+      else 
+      {
+        res.render('vwAdmin/edittag',{
+          error: true
+        })
+      }
+    }).catch(next);
+  }
+})
+router.post('/tag/delete/:id', (req,res,next) =>{
+  id = req.params.id;
+  userModel.deleteTag(id).then(rows =>{
+    userModel.singleTagitem(id).then(rows3 =>{
+      if(rows3.length>0)
+      {
+        userModel.deleteTagitem(id).then(rows2=>{
+          window.alert("Xóa tag thành công.");
+          res.redirect('/user/'+res.locals.authUser.f_ID+'/tags');
+        })
+      }
+      else {
+        window.alert("Xóa tag thành công.");
+        res.redirect('/user/'+res.locals.authUser.f_ID+'/tags');}
+    })
+    
+  }).catch(next);
+})
+router.post('/tag/:id', (req,res,next)=>{
+  var id = req.params.id;
+  entity = req.body;
+  userModel.updateTag(entity).then(rows =>{
+    res.redirect('/user/'+ res.locals.authUser.f_ID +'/tags');
+  })
+})
 router.post('/extend/:id', (req, res, next) => {
   id = req.params.id;
   if (res.locals.admin) {
