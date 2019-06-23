@@ -17,7 +17,9 @@ module.exports = {
   single: id => {
     return db.load(`select * from users where f_ID = ${id}`);
   },
-
+  singleSub: id => {
+    return db.load(`select * from subscriber where f_ID = ${id}`);
+  },
   singleByUserName: userName => {
     return db.load(`select * from users where f_Username = '${userName}'`);
   },
@@ -45,6 +47,11 @@ module.exports = {
   },
   Updatepic:(id,pic) => {
     return db.load(`UPDATE  users SET Pic='${pic}' where f_ID = ${id}`);
+  },
+  updateSub: entity =>{
+    var id = entity.id;
+    delete entity.id;
+    return db.update('subscriber','id',entity,id);
   },
   
   findOne: mail => {

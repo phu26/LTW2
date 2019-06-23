@@ -7,8 +7,17 @@ module.exports = {
   subcat: id  => {
     return db.load(`select * from subcategories where subid= ${id}`);
   },
-  updateEditor: (catid,editorid)  => {
-    return db.load(`insert into editor`);
+  singleEditor: id =>
+  {
+    return db.load(`select * from editor where CatID= ${id}`);
+  },
+  updateEditor: entity  => {
+    var id = entity.id;
+    delete entity.id;
+    return db.update('Editor', 'id', entity, id);
+  },
+  insertEditor: entity  => {
+    return db.add('Editor',entity);
   },
   allWithDetails: () => {
     return db.load(`

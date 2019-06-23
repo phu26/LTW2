@@ -28,6 +28,7 @@ $(document).ready(function(){
   });
 });
 </script>
+<form id="formEdit" method="POST">
 <div class="main-panel">
     <nav class="navbar navbar-default navbar-fixed">
         <div class="container-fluid">
@@ -74,6 +75,7 @@ $(document).ready(function(){
                                         <th scope="col">Tên đăng nhập</th>
                                         <th scope="col">Email</th>
                                         <th scope="col">Ngày hết hạn</th>
+                                        
                                     </tr>
                                 </thead>
                                 <tbody id="tbSub">
@@ -94,8 +96,12 @@ $(document).ready(function(){
                                                     <i class="fa fa-trash-o" aria-hidden="true"></i>
                                                 </button></span>
                                             <span><button class="btn btn-secondary btn-sm"
-                                                    formaction="/user/{{f_ID}}/backoriginal" role="button" title="Chuyển về Guest">
+                                                    formaction="/user/backtoguest/{{f_ID}}" role="button" title="Chuyển về Guest">
                                                     <i class="fa fa-sign-out" aria-hidden="true"></i>
+                                                </button></span>
+                                                <span><button class="btn btn-success btn-sm" formaction="/user/extend/{{f_ID}}"
+                                                role="button" title="Gia hạn Subscriber">
+                                                    <i class="fa fa-level-up" aria-hidden="true"></i>
                                                 </button></span>
                                             <span><input type="hidden" id="a" name="userid" value="{{f_ID}}"></span>
                                             
@@ -132,7 +138,12 @@ $(document).ready(function(){
                                         <th scope="col">Họ tên</th>
                                         <th scope="col">Tên đăng nhập</th>
                                         <th scope="col">Email</th>
-                                        <th scope="col" class="text-right">                                        
+                                        <th scope="col" class="text-right">
+                                            <a class="btn btn-outline-success btn-sm" href="/user/admin/register/1"
+                                                role="button" title="Add">
+                                                <i class="fa fa-plus" aria-hidden="true"></i>
+                                                Thêm tài khoản
+                                            </a>
                                         </th>
 
                                     </tr>
@@ -153,9 +164,9 @@ $(document).ready(function(){
                                                     onclick="doPreview();" role="button" title="Xóa tài khoản">
                                                     <i class="fa fa-trash-o" aria-hidden="true"></i>
                                                 </button></span>
-                                            <span><button class="btn btn-secondary btn-sm"
-                                                    formaction="/user/{{f_ID}}/backoriginal" role="button" title="Chuyển về Guest">
-                                                    <i class="fa fa-sign-out" aria-hidden="true"></i>
+                                                <span><button class="btn btn-success btn-sm" formaction="/user//{{f_ID}}"
+                                                    onclick="doPreview();" role="button" title="Nâng cấp Subscriber">
+                                                    <i class="fa fa-share-square-o" aria-hidden="true"></i>
                                                 </button></span>
                                             <span><input type="hidden" id="a" name="userid" value="{{f_ID}}"></span>
                                             
@@ -176,8 +187,4 @@ $(document).ready(function(){
 </div>
 
 </div>
-
-
-</body>
-
-</html>
+</form>

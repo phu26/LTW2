@@ -5,6 +5,9 @@ module.exports = {
             
         return db.load(`SELECT * FROM products where TrangThai = 3`);
     },
+    allbySub: id =>{
+      return db.load(`SELECT * FROM products where SubCatID = '${id}'`)
+    },
     search: (string,start_offset) => {
       var lim = config.paginate.default;
       return db.load(`SELECT * FROM products p
