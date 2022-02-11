@@ -29,7 +29,7 @@
     "date-time-js": "^1.0.6",
     "express": "^4.16.4",
     "express-flash": "git://github.com/RGBboy/express-flash.git",
-    "express-handlebars": "^3.0.2",
+    "express-handlebars": "^5.3.1",
     "express-handlebars-sections": "^1.0.1",
     "express-session": "^1.16.1",
     "flash": "^1.1.0",
